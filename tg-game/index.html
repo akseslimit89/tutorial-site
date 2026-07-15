@@ -29,27 +29,37 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 @keyframes flyUp{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-100px) scale(1.5)}}
 
 .stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:16px 0}
-.stat-card{background:rgba(255,255,255,0.08);border-radius:12px;padding:10px;backdrop-filter:blur(10px)}
+.stat-card{background:rgba(255,255,255,0.08);border-radius:12px;padding:10px;backdrop-filter:blur(10px);transition:all .3s}
 .stat-card .num{font-size:18px;font-weight:700;color:#ffd700}
 .stat-card .label{font-size:11px;color:#aaa;margin-top:2px}
+.stat-card.rush{background:rgba(255,107,107,0.25);box-shadow:0 0 20px rgba(255,107,107,0.3)}
 
 .boosts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
 .boost-btn{background:linear-gradient(135deg,#4a6cf7,#6c5ce7);border:none;color:#fff;padding:12px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;transition:transform 0.2s}
 .boost-btn:active{transform:scale(0.95)}
 .boost-btn:disabled{opacity:0.4}
-.boost-btn .cost{font-size:11px;color:rgba(255,255,255,0.7);margin-top:2px}
 
-.ad-boost{width:100%;padding:14px;background:linear-gradient(135deg,#ff6b6b,#ff4757);border:none;border-radius:12px;font-size:15px;font-weight:700;color:#fff;cursor:pointer;transition:transform 0.2s;margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:8px}
-.ad-boost:active{transform:scale(0.97)}
-.ad-boost:disabled{opacity:0.5}
+/* NEW: MULTI AD BUTTONS */
+.ad-btns{display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
+.ad-btn{width:100%;padding:12px 16px;border:none;border-radius:12px;font-size:13px;font-weight:700;color:#fff;cursor:pointer;transition:transform 0.2s;display:flex;align-items:center;justify-content:space-between}
+.ad-btn:active{transform:scale(0.97)}
+.ad-btn:disabled{opacity:0.5}
+.ad-btn .left{display:flex;align-items:center;gap:8px}
+.ad-btn .right{font-size:12px;opacity:.8}
+.ad-btn .badge{background:rgba(255,255,255,0.25);padding:2px 8px;border-radius:10px;font-size:11px}
+.ad-btn-primary{background:linear-gradient(135deg,#ff6b6b,#ff4757)}
+.ad-btn-gold{background:linear-gradient(135deg,#ffd700,#ff8c00);color:#0d0d2b}
+.ad-btn-purple{background:linear-gradient(135deg,#a855f7,#7c3aed)}
+.ad-btn-green{background:linear-gradient(135deg,#22c55e,#16a34a)}
+
+.claim-btn{width:100%;padding:16px;background:linear-gradient(135deg,#ffd700,#ff8c00);border:none;border-radius:14px;font-size:18px;font-weight:800;color:#0d0d2b;cursor:pointer;transition:transform 0.2s;margin-bottom:8px}
+.claim-btn:active{transform:scale(0.97)}
 
 .timer-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:100;justify-content:center;align-items:center;flex-direction:column}
 .timer-overlay.show{display:flex}
 .timer-overlay .big{font-size:72px;font-weight:800;color:#ffd700}
 .timer-overlay .info{font-size:16px;color:#ccc;margin-top:12px}
-
-.claim-btn{width:100%;padding:16px;background:linear-gradient(135deg,#ffd700,#ff8c00);border:none;border-radius:14px;font-size:18px;font-weight:800;color:#0d0d2b;cursor:pointer;transition:transform 0.2s;margin-bottom:8px}
-.claim-btn:active{transform:scale(0.97)}
+.timer-overlay .bonus{font-size:14px;color:#ffd700;margin-top:6px;font-weight:600}
 
 .ad-banner{min-height:50px;margin:8px 0;border-radius:12px;overflow:hidden;background:rgba(255,255,255,0.03);font-size:12px;color:#555;display:flex;align-items:center;justify-content:center}
 
@@ -80,7 +90,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   
   <div class="stats">
     <div class="stat-card"><div class="num" id="stat-taps">0</div><div class="label">Total Taps</div></div>
-    <div class="stat-card"><div class="num" id="stat-power">1x</div><div class="label">Tap Power</div></div>
+    <div class="stat-card" id="stat-power-card"><div class="num" id="stat-power">1x</div><div class="label">Tap Power</div></div>
     <div class="stat-card"><div class="num" id="stat-coins">0</div><div class="label">This Session</div></div>
   </div>
   
@@ -88,13 +98,30 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
     <button class="boost-btn" id="boost-power" onclick="buyBoost('power')">⚡ +1 Power<div class="cost">🪙 100</div></button>
     <button class="boost-btn" id="boost-energy" onclick="buyBoost('energy')">🔋 Full Energy<div class="cost">🪙 50</div></button>
   </div>
+
+  <!-- 🎬 MULTI AD BUTTONS -->
+  <div class="ad-btns" id="ad-btns">
+    <button class="ad-btn ad-btn-primary" id="ad-boost-btn" onclick="watchAd('boost')">
+      <span class="left">🎬 Watch Ad</span>
+      <span class="right">+50⚡ +10🪙</span>
+    </button>
+    <button class="ad-btn ad-btn-gold" id="ad-daily-btn" onclick="watchAd('daily')">
+      <span class="left">⭐ Daily Bonus</span>
+      <span class="right" id="daily-label">2x Reward Ready!</span>
+    </button>
+    <button class="ad-btn ad-btn-purple" id="ad-multiply-btn" onclick="multiplyClaim()">
+      <span class="left">🔁 Multiply Claim</span>
+      <span class="right" id="multiply-label">2x your coins!</span>
+    </button>
+    <button class="ad-btn ad-btn-green" id="ad-rush-btn" onclick="watchAd('rush')">
+      <span class="left">⚡ Rush Mode</span>
+      <span class="right">3x Power 30s</span>
+    </button>
+  </div>
   
-  <button class="ad-boost" id="ad-boost-btn" onclick="watchAd()"><span>🎬 Watch Ad → +50 Energy + 10 Coins</span></button>
   <button class="claim-btn" onclick="claimCoins()">📤 Claim to Bot</button>
 
-  <div class="ad-banner" id="ad-container">
-    <small style="color:#555">— Ad Space —</small>
-  </div>
+  <div class="ad-banner" id="ad-container"><small style="color:#555">— Ad Space —</small></div>
   
   <div class="footer-links">
     <a href="https://venicelab.web.id">About</a>
@@ -104,20 +131,39 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 
 <div class="timer-overlay" id="timer">
   <div class="big" id="timer-num">10</div>
-  <div class="info">📺 Watching ad... Get ready for reward!</div>
+  <div class="info" id="timer-info">📢 Loading ad... Reward incoming!</div>
+  <div class="bonus" id="timer-bonus"></div>
 </div>
 
 <script>
 let tg = window.Telegram?.WebApp;
 if(tg) { tg.expand(); tg.enableClosingConfirmation(); }
 
-let state = {coins:0, energy:1000, maxEnergy:1000, tapPower:1, totalTaps:0, sessionCoins:0, level:1, adWatchCount:0};
+let state = {
+  coins:0, energy:1000, maxEnergy:1000, tapPower:1,
+  totalTaps:0, sessionCoins:0, level:1, adWatchCount:0,
+  rushMode:false, rushEnd:0,
+  dailyBonus:true,
+  multiplyReady:false,
+};
 
 try {
   let s = JSON.parse(localStorage.getItem('venice_state'));
   if(s) Object.assign(state, s);
 } catch(e) {}
 
+
+// ⚡ RUSH MODE TIMER
+setInterval(() => {
+  if(state.rushMode && Date.now() > state.rushEnd) {
+    state.rushMode = false;
+    state.tapPower = Math.max(1, state.tapPower - 2);
+    document.getElementById('stat-power-card').classList.remove('rush');
+    updateUI(); saveState();
+  }
+}, 1000);
+
+// ⚡ ENERGY REFILL
 setInterval(() => {
   if(state.energy < state.maxEnergy) {
     state.energy = Math.min(state.energy + 3, state.maxEnergy);
@@ -125,6 +171,7 @@ setInterval(() => {
   }
 }, 1000);
 
+// 👆 TAP
 document.getElementById('coin').addEventListener('click', (e) => {
   if(state.energy < state.tapPower) return;
   state.energy = Math.max(0, state.energy - state.tapPower);
@@ -144,7 +191,10 @@ document.getElementById('coin').addEventListener('click', (e) => {
   updateUI(); saveState();
   
   let nl = Math.floor(state.totalTaps/500)+1;
-  if(nl > state.level) { state.level = nl; if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success'); }
+  if(nl > state.level) {
+    state.level = nl;
+    if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+  }
 });
 
 function updateUI() {
@@ -152,10 +202,19 @@ function updateUI() {
   document.getElementById('energy-text').textContent = `${state.energy}/${state.maxEnergy}`;
   document.getElementById('energy-fill').style.width = `${(state.energy/state.maxEnergy)*100}%`;
   document.getElementById('stat-taps').textContent = state.totalTaps.toLocaleString();
-  document.getElementById('stat-power').textContent = `${state.tapPower}x`;
+  document.getElementById('stat-power').textContent = state.rushMode ? `3x ⚡` : `${state.tapPower}x`;
   document.getElementById('stat-coins').textContent = state.sessionCoins;
   document.getElementById('level').textContent = state.level;
+  
+  let dl = document.getElementById('daily-label');
+  dl.textContent = state.dailyBonus ? '⭐ 2x Reward!' : '✅ Done today';
+  document.getElementById('ad-daily-btn').disabled = !state.dailyBonus;
+  
+  let ml = document.getElementById('multiply-label');
+  ml.textContent = state.sessionCoins > 0 ? '2x your coins!' : 'Claim first!';
+  document.getElementById('ad-multiply-btn').disabled = state.sessionCoins <= 0 || !state.multiplyReady;
 }
+
 function saveState() { try { localStorage.setItem('venice_state', JSON.stringify(state)); } catch(e) {} }
 
 function buyBoost(t) {
@@ -172,31 +231,108 @@ function buyBoost(t) {
   updateUI(); saveState();
 }
 
-function watchAd() {
-  let btn = document.getElementById('ad-boost-btn');
-  if(btn.disabled) return;
-  btn.disabled = true;
-  
-  // Buka link ad network (biar dapet CPM)
-  let adUrl = randomAdLink();
+// 🎬 OPEN AD LINK
+function openAdLink() {
+  let ads = [
+    'https://6opo.com/wrr?z=11298121&p_rid=37314776-dc73-453f-9024-07d4f44dc157&rb=r5L-31vDSjUVWY-RQ41amCGRqOKu3nRa1nOWWZA_GZREap6a97W9kv6pMjqjYxN3mOjqMqxN-jbDcpY-ltNdeaDTvbCgJ0nJ1gQcVSh3zG2aa8wsWviwD8Z_1CoxCRmcDe7OcoYjUZUAYTg8aLIUq9odhrL6cC5agoTF8jjP0oPBnhiQwqCpDxbcinfsjGw92MONLGw4N0fvWn4Jvk4AYtlyqo6sbATqMM6DpdEKaicTZovud5igJ7X-W-3QA7wVBXO6Tqw_KzJ1gyi4_6D9ufqW6vpajLCZJutXpQUlh4ZEcxMa0Zr3TuMTJ2fMToF7hJuMVC3VK8kOXByTY0OlmOqkYCOqgjDK',
+    'https://www.effectivecpmnetwork.com/xhgf1sj3b?key=6048daa838a4bd6f87c6330df02084fb',
+  ];
+  let url = ads[Math.floor(Math.random() * ads.length)];
   setTimeout(() => {
     try {
-      if(tg && tg.openLink) {
-        tg.openLink(adUrl, {try_instant_view: false});
-      } else if(tg && tg.openExternalLink) {
-        tg.openExternalLink(adUrl);
-      } else {
-        window.open(adUrl, '_blank');
-      }
+      if(tg && tg.openLink) tg.openLink(url, {try_instant_view: false});
+      else if(tg && tg.openExternalLink) tg.openExternalLink(url);
+      else window.open(url, '_blank');
     } catch(e) {}
   }, 200);
+}
+
+// 🎬 WATCH AD (3 TYPES)
+function watchAd(type) {
+  if(type === 'boost') {
+    let btn = document.getElementById('ad-boost-btn');
+    if(btn.disabled) return;
+    btn.disabled = true;
+    
+    openAdLink();
+    showTimer(12, '📢 Loading ad...', '', () => {
+      state.energy = Math.min(state.energy + 50, state.maxEnergy);
+      state.coins += 10;
+      state.sessionCoins += 10;
+      state.adWatchCount += 1;
+      flyReward('🎬 +50⚡ +10🪙');
+      setTimeout(() => { btn.disabled = false; }, 25000);
+    });
+    
+  } else if(type === 'daily') {
+    let btn = document.getElementById('ad-daily-btn');
+    if(!state.dailyBonus || btn.disabled) return;
+    btn.disabled = true;
+    
+    openAdLink();
+    showTimer(15, '⭐ Daily Bonus!', 'Watch ad for DOUBLE reward!', () => {
+      let bonus = 100;
+      state.coins += bonus;
+      state.sessionCoins += bonus;
+      state.energy = state.maxEnergy;
+      state.dailyBonus = false;
+      state.adWatchCount += 1;
+      flyReward('⭐ +100🪙 +Full Energy');
+      if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+    });
+    
+  } else if(type === 'rush') {
+    let btn = document.getElementById('ad-rush-btn');
+    if(state.rushMode || btn.disabled) return;
+    btn.disabled = true;
+    
+    openAdLink();
+    showTimer(10, '⚡ Rush Mode!', '3x tap power for 30 seconds!', () => {
+      state.rushMode = true;
+      state.rushEnd = Date.now() + 30000;
+      state.tapPower = Math.max(state.tapPower, 1) + 2;
+      state.adWatchCount += 1;
+      document.getElementById('stat-power-card').classList.add('rush');
+      flyReward('⚡ 3x POWER 30s!');
+      if(tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('heavy');
+      setTimeout(() => { btn.disabled = false; }, 45000);
+    });
+  }
   
-  // Timer 12 detik
+  updateUI(); saveState();
+}
+
+// 🔁 MULTIPLY CLAIM
+function multiplyClaim() {
+  let btn = document.getElementById('ad-multiply-btn');
+  if(state.sessionCoins <= 0 || !state.multiplyReady || btn.disabled) return;
+  btn.disabled = true;
+  
+  openAdLink();
+  showTimer(12, '🔁 Multiply Claim!', `2x your ${state.sessionCoins} coins!`, () => {
+    state.coins += state.sessionCoins;
+    state.sessionCoins *= 2;
+    state.adWatchCount += 1;
+    state.multiplyReady = false;
+    flyReward('🔁 2x MULTIPLIED!');
+    if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+    setTimeout(() => { btn.disabled = false; }, 60000);
+  });
+  updateUI(); saveState();
+}
+
+// ⏱ TIMER HELPER
+function showTimer(seconds, info, bonus, callback) {
   let overlay = document.getElementById('timer');
   let numEl = document.getElementById('timer-num');
+  let infoEl = document.getElementById('timer-info');
+  let bonusEl = document.getElementById('timer-bonus');
+  
+  infoEl.textContent = info;
+  bonusEl.textContent = bonus || '';
   overlay.classList.add('show');
-  document.querySelector('#timer .info').textContent = '📢 Loading ad... Reward incoming!';
-  let count = 12;
+  
+  let count = seconds;
   numEl.textContent = count;
   
   let timer = setInterval(() => {
@@ -205,38 +341,32 @@ function watchAd() {
     if(count <= 0) {
       clearInterval(timer);
       overlay.classList.remove('show');
-      state.energy = Math.min(state.energy + 50, state.maxEnergy);
-      state.coins += 10;
-      state.sessionCoins += 10;
-      state.adWatchCount += 1;
-      saveState(); updateUI();
-      
-      let f = document.createElement('div');
-      f.className = 'fly';
-      f.textContent = '🎬 +50⚡ +10🪙';
-      f.style.left = '30%'; f.style.top = '40%';
-      document.querySelector('.container').appendChild(f);
-      setTimeout(()=>f.remove(), 1000);
-      
-      if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
-      setTimeout(() => { btn.disabled = false; }, 30000);
+      if(callback) callback();
+      updateUI(); saveState();
     }
   }, 1000);
 }
 
-function randomAdLink() {
-  let ads = [
-    'https://6opo.com/wrr?z=11298121&p_rid=37314776-dc73-453f-9024-07d4f44dc157&rb=r5L-31vDSjUVWY-RQ41amCGRqOKu3nRa1nOWWZA_GZREap6a97W9kv6pMjqjYxN3mOjqMqxN-jbDcpY-ltNdeaDTvbCgJ0nJ1gQcVSh3zG2aa8wsWviwD8Z_1CoxCRmcDe7OcoYjUZUAYTg8aLIUq9odhrL6cC5agoTF8jjP0oPBnhiQwqCpDxbcinfsjGw92MONLGw4N0fvWn4Jvk4AYtlyqo6sbATqMM6DpdEKaicTZovud5igJ7X-W-3QA7wVBXO6Tqw_KzJ1gyi4_6D9ufqW6vpajLCZJutXpQUlh4ZEcxMa0Zr3TuMTJ2fMToF7hJuMVC3VK8kOXByTY0OlmOqkYCOqgjDK',
-    'https://www.effectivecpmnetwork.com/xhgf1sj3b?key=6048daa838a4bd6f87c6330df02084fb',
-  ];
-  return ads[Math.floor(Math.random() * ads.length)];
+// 🎉 FLY REWARD
+function flyReward(text) {
+  let f = document.createElement('div');
+  f.className = 'fly';
+  f.textContent = text;
+  f.style.left = '25%';
+  f.style.top = '35%';
+  f.style.fontSize = '18px';
+  document.querySelector('.container').appendChild(f);
+  setTimeout(()=>f.remove(), 1200);
 }
 
+// 📤 CLAIM → RESET MULTIPLY
 function claimCoins() {
   if(state.sessionCoins <= 0) return;
   if(tg) {
     tg.sendData(JSON.stringify({action:'claim', coins: state.sessionCoins}));
-    state.sessionCoins = 0; updateUI(); saveState();
+    state.multiplyReady = true;
+    state.sessionCoins = 0;
+    updateUI(); saveState();
     if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
   }
 }
@@ -245,18 +375,29 @@ function showLeaderboard() {
   if(tg) tg.sendData(JSON.stringify({action:'get_leaderboard'}));
 }
 
-// Ad banner (load after page ready)
-setTimeout(() => {
-  let adc = document.getElementById('ad-container');
-  adc.innerHTML = '<script src="https://pl30369958.effectivecpmnetwork.com/01/1f/62/011f62616bd79203ac3a539277dfff65.js"><\/script>';
-}, 3000);
+// ⏰ RESET DAILY BONUS (checks every minute)
+setInterval(() => {
+  let today = new Date().toDateString();
+  let saved = localStorage.getItem('venice_daily');
+  if(saved !== today) {
+    state.dailyBonus = true;
+    localStorage.setItem('venice_daily', today);
+    saveState(); updateUI();
+  }
+}, 60000);
 
+// CHECK BOOST DISABLE
 setInterval(() => {
   let pc = 100 * state.tapPower;
   document.querySelector('#boost-power .cost').textContent = `🪙 ${pc}`;
   document.getElementById('boost-power').disabled = state.coins < pc;
   document.getElementById('boost-energy').disabled = state.coins < 50 || state.energy >= state.maxEnergy;
 }, 500);
+
+// SET DAILY ON LOAD
+if(!localStorage.getItem('venice_daily')) {
+  localStorage.setItem('venice_daily', new Date().toDateString());
+}
 
 updateUI();
 </script>
