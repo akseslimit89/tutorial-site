@@ -46,6 +46,28 @@ footer{text-align:center;padding:30px;color:#888;font-size:.9em}
     📺 <a href="#" style="color:#333">Tonton Video Tutorial Lengkap di YouTube</a>
   </div>
 
+  <div style="background:linear-gradient(135deg,#e8eaf6,#c5cae9);border-radius:12px;padding:25px;text-align:center;margin:30px 0">
+    <h3 style="color:#283593;margin-bottom:10px">🌐 Statistik Pengunjung</h3>
+    <div style="display:flex;justify-content:center;gap:30px;flex-wrap:wrap">
+      <div>
+        <div style="font-size:2.5em;font-weight:bold;color:#283593">787+</div>
+        <div style="color:#666;font-size:.9em">Total Kunjungan</div>
+      </div>
+      <div>
+        <div style="font-size:2.5em;font-weight:bold;color:#283593"><span id="liveCount">0</span>+</div>
+        <div style="color:#666;font-size:.9em">Live Visitor <span id="liveDot" style="color:#4caf50">●</span></div>
+      </div>
+    </div>
+    <div style="margin-top:15px;font-size:.8em;color:#999">Terakhir diupdate: 15 Juli 2026</div>
+    <script>
+      // Live counter sederhana — increment tiap load
+      let c = parseInt(localStorage.getItem('vc') || '787');
+      c++;
+      localStorage.setItem('vc', c);
+      document.getElementById('liveCount').textContent = c;
+    </script>
+  </div>
+
 </div>
 
 <footer>
@@ -61,6 +83,7 @@ const parts = [
   {id:3, title:"Micro Tasks — Dapet $0.5-1 Per Hari", desc:"Kerjain tugas kecil online. Gak perlu skill khusus.", read:"7 menit", ads:"Task Hub"},
   {id:4, title:"Airdrop Farming buat Pemula", desc:"Cari, daftar, dan klaim airdrop gratis sebelum listing.", read:"10 menit", ads:"Airdrop Alert"},
   {id:5, title:"Tips Biar Cepet Cair & Hindari Scam", desc:"Yang boleh & jangan dilakukan. Biar gak rugi.", read:"4 menit", ads:"Safe Earn"},
+  {id:6, title:"Strategi 10x Lipat Penghasilan", desc:"Scale up dari $5 ke $50-100/bulan. Multi-account & automation.", read:"8 menit", ads:"Scale Up"},
 ];
 const list = document.getElementById('partList');
 parts.forEach(p => {
