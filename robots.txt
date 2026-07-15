@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://venicelab.web.id/sitemap.xml
