@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Venice Coin 🪙</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="https://quge5.com/88/tag.min.js" data-zone="259806" async data-cfasync="false"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:linear-gradient(180deg,#0d0d2b 0%,#1a1a4e 100%);min-height:100vh;color:#fff;overflow-x:hidden}
@@ -39,15 +40,32 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .stat-card .label{font-size:11px;color:#aaa;margin-top:2px}
 
 /* BOOSTS */
-.boosts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.boosts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
 .boost-btn{background:linear-gradient(135deg,#4a6cf7,#6c5ce7);border:none;color:#fff;padding:12px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;transition:transform 0.2s}
 .boost-btn:active{transform:scale(0.95)}
 .boost-btn:disabled{opacity:0.4}
 .boost-btn .cost{font-size:11px;color:rgba(255,255,255,0.7);margin-top:2px}
 
+/* WATCH AD BOOST - FULL WIDTH */
+.ad-boost{width:100%;padding:14px;background:linear-gradient(135deg,#ff6b6b,#ff4757);border:none;border-radius:12px;font-size:15px;font-weight:700;color:#fff;cursor:pointer;transition:transform 0.2s;margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:8px}
+.ad-boost:active{transform:scale(0.97)}
+.ad-boost:disabled{opacity:0.5}
+.ad-boost .icon{font-size:20px}
+
+/* TIMER OVERLAY */
+.timer-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:100;justify-content:center;align-items:center;flex-direction:column}
+.timer-overlay.show{display:flex}
+.timer-overlay .big{font-size:72px;font-weight:800;color:#ffd700;animation:pulse 0.5s}
+.timer-overlay .info{font-size:16px;color:#ccc;margin-top:12px}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
+
 /* CLAIM BUTTON */
 .claim-btn{width:100%;padding:16px;background:linear-gradient(135deg,#ffd700,#ff8c00);border:none;border-radius:14px;font-size:18px;font-weight:800;color:#0d0d2b;cursor:pointer;transition:transform 0.2s;margin-bottom:8px}
 .claim-btn:active{transform:scale(0.97)}
+
+/* AD BANNER */
+.ad-banner{margin:8px 0;border-radius:12px;overflow:hidden;min-height:60px;background:rgba(255,255,255,0.05)}
+.ad-banner iframe{width:100%!important}
 
 .footer-links{display:flex;justify-content:center;gap:20px;padding:8px}
 .footer-links a{color:#aaa;text-decoration:none;font-size:12px}
@@ -57,7 +75,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <div class="container">
   <!-- HEADER -->
   <div class="header">
-    <div class="level">🪙 Lv.1</div>
+    <div class="level">🪙 Lv.<span id="level">1</span></div>
     <div class="score">💰 <span id="score">0</span></div>
   </div>
   
@@ -107,13 +125,30 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
     </button>
   </div>
   
+  <!-- WATCH AD BOOST -->
+  <button class="ad-boost" id="ad-boost-btn" onclick="watchAd()">
+    <span class="icon">🎬</span>
+    <span>Watch Ad → +50 Energy + 10 Coins</span>
+  </button>
+  
   <!-- CLAIM -->
   <button class="claim-btn" onclick="claimCoins()">📤 Claim to Bot</button>
+
+  <!-- AD BANNER -->
+  <div class="ad-banner">
+    <script src="https://pl30369958.effectivecpmnetwork.com/01/1f/62/011f62616bd79203ac3a539277dfff65.js"></script>
+  </div>
   
   <div class="footer-links">
     <a href="https://venicelab.web.id">About</a>
     <a href="#" onclick="showLeaderboard()">🏆 Top</a>
   </div>
+</div>
+
+<!-- TIMER OVERLAY -->
+<div class="timer-overlay" id="timer">
+  <div class="big" id="timer-num">10</div>
+  <div class="info">📺 Watching ad... Get ready for reward!</div>
 </div>
 
 <script>
@@ -132,6 +167,7 @@ let state = {
   totalTaps: 0,
   sessionCoins: 0,
   level: 1,
+  adWatchCount: 0,
 };
 
 // LOAD SAVED STATE
@@ -145,6 +181,7 @@ try {
     state.tapPower = s.tapPower || 1;
     state.totalTaps = s.totalTaps || 0;
     state.level = s.level || 1;
+    state.adWatchCount = s.adWatchCount || 0;
   }
 } catch(e) {}
 
@@ -160,7 +197,6 @@ setInterval(() => {
 // TAP HANDLER
 let coinEl = document.getElementById('coin');
 let coinWrap = document.getElementById('coin-wrap');
-let tapTimeout;
 
 coinEl.addEventListener('click', (e) => {
   if(state.energy < state.tapPower) {
@@ -169,16 +205,13 @@ coinEl.addEventListener('click', (e) => {
     return;
   }
   
-  // Deduct energy
   state.energy = Math.max(0, state.energy - state.tapPower);
-  
-  // Add coins
   let earned = state.tapPower;
   state.coins += earned;
   state.totalTaps += 1;
   state.sessionCoins += earned;
   
-  // Fly animation
+  // Fly anim
   let fly = document.createElement('div');
   fly.className = 'fly';
   fly.textContent = `+${earned}`;
@@ -187,15 +220,11 @@ coinEl.addEventListener('click', (e) => {
   coinWrap.appendChild(fly);
   setTimeout(() => fly.remove(), 800);
   
-  // Haptic feedback
-  if(tg?.HapticFeedback) {
-    tg.HapticFeedback.impactOccurred('medium');
-  }
+  if(tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
   
   updateUI();
   saveState();
   
-  // Level up check
   let newLevel = Math.floor(state.totalTaps / 500) + 1;
   if(newLevel > state.level) {
     state.level = newLevel;
@@ -210,13 +239,11 @@ function updateUI() {
   document.getElementById('stat-taps').textContent = state.totalTaps.toLocaleString();
   document.getElementById('stat-power').textContent = `${state.tapPower}x`;
   document.getElementById('stat-coins').textContent = state.sessionCoins;
-  document.querySelector('.level').textContent = `🪙 Lv.${state.level}`;
+  document.getElementById('level').textContent = state.level;
 }
 
 function saveState() {
-  try {
-    localStorage.setItem('venice_state', JSON.stringify(state));
-  } catch(e) {}
+  try { localStorage.setItem('venice_state', JSON.stringify(state)); } catch(e) {}
 }
 
 function buyBoost(type) {
@@ -236,21 +263,67 @@ function buyBoost(type) {
   saveState();
 }
 
+/* 🎬 WATCH AD FUNCTION */
+function watchAd() {
+  let btn = document.getElementById('ad-boost-btn');
+  if(btn.disabled) return;
+  btn.disabled = true;
+  
+  // Buka popunder ad (biar dapet CPM)
+  try {
+    window.open('https://quge5.com/88/tag.min.js', '_blank');
+  } catch(e) {}
+  
+  // Tampilkan timer
+  let overlay = document.getElementById('timer');
+  let numEl = document.getElementById('timer-num');
+  overlay.classList.add('show');
+  let count = 12;
+  numEl.textContent = count;
+  
+  let timer = setInterval(() => {
+    count--;
+    numEl.textContent = count;
+    if(count <= 0) {
+      clearInterval(timer);
+      overlay.classList.remove('show');
+      
+      // KASI REWARD
+      let bonusEnergy = 50;
+      let bonusCoins = 10;
+      state.energy = Math.min(state.energy + bonusEnergy, state.maxEnergy);
+      state.coins += bonusCoins;
+      state.sessionCoins += bonusCoins;
+      state.adWatchCount += 1;
+      saveState();
+      updateUI();
+      
+      // Notif
+      let fly = document.createElement('div');
+      fly.className = 'fly';
+      fly.textContent = `🎬 +${bonusEnergy}⚡ +${bonusCoins}🪙`;
+      fly.style.left = '30%';
+      fly.style.top = '40%';
+      document.querySelector('.container').appendChild(fly);
+      setTimeout(() => fly.remove(), 1000);
+      
+      if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+      
+      // Cooldown 30 detik
+      setTimeout(() => {
+        btn.disabled = false;
+      }, 30000);
+    }
+  }, 1000);
+}
+
 function claimCoins() {
   if(state.sessionCoins <= 0) return;
-  
-  // Kirim ke bot via Telegram WebApp
   if(tg) {
-    tg.sendData(JSON.stringify({
-      action: 'claim',
-      coins: state.sessionCoins
-    }));
-    
-    // Reset session
+    tg.sendData(JSON.stringify({action: 'claim', coins: state.sessionCoins}));
     state.sessionCoins = 0;
     updateUI();
     saveState();
-    
     if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
   } else {
     alert(`Claimed ${state.sessionCoins} coins! (Run via Telegram bot)`);
@@ -261,9 +334,7 @@ function claimCoins() {
 }
 
 function showLeaderboard() {
-  if(tg) {
-    tg.sendData(JSON.stringify({action: 'get_leaderboard'}));
-  }
+  if(tg) tg.sendData(JSON.stringify({action: 'get_leaderboard'}));
 }
 
 // BOOST STATUS CHECK
@@ -274,7 +345,6 @@ setInterval(() => {
   document.getElementById('boost-energy').disabled = state.coins < 50 || state.energy >= state.maxEnergy;
 }, 500);
 
-// INIT
 updateUI();
 </script>
 </body>
