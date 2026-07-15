@@ -177,19 +177,18 @@ function watchAd() {
   if(btn.disabled) return;
   btn.disabled = true;
   
-  // Buka popunder ad (handle dulu biar gak error)
+  // Buka link sponsor di browser eksternal (via Telegram API)
   setTimeout(() => {
     try {
-      let w = window.open('https://quge5.com/88/tag.min.js', '_blank');
-      if(!w) {
-        // Fallback: buka di iframe
-        let adc = document.getElementById('ad-container');
-        adc.innerHTML = '<iframe src="https://quge5.com/88/tag.min.js" style="width:100%;height:60px;border:none;border-radius:8px"></iframe>';
+      if(tg) {
+        tg.openExternalLink('https://quge5.com/88/259806');
+      } else {
+        window.open('https://quge5.com/88/259806', '_blank');
       }
     } catch(e) {}
-  }, 100);
+  }, 200);
   
-  // Timer
+  // Timer 12 detik
   let overlay = document.getElementById('timer');
   let numEl = document.getElementById('timer-num');
   overlay.classList.add('show');
