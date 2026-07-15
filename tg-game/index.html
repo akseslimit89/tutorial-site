@@ -181,7 +181,9 @@ function watchAd() {
   let adUrl = randomAdLink();
   setTimeout(() => {
     try {
-      if(tg) {
+      if(tg && tg.openLink) {
+        tg.openLink(adUrl, {try_instant_view: false});
+      } else if(tg && tg.openExternalLink) {
         tg.openExternalLink(adUrl);
       } else {
         window.open(adUrl, '_blank');
