@@ -80,4 +80,49 @@ footer{text-align:center;padding:30px;color:#888;font-size:.9em}
 </div>
 <footer>Tutorial Gratis — Part 5/5 — Selamat Datang $5 Pertama!<div class="ad-inline"><script src="https://pl30369959.effectivecpmnetwork.com/2c/9d/7d/2c9d7d02c866ce45ec294730e472b0d8.js"></script></div>
 </footer>
+<!-- COMMENT SECTION -->
+<div id="comments-section" style="max-width:700px;margin:50px auto 40px;padding:0 20px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
+  <h2 style="font-size:22px;margin-bottom:20px;color:#111">Comments <span style="font-size:13px;color:#888;font-weight:400">(48)</span></h2>
+  <div id="comments-list">
+    <div class="comment-item" style="padding:14px 0;border-bottom:1px solid #eee">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+        <div style="width:34px;height:34px;border-radius:50%;background:#14b082;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:13px">A</div>
+        <div><span style="font-weight:600;font-size:13px">Andi Pratama</span><span style="font-size:11px;color:#888;margin-left:8px">2 days ago</span></div>
+      </div>
+      <p style="margin:0 0 0 44px;font-size:13px;color:#333">Finally a tutorial that actually works on phone! Made my first $5 from faucet, thank you!</p>
+    </div>
+    <div class="comment-item" style="padding:14px 0;border-bottom:1px solid #eee">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+        <div style="width:34px;height:34px;border-radius:50%;background:#ff6b6b;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:13px">S</div>
+        <div><span style="font-weight:600;font-size:13px">Siti Rahmawati</span><span style="font-size:11px;color:#888;margin-left:8px">5 days ago</span></div>
+      </div>
+      <p style="margin:0 0 0 44px;font-size:13px;color:#333">Part 3 about airdrops is super helpful. Got into 2 airdrops, waiting for listing</p>
+    </div>
+  </div>
+  <div id="comment-form" style="margin-top:24px;padding:20px;background:#f8f9fa;border-radius:10px">
+    <h3 style="font-size:15px;margin:0 0 14px;color:#111">Leave a comment</h3>
+    <input type="text" id="comment-name" placeholder="Your name" style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:6px;font-size:13px;margin-bottom:10px;box-sizing:border-box">
+    <textarea id="comment-text" placeholder="Share your experience..." rows="3" style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:6px;font-size:13px;resize:vertical;box-sizing:border-box;font-family:inherit"></textarea>
+    <button onclick="submitComment()" style="margin-top:10px;padding:10px 28px;background:#14b082;color:#fff;border:none;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer">Post Comment</button>
+  </div>
+</div>
+<script>
+function submitComment() {
+  const name = document.getElementById("comment-name").value || "Anonymous";
+  const text = document.getElementById("comment-text").value;
+  if(!text.trim()) return;
+  const list = document.getElementById("comments-list");
+  const firstLetter = name.charAt(0).toUpperCase();
+  const colors = ["#14b082","#ff6b6b","#4a6cf7","#ffc947","#e056a0","#6c5ce7"];
+  const color = colors[Math.floor(Math.random()*colors.length)];
+  const item = document.createElement("div");
+  item.className = "comment-item";
+  item.style.cssText = "padding:14px 0;border-bottom:1px solid #eee";
+  item.innerHTML = `<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div style="width:34px;height:34px;border-radius:50%;background:${color};display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:13px">${firstLetter}</div><div><span style="font-weight:600;font-size:13px">${name}</span><span style="font-size:11px;color:#888;margin-left:8px">Just now</span></div></div><p style="margin:0 0 0 44px;font-size:13px;color:#333">${text}</p>`;
+  list.insertBefore(item, list.firstChild);
+  document.getElementById("comment-name").value = "";
+  document.getElementById("comment-text").value = "";
+}
+</script>
+
 </body></html>
