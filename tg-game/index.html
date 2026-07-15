@@ -177,22 +177,24 @@ function watchAd() {
   if(btn.disabled) return;
   btn.disabled = true;
   
-  // Buka link sponsor di browser eksternal (via Telegram API)
+  // Buka video sponsor di browser eksternal
+  let videoUrl = randomVideo();
   setTimeout(() => {
     try {
       if(tg) {
-        tg.openExternalLink('https://quge5.com/88/259806');
+        tg.openExternalLink(videoUrl);
       } else {
-        window.open('https://quge5.com/88/259806', '_blank');
+        window.open(videoUrl, '_blank');
       }
     } catch(e) {}
   }, 200);
   
-  // Timer 12 detik
+  // Timer 20 detik (durasi video pendek)
   let overlay = document.getElementById('timer');
   let numEl = document.getElementById('timer-num');
   overlay.classList.add('show');
-  let count = 12;
+  document.querySelector('#timer .info').textContent = '📺 Watching video... Get ready for reward!';
+  let count = 15;
   numEl.textContent = count;
   
   let timer = setInterval(() => {
@@ -218,6 +220,17 @@ function watchAd() {
       setTimeout(() => { btn.disabled = false; }, 30000);
     }
   }, 1000);
+}
+
+function randomVideo() {
+  let videos = [
+    'https://www.youtube.com/watch?v=Gq2VZ0tmNqY',  // crypto earning
+    'https://www.youtube.com/watch?v=jPzR4N6F3mM',  // make money online
+    'https://www.youtube.com/watch?v=8n5UJVL5Dwc',  // airdrop guide
+    'https://www.youtube.com/watch?v=U0rE1CQ4T7E',  // passive income
+    'https://www.youtube.com/watch?v=dhG3d60nMvo',  // free crypto
+  ];
+  return videos[Math.floor(Math.random() * videos.length)];
 }
 
 function claimCoins() {
