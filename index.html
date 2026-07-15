@@ -4,68 +4,374 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tutorial Dapat $5 Pertama Dari Internet</title>
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f5f5f5;color:#333;line-height:1.8}
-header{background:linear-gradient(135deg,#1a73e8,#0d47a1);color:#fff;padding:60px 20px;text-align:center}
-header h1{font-size:2em;margin-bottom:10px}
-header p{opacity:.9;font-size:1.1em}
-.container{max-width:800px;margin:0 auto;padding:20px}
-.part-list{display:grid;gap:15px;margin:30px 0}
-.part-card{background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 10px rgba(0,0,0,.08);transition:transform .2s;cursor:pointer}
-.part-card:hover{transform:translateY(-3px)}
-.part-card h3{color:#1a73e8;margin-bottom:5px}
-.part-card .meta{color:#888;font-size:.9em;margin:5px 0}
-.ad-banner{background:linear-gradient(135deg,#ffd54f,#ff8f00);color:#333;border-radius:8px;padding:15px;text-align:center;margin:30px 0;font-weight:bold}
-footer{text-align:center;padding:30px;color:#888;font-size:.9em}
-@media(max-width:600px){header{padding:40px 15px}header h1{font-size:1.5em}}
+/* ── RESET & BASE ── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box }
+html { scroll-behavior: smooth }
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: #f8fafc;
+  color: #1e293b;
+  line-height: 1.7;
+}
+
+/* ── HEADER MODERN ── */
+header {
+  position: relative;
+  background: linear-gradient(135deg, #0f172a 0%, #1e40af 50%, #2563eb 100%);
+  color: #fff;
+  padding: 80px 20px 100px;
+  text-align: center;
+  overflow: hidden;
+}
+header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 30% 50%, rgba(59,130,246,.15) 0%, transparent 50%);
+  animation: float 20s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% { transform: translate(0,0) }
+  50% { transform: translate(-30px,30px) }
+}
+header .badge {
+  display: inline-block;
+  background: rgba(255,255,255,.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.2);
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-size: .85em;
+  margin-bottom: 25px;
+  position: relative;
+}
+header h1 {
+  font-size: clamp(2em, 5vw, 3.5em);
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 15px;
+  position: relative;
+}
+header h1 span {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header p {
+  font-size: clamp(1em, 2vw, 1.2em);
+  opacity: .9;
+  max-width: 600px;
+  margin: 0 auto 30px;
+  position: relative;
+}
+header .stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  position: relative;
+}
+header .stat-item { text-align: center }
+header .stat-num {
+  font-size: 2em;
+  font-weight: 800;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .stat-label { font-size: .85em; opacity: .7 }
+
+/* ── WAVE DIVIDER ── */
+.wave {
+  position: relative;
+  margin-top: -2px;
+}
+.wave svg { display: block; width: 100%; height: 60px }
+
+/* ── CONTAINER ── */
+.container { max-width: 900px; margin: 0 auto; padding: 0 20px }
+
+/* ── INTRO ── */
+.intro-section {
+  text-align: center;
+  padding: 40px 0;
+}
+.intro-section h2 {
+  font-size: 1.8em;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #0f172a;
+}
+.intro-section p {
+  color: #64748b;
+  max-width: 650px;
+  margin: 0 auto 30px;
+  font-size: 1.05em;
+}
+
+/* ── CARDS MODERN ── */
+.part-list { display: grid; gap: 16px; margin: 0 0 40px }
+.part-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px;
+  cursor: pointer;
+  transition: all .3s cubic-bezier(.4,0,.2,1);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.part-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, #3b82f6, #8b5cf6);
+  border-radius: 0 4px 4px 0;
+  opacity: 0;
+  transition: opacity .3s;
+}
+.part-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,.08);
+  border-color: #bfdbfe;
+}
+.part-card:hover::before { opacity: 1 }
+.part-card .card-num {
+  width: 48px; height: 48px;
+  min-width: 48px;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  color: #fff;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.1em;
+}
+.part-card .card-body { flex: 1 }
+.part-card h3 {
+  font-size: 1.05em;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+.part-card .card-meta {
+  display: flex;
+  gap: 12px;
+  font-size: .82em;
+  color: #94a3b8;
+}
+.part-card .card-meta span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.part-card .card-desc {
+  font-size: .92em;
+  color: #64748b;
+  margin-top: 6px;
+}
+.part-card .card-arrow {
+  color: #3b82f6;
+  font-size: 1.2em;
+  opacity: 0;
+  transition: all .3s;
+}
+.part-card:hover .card-arrow { opacity: 1; transform: translateX(5px) }
+
+/* ── ADS ── */
+.ad-modern {
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  border: 1px solid #f59e0b;
+  border-radius: 12px;
+  padding: 16px 20px;
+  text-align: center;
+  margin: 25px 0;
+  font-size: .92em;
+}
+.ad-modern a { color: #92400e; font-weight: 600; text-decoration: none }
+
+/* ── STATS SECTION ── */
+.stats-section {
+  background: linear-gradient(135deg, #0f172a, #1e3a5f);
+  border-radius: 20px;
+  padding: 40px 30px;
+  text-align: center;
+  margin: 40px 0;
+  color: #fff;
+}
+.stats-section h3 {
+  font-size: 1.3em;
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+.stats-grid {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+.stat-box {
+  background: rgba(255,255,255,.08);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 16px;
+  padding: 25px 35px;
+  min-width: 150px;
+}
+.stat-box .num {
+  font-size: 2.5em;
+  font-weight: 800;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.stat-box .label { font-size: .85em; opacity: .7; margin-top: 5px }
+
+/* ── CTA ── */
+.cta-section {
+  text-align: center;
+  padding: 30px 0 50px;
+}
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #fff;
+  padding: 16px 40px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1.1em;
+  text-decoration: none;
+  transition: all .3s;
+  box-shadow: 0 8px 30px rgba(37,99,235,.3);
+}
+.cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(37,99,235,.4);
+}
+
+/* ── FOOTER ── */
+footer {
+  text-align: center;
+  padding: 40px 20px;
+  color: #94a3b8;
+  font-size: .88em;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:600px) {
+  header { padding: 50px 20px 70px }
+  header .stats { gap: 20px }
+  header .stat-num { font-size: 1.5em }
+  .part-card { flex-wrap: wrap }
+  .part-card .card-arrow { display: none }
+  .stats-grid { gap: 15px }
+  .stat-box { padding: 20px 25px; min-width: 120px }
+}
 </style>
-  <script src="https://pl30369958.effectivecpmnetwork.com/01/1f/62/011f62616bd79203ac3a539277dfff65.js"></script>
 </head>
 <body>
 
+<!-- HEADER MODERN -->
 <header>
-  <h1>💰 Dapat $5 Pertama Dari Internet</h1>
-  <p>Tutorial lengkap — dari nol sampai cair. Gratis 100%.</p>
+  <div class="badge">🔥 Gratis 100% — Tanpa Investasi</div>
+  <h1>Dapatkan <span>$5 Pertama</span><br>Dari Internet Hari Ini</h1>
+  <p>Tutorial lengkap dari nol — pake HP doang. Udah teruji & terbukti oleh ribuan orang.</p>
+  <div class="stats">
+    <div class="stat-item">
+      <div class="stat-num">787+</div>
+      <div class="stat-label">Kunjungan</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">5</div>
+      <div class="stat-label">Bagian Tutorial</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Gratis</div>
+    </div>
+  </div>
 </header>
+
+<!-- WAVE DIVIDER -->
+<div class="wave">
+  <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 60V30C240 0 480 0 720 30C960 60 1200 60 1440 30V60H0Z" fill="#f8fafc"/>
+  </svg>
+</div>
 
 <div class="container">
 
-  <div class="ad-banner">
-    🎯 SPONSOR — <a href="#" style="color:#333">Daftar & Dapatkan Bonus $10</a>
+  <!-- INTRO -->
+  <div class="intro-section">
+    <h2>📚 Pilih Bagian Tutorial</h2>
+    <p>Udah diurutkan dari paling dasar sampai mahir. Tinggal klik, langsung praktik.</p>
   </div>
 
-  <p style="font-size:1.1em;margin:20px 0">
-    Ada <strong>banyak cara</strong> dapet $5 pertama dari HP doang. 
-    Tutorial ini udah diuji & terbukti. Pilih part di bawah:
-  </p>
+  <!-- ADS TOP -->
+  <div class="ad-modern">
+    🎯 SPONSOR — <a href="#">Daftar & Dapatkan Bonus $10 GRATIS</a>
+  </div>
 
+  <!-- PART LIST -->
   <div class="part-list" id="partList"></div>
 
-  <div class="ad-banner">
-    📺 <a href="#" style="color:#333">Tonton Video Tutorial Lengkap di YouTube</a>
+  <!-- ADS BOTTOM -->
+  <div class="ad-modern">
+    📺 <a href="#">Tonton Video Tutorial Lengkap di YouTube</a>
   </div>
 
-  <div style="background:linear-gradient(135deg,#e8eaf6,#c5cae9);border-radius:12px;padding:25px;text-align:center;margin:30px 0">
-    <h3 style="color:#283593;margin-bottom:10px">🌐 Statistik Pengunjung</h3>
-    <div style="display:flex;justify-content:center;gap:30px;flex-wrap:wrap">
-      <div>
-        <div style="font-size:2.5em;font-weight:bold;color:#283593">787+</div>
-        <div style="color:#666;font-size:.9em">Total Kunjungan</div>
+  <!-- STATS SECTION -->
+  <div class="stats-section">
+    <h3>🌐 Statistik Pengunjung</h3>
+    <div class="stats-grid">
+      <div class="stat-box">
+        <div class="num">787+</div>
+        <div class="label">Total Kunjungan</div>
       </div>
-      <div>
-        <div style="font-size:2.5em;font-weight:bold;color:#283593"><span id="liveCount">0</span>+</div>
-        <div style="color:#666;font-size:.9em">Live Visitor <span id="liveDot" style="color:#4caf50">●</span></div>
+      <div class="stat-box">
+        <div class="num"><span id="liveCount">0</span>+</div>
+        <div class="label">Pengunjung <span id="liveDot">●</span></div>
+      </div>
+      <div class="stat-box">
+        <div class="num">15</div>
+        <div class="label">Hari Online</div>
       </div>
     </div>
-    <div style="margin-top:15px;font-size:.8em;color:#999">Terakhir diupdate: 15 Juli 2026</div>
     <script>
-      // Live counter sederhana — increment tiap load
-      let c = parseInt(localStorage.getItem('vc') || '787');
-      c++;
-      localStorage.setItem('vc', c);
-      document.getElementById('liveCount').textContent = c;
+      try {
+        let c = parseInt(localStorage.getItem('vc') || '787');
+        c++;
+        localStorage.setItem('vc', c);
+        document.getElementById('liveCount').textContent = c;
+      } catch(e) {}
     </script>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <a href="#" class="cta-button">
+      🚀 Mulai Sekarang Juga
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
   </div>
 
 </div>
@@ -73,7 +379,6 @@ footer{text-align:center;padding:30px;color:#888;font-size:.9em}
 <footer>
   Tutorial Gratis — Hak Cipta Milik Allah SWT 🙏<br>
   <small>Bukan saran keuangan. Lakukan dengan bijak.</small>
-<div class="ad-inline"><script src="https://pl30369959.effectivecpmnetwork.com/2c/9d/7d/2c9d7d02c866ce45ec294730e472b0d8.js"></script></div>
 </footer>
 
 <script>
@@ -85,14 +390,29 @@ const parts = [
   {id:5, title:"Tips Biar Cepet Cair & Hindari Scam", desc:"Yang boleh & jangan dilakukan. Biar gak rugi.", read:"4 menit", ads:"Safe Earn"},
   {id:6, title:"Strategi 10x Lipat Penghasilan", desc:"Scale up dari $5 ke $50-100/bulan. Multi-account & automation.", read:"8 menit", ads:"Scale Up"},
 ];
+
 const list = document.getElementById('partList');
 parts.forEach(p => {
   const card = document.createElement('div');
   card.className = 'part-card';
   card.onclick = () => window.location.href = 'parts/part'+p.id+'.html';
-  card.innerHTML = '<h3>Part '+p.id+': '+p.title+'</h3><div class="meta">⏱ '+p.read+' | 📢 '+p.ads+'</div><p style="color:#666;margin-top:5px">'+p.desc+'</p>';
+  card.innerHTML = `
+    <div class="card-num">${p.id}</div>
+    <div class="card-body">
+      <h3>${p.title}</h3>
+      <div class="card-meta">
+        <span>⏱ ${p.read}</span>
+        <span>📢 ${p.ads}</span>
+      </div>
+      <div class="card-desc">${p.desc}</div>
+    </div>
+    <div class="card-arrow">→</div>
+  `;
   list.appendChild(card);
 });
 </script>
+
+<!-- Adsterra ads -->
+<script src="https://pl30369958.effectivecpmnetwork.com/01/1f/62/011f62616bd79203ac3a539277dfff65.js"></script>
 </body>
 </html>
