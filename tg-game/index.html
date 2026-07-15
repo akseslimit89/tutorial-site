@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Venice Coin 🪙</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:linear-gradient(180deg,#0d0d2b 0%,#1a1a4e 100%);min-height:100vh;color:#fff;overflow-x:hidden}
+.container{max-width:420px;margin:0 auto;padding:16px;text-align:center;min-height:100vh;display:flex;flex-direction:column}
+
+/* HEADER */
+.header{padding:10px 0;display:flex;justify-content:space-between;align-items:center}
+.header .score{font-size:24px;font-weight:800;background:rgba(255,255,255,0.1);padding:8px 20px;border-radius:20px;backdrop-filter:blur(10px)}
+.header .score span{color:#ffd700}
+.header .level{padding:8px 16px;background:rgba(255,255,255,0.1);border-radius:20px;font-size:14px}
+
+/* ENERGY BAR */
+.energy-wrap{margin:8px 0;text-align:left}
+.energy-label{display:flex;justify-content:space-between;font-size:12px;color:#aaa;margin-bottom:4px}
+.energy-bar{height:6px;background:rgba(255,255,255,0.15);border-radius:3px;overflow:hidden}
+.energy-fill{height:100%;background:linear-gradient(90deg,#ff6b6b,#ffd700);border-radius:3px;transition:width 0.3s;width:100%}
+
+/* COIN */
+.coin-area{flex:1;display:flex;align-items:center;justify-content:center;position:relative}
+.coin-wrap{position:relative;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.coin{width:200px;height:200px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ffd700,#ff8c00,#b8860b);display:flex;align-items:center;justify-content:center;font-size:80px;box-shadow:0 0 80px rgba(255,215,0,0.3),inset 0 -10px 30px rgba(0,0,0,0.3);transition:transform 0.1s;border:4px solid #ffd700}
+.coin:active{transform:scale(0.9)}
+
+/* FLOATING +N */
+.fly{position:absolute;font-weight:800;font-size:24px;color:#ffd700;pointer-events:none;animation:flyUp 0.8s ease-out forwards;z-index:10}
+@keyframes flyUp{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-100px) scale(1.5)}}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:16px 0}
+.stat-card{background:rgba(255,255,255,0.08);border-radius:12px;padding:10px;backdrop-filter:blur(10px)}
+.stat-card .num{font-size:18px;font-weight:700;color:#ffd700}
+.stat-card .label{font-size:11px;color:#aaa;margin-top:2px}
+
+/* BOOSTS */
+.boosts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.boost-btn{background:linear-gradient(135deg,#4a6cf7,#6c5ce7);border:none;color:#fff;padding:12px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;transition:transform 0.2s}
+.boost-btn:active{transform:scale(0.95)}
+.boost-btn:disabled{opacity:0.4}
+.boost-btn .cost{font-size:11px;color:rgba(255,255,255,0.7);margin-top:2px}
+
+/* CLAIM BUTTON */
+.claim-btn{width:100%;padding:16px;background:linear-gradient(135deg,#ffd700,#ff8c00);border:none;border-radius:14px;font-size:18px;font-weight:800;color:#0d0d2b;cursor:pointer;transition:transform 0.2s;margin-bottom:8px}
+.claim-btn:active{transform:scale(0.97)}
+
+.footer-links{display:flex;justify-content:center;gap:20px;padding:8px}
+.footer-links a{color:#aaa;text-decoration:none;font-size:12px}
+</style>
+</head>
+<body>
+<div class="container">
+  <!-- HEADER -->
+  <div class="header">
+    <div class="level">🪙 Lv.1</div>
+    <div class="score">💰 <span id="score">0</span></div>
+  </div>
+  
+  <!-- ENERGY -->
+  <div class="energy-wrap">
+    <div class="energy-label">
+      <span>⚡ Energy</span>
+      <span id="energy-text">1000/1000</span>
+    </div>
+    <div class="energy-bar">
+      <div class="energy-fill" id="energy-fill" style="width:100%"></div>
+    </div>
+  </div>
+  
+  <!-- COIN -->
+  <div class="coin-area">
+    <div class="coin-wrap" id="coin-wrap">
+      <div class="coin" id="coin">🪙</div>
+    </div>
+  </div>
+  
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat-card">
+      <div class="num" id="stat-taps">0</div>
+      <div class="label">Total Taps</div>
+    </div>
+    <div class="stat-card">
+      <div class="num" id="stat-power">1x</div>
+      <div class="label">Tap Power</div>
+    </div>
+    <div class="stat-card">
+      <div class="num" id="stat-coins">0</div>
+      <div class="label">This Session</div>
+    </div>
+  </div>
+  
+  <!-- BOOSTS -->
+  <div class="boosts">
+    <button class="boost-btn" id="boost-power" onclick="buyBoost('power')">
+      ⚡ +1 Tap Power
+      <div class="cost">🪙 100</div>
+    </button>
+    <button class="boost-btn" id="boost-energy" onclick="buyBoost('energy')">
+      🔋 Full Energy
+      <div class="cost">🪙 50</div>
+    </button>
+  </div>
+  
+  <!-- CLAIM -->
+  <button class="claim-btn" onclick="claimCoins()">📤 Claim to Bot</button>
+  
+  <div class="footer-links">
+    <a href="https://venicelab.web.id">About</a>
+    <a href="#" onclick="showLeaderboard()">🏆 Top</a>
+  </div>
+</div>
+
+<script>
+let tg = window.Telegram?.WebApp;
+if(tg) {
+  tg.expand();
+  tg.enableClosingConfirmation();
+}
+
+// GAME STATE
+let state = {
+  coins: 0,
+  energy: 1000,
+  maxEnergy: 1000,
+  tapPower: 1,
+  totalTaps: 0,
+  sessionCoins: 0,
+  level: 1,
+};
+
+// LOAD SAVED STATE
+try {
+  let saved = localStorage.getItem('venice_state');
+  if(saved) {
+    let s = JSON.parse(saved);
+    state.coins = s.coins || 0;
+    state.energy = s.energy ?? 1000;
+    state.maxEnergy = s.maxEnergy || 1000;
+    state.tapPower = s.tapPower || 1;
+    state.totalTaps = s.totalTaps || 0;
+    state.level = s.level || 1;
+  }
+} catch(e) {}
+
+// ENERGY REFILL
+setInterval(() => {
+  if(state.energy < state.maxEnergy) {
+    state.energy = Math.min(state.energy + 3, state.maxEnergy);
+    updateUI();
+    saveState();
+  }
+}, 1000);
+
+// TAP HANDLER
+let coinEl = document.getElementById('coin');
+let coinWrap = document.getElementById('coin-wrap');
+let tapTimeout;
+
+coinEl.addEventListener('click', (e) => {
+  if(state.energy < state.tapPower) {
+    coinEl.style.transform = 'scale(0.95)';
+    setTimeout(() => coinEl.style.transform = '', 200);
+    return;
+  }
+  
+  // Deduct energy
+  state.energy = Math.max(0, state.energy - state.tapPower);
+  
+  // Add coins
+  let earned = state.tapPower;
+  state.coins += earned;
+  state.totalTaps += 1;
+  state.sessionCoins += earned;
+  
+  // Fly animation
+  let fly = document.createElement('div');
+  fly.className = 'fly';
+  fly.textContent = `+${earned}`;
+  fly.style.left = (Math.random() * 60 + 20) + '%';
+  fly.style.top = (Math.random() * 30 + 10) + '%';
+  coinWrap.appendChild(fly);
+  setTimeout(() => fly.remove(), 800);
+  
+  // Haptic feedback
+  if(tg?.HapticFeedback) {
+    tg.HapticFeedback.impactOccurred('medium');
+  }
+  
+  updateUI();
+  saveState();
+  
+  // Level up check
+  let newLevel = Math.floor(state.totalTaps / 500) + 1;
+  if(newLevel > state.level) {
+    state.level = newLevel;
+    if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+  }
+});
+
+function updateUI() {
+  document.getElementById('score').textContent = state.coins.toLocaleString();
+  document.getElementById('energy-text').textContent = `${state.energy}/${state.maxEnergy}`;
+  document.getElementById('energy-fill').style.width = `${(state.energy/state.maxEnergy)*100}%`;
+  document.getElementById('stat-taps').textContent = state.totalTaps.toLocaleString();
+  document.getElementById('stat-power').textContent = `${state.tapPower}x`;
+  document.getElementById('stat-coins').textContent = state.sessionCoins;
+  document.querySelector('.level').textContent = `🪙 Lv.${state.level}`;
+}
+
+function saveState() {
+  try {
+    localStorage.setItem('venice_state', JSON.stringify(state));
+  } catch(e) {}
+}
+
+function buyBoost(type) {
+  if(type === 'power') {
+    let cost = 100 * state.tapPower;
+    if(state.coins < cost) return;
+    state.coins -= cost;
+    state.tapPower += 1;
+    if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+  } else if(type === 'energy') {
+    if(state.coins < 50) return;
+    state.coins -= 50;
+    state.energy = state.maxEnergy;
+    if(tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('heavy');
+  }
+  updateUI();
+  saveState();
+}
+
+function claimCoins() {
+  if(state.sessionCoins <= 0) return;
+  
+  // Kirim ke bot via Telegram WebApp
+  if(tg) {
+    tg.sendData(JSON.stringify({
+      action: 'claim',
+      coins: state.sessionCoins
+    }));
+    
+    // Reset session
+    state.sessionCoins = 0;
+    updateUI();
+    saveState();
+    
+    if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+  } else {
+    alert(`Claimed ${state.sessionCoins} coins! (Run via Telegram bot)`);
+    state.sessionCoins = 0;
+    updateUI();
+    saveState();
+  }
+}
+
+function showLeaderboard() {
+  if(tg) {
+    tg.sendData(JSON.stringify({action: 'get_leaderboard'}));
+  }
+}
+
+// BOOST STATUS CHECK
+setInterval(() => {
+  let powerCost = 100 * state.tapPower;
+  document.querySelector('#boost-power .cost').textContent = `🪙 ${powerCost}`;
+  document.getElementById('boost-power').disabled = state.coins < powerCost;
+  document.getElementById('boost-energy').disabled = state.coins < 50 || state.energy >= state.maxEnergy;
+}, 500);
+
+// INIT
+updateUI();
+</script>
+</body>
+</html>
