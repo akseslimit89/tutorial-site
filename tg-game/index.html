@@ -5,67 +5,53 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Venice Coin 🪙</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script src="https://quge5.com/88/tag.min.js" data-zone="259806" async data-cfasync="false"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:linear-gradient(180deg,#0d0d2b 0%,#1a1a4e 100%);min-height:100vh;color:#fff;overflow-x:hidden}
 .container{max-width:420px;margin:0 auto;padding:16px;text-align:center;min-height:100vh;display:flex;flex-direction:column}
 
-/* HEADER */
 .header{padding:10px 0;display:flex;justify-content:space-between;align-items:center}
 .header .score{font-size:24px;font-weight:800;background:rgba(255,255,255,0.1);padding:8px 20px;border-radius:20px;backdrop-filter:blur(10px)}
 .header .score span{color:#ffd700}
 .header .level{padding:8px 16px;background:rgba(255,255,255,0.1);border-radius:20px;font-size:14px}
 
-/* ENERGY BAR */
 .energy-wrap{margin:8px 0;text-align:left}
 .energy-label{display:flex;justify-content:space-between;font-size:12px;color:#aaa;margin-bottom:4px}
 .energy-bar{height:6px;background:rgba(255,255,255,0.15);border-radius:3px;overflow:hidden}
 .energy-fill{height:100%;background:linear-gradient(90deg,#ff6b6b,#ffd700);border-radius:3px;transition:width 0.3s;width:100%}
 
-/* COIN */
 .coin-area{flex:1;display:flex;align-items:center;justify-content:center;position:relative}
-.coin-wrap{position:relative;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.coin-wrap{position:relative;cursor:pointer}
 .coin{width:200px;height:200px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ffd700,#ff8c00,#b8860b);display:flex;align-items:center;justify-content:center;font-size:80px;box-shadow:0 0 80px rgba(255,215,0,0.3),inset 0 -10px 30px rgba(0,0,0,0.3);transition:transform 0.1s;border:4px solid #ffd700}
 .coin:active{transform:scale(0.9)}
 
-/* FLOATING +N */
 .fly{position:absolute;font-weight:800;font-size:24px;color:#ffd700;pointer-events:none;animation:flyUp 0.8s ease-out forwards;z-index:10}
 @keyframes flyUp{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-100px) scale(1.5)}}
 
-/* STATS */
 .stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:16px 0}
 .stat-card{background:rgba(255,255,255,0.08);border-radius:12px;padding:10px;backdrop-filter:blur(10px)}
 .stat-card .num{font-size:18px;font-weight:700;color:#ffd700}
 .stat-card .label{font-size:11px;color:#aaa;margin-top:2px}
 
-/* BOOSTS */
 .boosts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
 .boost-btn{background:linear-gradient(135deg,#4a6cf7,#6c5ce7);border:none;color:#fff;padding:12px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;transition:transform 0.2s}
 .boost-btn:active{transform:scale(0.95)}
 .boost-btn:disabled{opacity:0.4}
 .boost-btn .cost{font-size:11px;color:rgba(255,255,255,0.7);margin-top:2px}
 
-/* WATCH AD BOOST - FULL WIDTH */
 .ad-boost{width:100%;padding:14px;background:linear-gradient(135deg,#ff6b6b,#ff4757);border:none;border-radius:12px;font-size:15px;font-weight:700;color:#fff;cursor:pointer;transition:transform 0.2s;margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:8px}
 .ad-boost:active{transform:scale(0.97)}
 .ad-boost:disabled{opacity:0.5}
-.ad-boost .icon{font-size:20px}
 
-/* TIMER OVERLAY */
 .timer-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:100;justify-content:center;align-items:center;flex-direction:column}
 .timer-overlay.show{display:flex}
-.timer-overlay .big{font-size:72px;font-weight:800;color:#ffd700;animation:pulse 0.5s}
+.timer-overlay .big{font-size:72px;font-weight:800;color:#ffd700}
 .timer-overlay .info{font-size:16px;color:#ccc;margin-top:12px}
-@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
 
-/* CLAIM BUTTON */
 .claim-btn{width:100%;padding:16px;background:linear-gradient(135deg,#ffd700,#ff8c00);border:none;border-radius:14px;font-size:18px;font-weight:800;color:#0d0d2b;cursor:pointer;transition:transform 0.2s;margin-bottom:8px}
 .claim-btn:active{transform:scale(0.97)}
 
-/* AD BANNER */
-.ad-banner{margin:8px 0;border-radius:12px;overflow:hidden;min-height:60px;background:rgba(255,255,255,0.05)}
-.ad-banner iframe{width:100%!important}
+.ad-banner{min-height:50px;margin:8px 0;border-radius:12px;overflow:hidden;background:rgba(255,255,255,0.03);font-size:12px;color:#555;display:flex;align-items:center;justify-content:center}
 
 .footer-links{display:flex;justify-content:center;gap:20px;padding:8px}
 .footer-links a{color:#aaa;text-decoration:none;font-size:12px}
@@ -73,70 +59,41 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 </head>
 <body>
 <div class="container">
-  <!-- HEADER -->
   <div class="header">
     <div class="level">🪙 Lv.<span id="level">1</span></div>
     <div class="score">💰 <span id="score">0</span></div>
   </div>
   
-  <!-- ENERGY -->
   <div class="energy-wrap">
     <div class="energy-label">
       <span>⚡ Energy</span>
       <span id="energy-text">1000/1000</span>
     </div>
-    <div class="energy-bar">
-      <div class="energy-fill" id="energy-fill" style="width:100%"></div>
-    </div>
+    <div class="energy-bar"><div class="energy-fill" id="energy-fill" style="width:100%"></div></div>
   </div>
   
-  <!-- COIN -->
   <div class="coin-area">
     <div class="coin-wrap" id="coin-wrap">
       <div class="coin" id="coin">🪙</div>
     </div>
   </div>
   
-  <!-- STATS -->
   <div class="stats">
-    <div class="stat-card">
-      <div class="num" id="stat-taps">0</div>
-      <div class="label">Total Taps</div>
-    </div>
-    <div class="stat-card">
-      <div class="num" id="stat-power">1x</div>
-      <div class="label">Tap Power</div>
-    </div>
-    <div class="stat-card">
-      <div class="num" id="stat-coins">0</div>
-      <div class="label">This Session</div>
-    </div>
+    <div class="stat-card"><div class="num" id="stat-taps">0</div><div class="label">Total Taps</div></div>
+    <div class="stat-card"><div class="num" id="stat-power">1x</div><div class="label">Tap Power</div></div>
+    <div class="stat-card"><div class="num" id="stat-coins">0</div><div class="label">This Session</div></div>
   </div>
   
-  <!-- BOOSTS -->
   <div class="boosts">
-    <button class="boost-btn" id="boost-power" onclick="buyBoost('power')">
-      ⚡ +1 Tap Power
-      <div class="cost">🪙 100</div>
-    </button>
-    <button class="boost-btn" id="boost-energy" onclick="buyBoost('energy')">
-      🔋 Full Energy
-      <div class="cost">🪙 50</div>
-    </button>
+    <button class="boost-btn" id="boost-power" onclick="buyBoost('power')">⚡ +1 Power<div class="cost">🪙 100</div></button>
+    <button class="boost-btn" id="boost-energy" onclick="buyBoost('energy')">🔋 Full Energy<div class="cost">🪙 50</div></button>
   </div>
   
-  <!-- WATCH AD BOOST -->
-  <button class="ad-boost" id="ad-boost-btn" onclick="watchAd()">
-    <span class="icon">🎬</span>
-    <span>Watch Ad → +50 Energy + 10 Coins</span>
-  </button>
-  
-  <!-- CLAIM -->
+  <button class="ad-boost" id="ad-boost-btn" onclick="watchAd()"><span>🎬 Watch Ad → +50 Energy + 10 Coins</span></button>
   <button class="claim-btn" onclick="claimCoins()">📤 Claim to Bot</button>
 
-  <!-- AD BANNER -->
-  <div class="ad-banner">
-    <script src="https://pl30369958.effectivecpmnetwork.com/01/1f/62/011f62616bd79203ac3a539277dfff65.js"></script>
+  <div class="ad-banner" id="ad-container">
+    <small style="color:#555">— Ad Space —</small>
   </div>
   
   <div class="footer-links">
@@ -145,7 +102,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   </div>
 </div>
 
-<!-- TIMER OVERLAY -->
 <div class="timer-overlay" id="timer">
   <div class="big" id="timer-num">10</div>
   <div class="info">📺 Watching ad... Get ready for reward!</div>
@@ -153,83 +109,42 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 
 <script>
 let tg = window.Telegram?.WebApp;
-if(tg) {
-  tg.expand();
-  tg.enableClosingConfirmation();
-}
+if(tg) { tg.expand(); tg.enableClosingConfirmation(); }
 
-// GAME STATE
-let state = {
-  coins: 0,
-  energy: 1000,
-  maxEnergy: 1000,
-  tapPower: 1,
-  totalTaps: 0,
-  sessionCoins: 0,
-  level: 1,
-  adWatchCount: 0,
-};
+let state = {coins:0, energy:1000, maxEnergy:1000, tapPower:1, totalTaps:0, sessionCoins:0, level:1, adWatchCount:0};
 
-// LOAD SAVED STATE
 try {
-  let saved = localStorage.getItem('venice_state');
-  if(saved) {
-    let s = JSON.parse(saved);
-    state.coins = s.coins || 0;
-    state.energy = s.energy ?? 1000;
-    state.maxEnergy = s.maxEnergy || 1000;
-    state.tapPower = s.tapPower || 1;
-    state.totalTaps = s.totalTaps || 0;
-    state.level = s.level || 1;
-    state.adWatchCount = s.adWatchCount || 0;
-  }
+  let s = JSON.parse(localStorage.getItem('venice_state'));
+  if(s) Object.assign(state, s);
 } catch(e) {}
 
-// ENERGY REFILL
 setInterval(() => {
   if(state.energy < state.maxEnergy) {
     state.energy = Math.min(state.energy + 3, state.maxEnergy);
-    updateUI();
-    saveState();
+    updateUI(); saveState();
   }
 }, 1000);
 
-// TAP HANDLER
-let coinEl = document.getElementById('coin');
-let coinWrap = document.getElementById('coin-wrap');
-
-coinEl.addEventListener('click', (e) => {
-  if(state.energy < state.tapPower) {
-    coinEl.style.transform = 'scale(0.95)';
-    setTimeout(() => coinEl.style.transform = '', 200);
-    return;
-  }
-  
+document.getElementById('coin').addEventListener('click', (e) => {
+  if(state.energy < state.tapPower) return;
   state.energy = Math.max(0, state.energy - state.tapPower);
-  let earned = state.tapPower;
-  state.coins += earned;
+  state.coins += state.tapPower;
   state.totalTaps += 1;
-  state.sessionCoins += earned;
+  state.sessionCoins += state.tapPower;
   
-  // Fly anim
   let fly = document.createElement('div');
   fly.className = 'fly';
-  fly.textContent = `+${earned}`;
-  fly.style.left = (Math.random() * 60 + 20) + '%';
-  fly.style.top = (Math.random() * 30 + 10) + '%';
-  coinWrap.appendChild(fly);
-  setTimeout(() => fly.remove(), 800);
+  fly.textContent = `+${state.tapPower}`;
+  fly.style.left = (Math.random()*60+20)+'%';
+  fly.style.top = (Math.random()*30+10)+'%';
+  document.getElementById('coin-wrap').appendChild(fly);
+  setTimeout(()=>fly.remove(), 800);
   
   if(tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
+  updateUI(); saveState();
   
-  updateUI();
-  saveState();
-  
-  let newLevel = Math.floor(state.totalTaps / 500) + 1;
-  if(newLevel > state.level) {
-    state.level = newLevel;
-    if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
-  }
+  let nl = Math.floor(state.totalTaps/500)+1;
+  if(nl > state.level) { state.level = nl; if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success'); }
 });
 
 function updateUI() {
@@ -241,40 +156,40 @@ function updateUI() {
   document.getElementById('stat-coins').textContent = state.sessionCoins;
   document.getElementById('level').textContent = state.level;
 }
+function saveState() { try { localStorage.setItem('venice_state', JSON.stringify(state)); } catch(e) {} }
 
-function saveState() {
-  try { localStorage.setItem('venice_state', JSON.stringify(state)); } catch(e) {}
-}
-
-function buyBoost(type) {
-  if(type === 'power') {
-    let cost = 100 * state.tapPower;
-    if(state.coins < cost) return;
-    state.coins -= cost;
-    state.tapPower += 1;
+function buyBoost(t) {
+  if(t === 'power') {
+    let c = 100 * state.tapPower;
+    if(state.coins < c) return;
+    state.coins -= c; state.tapPower += 1;
     if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
-  } else if(type === 'energy') {
+  } else if(t === 'energy') {
     if(state.coins < 50) return;
-    state.coins -= 50;
-    state.energy = state.maxEnergy;
+    state.coins -= 50; state.energy = state.maxEnergy;
     if(tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('heavy');
   }
-  updateUI();
-  saveState();
+  updateUI(); saveState();
 }
 
-/* 🎬 WATCH AD FUNCTION */
 function watchAd() {
   let btn = document.getElementById('ad-boost-btn');
   if(btn.disabled) return;
   btn.disabled = true;
   
-  // Buka popunder ad (biar dapet CPM)
-  try {
-    window.open('https://quge5.com/88/tag.min.js', '_blank');
-  } catch(e) {}
+  // Buka popunder ad (handle dulu biar gak error)
+  setTimeout(() => {
+    try {
+      let w = window.open('https://quge5.com/88/tag.min.js', '_blank');
+      if(!w) {
+        // Fallback: buka di iframe
+        let adc = document.getElementById('ad-container');
+        adc.innerHTML = '<iframe src="https://quge5.com/88/tag.min.js" style="width:100%;height:60px;border:none;border-radius:8px"></iframe>';
+      }
+    } catch(e) {}
+  }, 100);
   
-  // Tampilkan timer
+  // Timer
   let overlay = document.getElementById('timer');
   let numEl = document.getElementById('timer-num');
   overlay.classList.add('show');
@@ -287,32 +202,21 @@ function watchAd() {
     if(count <= 0) {
       clearInterval(timer);
       overlay.classList.remove('show');
-      
-      // KASI REWARD
-      let bonusEnergy = 50;
-      let bonusCoins = 10;
-      state.energy = Math.min(state.energy + bonusEnergy, state.maxEnergy);
-      state.coins += bonusCoins;
-      state.sessionCoins += bonusCoins;
+      state.energy = Math.min(state.energy + 50, state.maxEnergy);
+      state.coins += 10;
+      state.sessionCoins += 10;
       state.adWatchCount += 1;
-      saveState();
-      updateUI();
+      saveState(); updateUI();
       
-      // Notif
-      let fly = document.createElement('div');
-      fly.className = 'fly';
-      fly.textContent = `🎬 +${bonusEnergy}⚡ +${bonusCoins}🪙`;
-      fly.style.left = '30%';
-      fly.style.top = '40%';
-      document.querySelector('.container').appendChild(fly);
-      setTimeout(() => fly.remove(), 1000);
+      let f = document.createElement('div');
+      f.className = 'fly';
+      f.textContent = '🎬 +50⚡ +10🪙';
+      f.style.left = '30%'; f.style.top = '40%';
+      document.querySelector('.container').appendChild(f);
+      setTimeout(()=>f.remove(), 1000);
       
       if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
-      
-      // Cooldown 30 detik
-      setTimeout(() => {
-        btn.disabled = false;
-      }, 30000);
+      setTimeout(() => { btn.disabled = false; }, 30000);
     }
   }, 1000);
 }
@@ -320,28 +224,26 @@ function watchAd() {
 function claimCoins() {
   if(state.sessionCoins <= 0) return;
   if(tg) {
-    tg.sendData(JSON.stringify({action: 'claim', coins: state.sessionCoins}));
-    state.sessionCoins = 0;
-    updateUI();
-    saveState();
+    tg.sendData(JSON.stringify({action:'claim', coins: state.sessionCoins}));
+    state.sessionCoins = 0; updateUI(); saveState();
     if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
-  } else {
-    alert(`Claimed ${state.sessionCoins} coins! (Run via Telegram bot)`);
-    state.sessionCoins = 0;
-    updateUI();
-    saveState();
   }
 }
 
 function showLeaderboard() {
-  if(tg) tg.sendData(JSON.stringify({action: 'get_leaderboard'}));
+  if(tg) tg.sendData(JSON.stringify({action:'get_leaderboard'}));
 }
 
-// BOOST STATUS CHECK
+// Ad banner (load after page ready)
+setTimeout(() => {
+  let adc = document.getElementById('ad-container');
+  adc.innerHTML = '<script src="https://pl30369958.effectivecpmnetwork.com/01/1f/62/011f62616bd79203ac3a539277dfff65.js"><\/script>';
+}, 3000);
+
 setInterval(() => {
-  let powerCost = 100 * state.tapPower;
-  document.querySelector('#boost-power .cost').textContent = `🪙 ${powerCost}`;
-  document.getElementById('boost-power').disabled = state.coins < powerCost;
+  let pc = 100 * state.tapPower;
+  document.querySelector('#boost-power .cost').textContent = `🪙 ${pc}`;
+  document.getElementById('boost-power').disabled = state.coins < pc;
   document.getElementById('boost-energy').disabled = state.coins < 50 || state.energy >= state.maxEnergy;
 }, 500);
 
