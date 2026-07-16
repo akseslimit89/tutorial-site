@@ -13,41 +13,21 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="VeniceLab">
 <meta name="twitter:site" content="@venicelab">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f5f5f5;color:#222;line-height:1.7}
-.container{max-width:800px;margin:0 auto;padding:20px}
-.header{background:linear-gradient(135deg,#0d0d2b,#1a1a4e);color:#fff;padding:40px 20px;text-align:center}
-.header h1{font-size:28px;margin-bottom:10px}
-.header .meta{font-size:14px;color:#aaa}
-.featured-img{width:100%;max-height:400px;object-fit:cover;border-radius:12px;margin:20px 0}
-.content{padding:20px 0}
-.content h2{font-size:22px;margin:30px 0 15px;color:#0d0d2b}
-.content h3{font-size:18px;margin:20px 0 10px;color:#1a1a4e}
-.content p{margin-bottom:15px;font-size:16px;color:#444}
-.content ul{margin:10px 0 20px 20px}
-.content li{margin-bottom:8px;font-size:15px}
-.highlight{background:#e8f5e9;padding:15px;border-radius:8px;border-left:4px solid #14b082;margin:20px 0}
-.highlight strong{color:#14b082}
-.ad-box{background:#f0f8ff;padding:15px;border-radius:8px;text-align:center;margin:30px 0;font-size:14px;color:#666}
-.back{margin:30px 0;text-align:center}
-.back a{color:#14b082;text-decoration:none;font-weight:600}
-footer{text-align:center;padding:20px;color:#999;font-size:13px;border-top:1px solid #eee;margin-top:40px}
-@media(max-width:600px){.header h1{font-size:22px}.content h2{font-size:19px}}
-</style>
+
+<link rel="stylesheet" href="../assets/style.css">
 </head>
 <body>
-<div class="header">
+<div class="header-premium">
   <h1>Top 5 Crypto Airdrops of July 2026 — Claim Free Tokens Worth $10,000+</h1>
   <div class="meta">📅 July 15, 2026 | 📷 Crypto | 💬 23 comments</div>
 </div>
 <div class="container">
   <img class="featured-img" src="https://picsum.photos/seed/crypto/800/400" alt="Crypto airdrops" loading="lazy">
   
-  <div class="content">
+  <div class="article-content">
     <p>Airdrop season is BACK in 2026! After the 2024-2025 bear market, major protocols are distributing billions in tokens to early users. If you've been following our <a href="../index.html">free earning tutorials</a>, this is the single biggest opportunity to make serious money without spending a dime.</p>
     
-    <div class="highlight">
+    <div class="highlight-box">
       <strong>⚡ Quick Summary:</strong> Complete these 5 airdrops before August 2026. Estimated total value: $10,000-$50,000 per wallet.
     </div>
 
@@ -96,11 +76,11 @@ footer{text-align:center;padding:20px;color:#999;font-size:13px;border-top:1px s
       <li>Estimated reward: $1,000-$4,000 per wallet</li>
     </ul>
 
-    <div class="highlight">
+    <div class="highlight-box">
       <strong>💡 Pro Tip:</strong> Use multiple wallets (5-10) to maximize your allocation. Each airdrop uses different criteria, so diversify your activity. Need help setting up? Check our <a href="../parts/part3.html">Part 3: Crypto Airdrops guide</a>.
     </div>
 
-    <div class="ad-box">
+    <div class="ad-modern">
       📢 SPONSOR: <a href="https://www.effectivecpmnetwork.com/xhgf1sj3b?key=6048daa838a4bd6f87c6330df02084fb" target="_blank" rel="nofollow">Claim your free bonus — Click here</a>
     </div>
 
@@ -108,10 +88,10 @@ footer{text-align:center;padding:20px;color:#999;font-size:13px;border-top:1px s
     <p>Remember: <strong>it costs NOTHING but your time.</strong> Gas fees on Layer 2 networks are under $0.10 per transaction. Start today!</p>
   </div>
 
-  <div class="back"><a href="../index.html">⬅ Back to Home</a></div>
+  <div class="back-link"><a href="../index.html">⬅ Back to Home</a></div>
 
   <!-- COMMENT SECTION -->
-  <div id="comments-section" style="margin:40px 0;font-family:inherit">
+  <div id="comments-section" class="comments-section">
     <h2 style="font-size:20px;margin-bottom:20px">Comments (23)</h2>
     <div id="comments-list">
       <div style="padding:12px 0;border-bottom:1px solid #eee"><div style="display:flex;align-items:center;gap:10px;margin-bottom:6px"><div style="width:32px;height:32px;border-radius:50%;background:#14b082;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:12px">M</div><div><span style="font-weight:600;font-size:13px">Mike Johnson</span><span style="font-size:11px;color:#888;margin-left:8px">2 hours ago</span></div></div><p style="margin:0 0 0 42px;font-size:13px">I did the zkSync airdrop round 1 and got $4,200! Definitely doing all 5 this time.</p></div>
@@ -124,23 +104,7 @@ footer{text-align:center;padding:20px;color:#999;font-size:13px;border-top:1px s
       <button onclick="submitComment()" style="margin-top:10px;padding:10px 28px;background:#14b082;color:#fff;border:none;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer">Post Comment</button>
     </div>
   </div>
-  <script>
-  function submitComment() {
-    const name = document.getElementById("comment-name").value || "Anonymous";
-    const text = document.getElementById("comment-text").value;
-    if(!text.trim()) return;
-    const list = document.getElementById("comments-list");
-    const firstLetter = name.charAt(0).toUpperCase();
-    const colors = ["#14b082","#ff6b6b","#4a6cf7","#ffc947","#e056a0","#6c5ce7"];
-    const color = colors[Math.floor(Math.random()*colors.length)];
-    const item = document.createElement("div");
-    item.style.cssText = "padding:12px 0;border-bottom:1px solid #eee";
-    item.innerHTML = `<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px"><div style="width:32px;height:32px;border-radius:50%;background:${color};display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:12px">${firstLetter}</div><div><span style="font-weight:600;font-size:13px">${name}</span><span style="font-size:11px;color:#888;margin-left:8px">Just now</span></div></div><p style="margin:0 0 0 42px;font-size:13px;color:#333">${text}</p>`;
-    list.insertBefore(item, list.firstChild);
-    document.getElementById("comment-name").value = "";
-    document.getElementById("comment-text").value = "";
-  }
-  </script>
+  <script src="../assets/script.js"></script>
 </div>
 <footer>© 2026 VENICELAB — Tutorial Gratis | <a href="../index.html">Home</a></footer>
 </body>
