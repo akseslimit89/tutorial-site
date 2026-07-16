@@ -101,59 +101,56 @@ function toggleLang() {
 }
 
 // ── REAL VISITOR COUNTER ──
-(async function() {
+(function() {
     const totalEl = document.getElementById('totalCount');
     const liveEl = document.getElementById('liveCount');
     const countryEl = document.getElementById('countryCount');
     if (!totalEl) return;
     
-    // 1️⃣ Total visitors — dari visitor badge (real count)
-    try {
-        const resp = await fetch('https://visitor-badge.laobi.icu/badge?page_id=venicelab.web.id&format=json');
-        const data = await resp.json();
-        totalEl.textContent = data.value || '1K+';
-    } catch {
-        // Fallback ke localStorage
-        let t = parseInt(localStorage.getItem('vc_total') || '787');
-        t++;
-        localStorage.setItem('vc_total', t);
-        totalEl.textContent = t.toLocaleString();
-    }
+    const today = new Date().toISOString().split('T')[0];
     
-    // 2️⃣ Today — pake localStorage (per browser)
-    let today = parseInt(localStorage.getItem('vc_today') || '0');
-    let lastDate = localStorage.getItem('vc_date') || '';
-    let todayStr = new Date().toDateString();
-    if (lastDate !== todayStr) {
-        today = 0;
-        localStorage.setItem('vc_date', todayStr);
-    }
-    today++;
-    localStorage.setItem('vc_today', today);
-    if (liveEl) liveEl.textContent = today;
+    // 1️⃣ Total visitors — dari visitor badge
+    fetch('https://visitor-badge.laobi.icu/badge?page_id=venicelab.web.id')
+        .then(r => r.text())
+        .then(svg => {
+            const match = svg.match(/<text[^>]*x="571[^"]*"[^>]*>([^<]+)<\/text>/);
+            totalEl.textContent = match ? match[1] : '1K+';
+        })
+        .catch(() => { totalEl.textContent = '1K+'; });
+    
+    // 2️⃣ Today — badge harian (auto reset tiap hari)
+    fetch(`https://visitor-badge.laobi.icu/badge?page_id=venicelab.${today}`)
+        .then(r => r.text())
+        .then(svg => {
+            const match = svg.match(/<text[^>]*x="571[^"]*"[^>]*>([^<]+)<\/text>/);
+            if (liveEl) liveEl.textContent = match ? match[1] : '0';
+        })
+        .catch(() => { if (liveEl) liveEl.textContent = '0'; });
     
     // 3️⃣ Country — deteksi real dari IP
     if (countryEl) {
-        try {
-            const ipResp = await fetch('https://api.ipify.org?format=json');
-            const ipData = await ipResp.json();
-            const geoResp = await fetch(`http://ip-api.com/json/${ipData.ip}?fields=status,country,countryCode`);
-            const geo = await geoResp.json();
-            if (geo.status === 'success') {
-                const flags = {
-                    'ID': '🇮🇩','US': '🇺🇸','GB': '🇬🇧','DE': '🇩🇪','FR': '🇫🇷',
-                    'NL': '🇳🇱','SG': '🇸🇬','JP': '🇯🇵','KR': '🇰🇷','CN': '🇨🇳',
-                    'RU': '🇷🇺','IN': '🇮🇳','MY': '🇲🇾','VN': '🇻🇳','TH': '🇹🇭',
-                    'CA': '🇨🇦','AU': '🇦🇺','BR': '🇧🇷','MX': '🇲🇽','IT': '🇮🇹',
-                    'ES': '🇪🇸','SA': '🇸🇦','AE': '🇦🇪','ZA': '🇿🇦','NG': '🇳🇬'
-                };
-                const flag = flags[geo.countryCode] || '🌍';
-                countryEl.textContent = `${flag} ${geo.country}`;
-            }
-        } catch {
-            countryEl.textContent = '🌍 Indonesia';
-        }
+        fetch('https://api.ipify.org?format=json')
+            .then(r => r.json())
+            .then(d => fetch(`http://ip-api.com/json/${d.ip}?fields=status,country,countryCode`))
+            .then(r => r.json())
+            .then(geo => {
+                if (geo.status === 'success') {
+                    const flags = {
+                        'ID':'🇮🇩','US':'🇺🇸','GB':'🇬🇧','DE':'🇩🇪','FR':'🇫🇷',
+                        'NL':'🇳🇱','SG':'🇸🇬','JP':'🇯🇵','KR':'🇰🇷','MY':'🇲🇾',
+                        'VN':'🇻🇳','TH':'🇹🇭','CA':'🇨🇦','AU':'🇦🇺','RU':'🇷🇺',
+                        'IN':'🇮🇳','CN':'🇨🇳','BR':'🇧🇷'
+                    };
+                    countryEl.textContent = `${flags[geo.countryCode]||'🌍'} ${geo.country}`;
+                }
+            })
+            .catch(() => { countryEl.textContent = '🌍 Indonesia'; });
     }
+    
+    // 4️⃣ Bonus: panggil badge dari script biar keitung semua traffic
+    // (script visit juga bakal increment badge ini)
+    fetch(`https://visitor-badge.laobi.icu/badge?page_id=venicelab.web.id`, {mode:'no-cors'});
+    fetch(`https://visitor-badge.laobi.icu/badge?page_id=venicelab.${today}`, {mode:'no-cors'});
 })();
 
 // ── INIT ──
