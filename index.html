@@ -5,36 +5,44 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- SEO META -->
-<title>Earn Your First $5 Online — Complete Beginner Tutorial (100% Free)</title>
-<meta name="description" content="Step-by-step guide to earn your first $5 online using just your phone. No investment needed. Proven methods: faucet, micro tasks, airdrops.">
-<meta name="keywords" content="earn money online, first $5, make money from phone, beginner tutorial, free earning, faucet, micro tasks, crypto airdrop">
+<!-- SEO META GLOBAL -->
+<title>Earn Your First $5 Online — Complete Free Beginner Tutorial (2026)</title>
+<meta name="description" content="Step-by-step guide to earn your first $5 online using just your phone. No investment needed. Proven methods: faucet, micro tasks, airdrops worldwide.">
+<meta name="keywords" content="earn money online 2026, make money from phone, beginner tutorial, free earning, faucet, micro tasks, crypto airdrop, passive income, online money">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://venicelab.web.id">
 
-<!-- OPEN GRAPH -->
-<meta property="og:title" content="Earn Your First $5 Online — Free Step-by-Step Tutorial">
-<meta property="og:description" content="Make your first $5 online using just your phone. 6 easy parts — 100% free.">
+<!-- HREFLANG GLOBAL -->
+<link rel="alternate" hreflang="en" href="https://venicelab.web.id">
+<link rel="alternate" hreflang="id" href="https://venicelab.web.id">
+<link rel="alternate" hreflang="x-default" href="https://venicelab.web.id">
+
+<!-- OPEN GRAPH GLOBAL -->
+<meta property="og:title" content="Earn Your First $5 Online — Complete Free Beginner Tutorial (2026)">
+<meta property="og:description" content="Make your first $5 online using just your phone. 6 easy parts — 100% free. Proven worldwide methods.">
 <meta property="og:image" content="https://venicelab.web.id/og-image.jpg">
 <meta property="og:url" content="https://venicelab.web.id">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="VeniceLab">
 
 <!-- TWITTER CARD -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Earn Your First $5 Online">
-<meta name="twitter:description" content="Proven methods to make $5 online from your phone. Free tutorial.">
+<meta name="twitter:title" content="Earn Your First $5 Online — Free Tutorial">
+<meta name="twitter:description" content="Proven methods to make $5 online from your phone. Free tutorial for everyone worldwide.">
+<meta name="twitter:site" content="@venicelab">
 
-<!-- SCHEMA.ORG -->
+<!-- SCHEMA.ORG GLOBAL -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "Earn Your First $5 Online — Complete Beginner Tutorial",
-  "description": "Step-by-step guide to make money online from your phone. Free, no investment.",
+  "@type": "WebSite",
+  "name": "VeniceLab",
+  "url": "https://venicelab.web.id",
+  "description": "Free step-by-step tutorials to earn money online. Methods that work worldwide.",
   "author": { "@type": "Person", "name": "Venice Lab" },
-  "datePublished": "2026-07-15",
-  "dateModified": "2026-07-15"
+  "inLanguage": ["en", "id"],
+  "audience": { "@type": "Audience", "audienceType": "Global beginners seeking online income" }
 }
 </script>
 
@@ -63,7 +71,7 @@ header::before{
 header .badge{
   display:inline-block;background:rgba(255,255,255,.15);backdrop-filter:blur(10px);
   border:1px solid rgba(255,255,255,.2);padding:8px 20px;border-radius:50px;
-  font-size:.85em;margin-bottom:25px;position:relative
+  font-size:.85em;margin-bottom:25px;position:relative;cursor:pointer
 }
 header h1{
   font-size:clamp(2em,5vw,3.5em);font-weight:800;line-height:1.2;margin-bottom:15px;position:relative
@@ -174,7 +182,7 @@ footer{text-align:center;padding:40px 20px;color:#94a3b8;font-size:.88em;border-
 <body>
 
 <header>
-  <div class="badge">🔥 100% Free — No Investment Needed</div>
+  <div class="badge" onclick="toggleLang()" id="langBadge" title="Switch language / Ganti bahasa">🌍 English</div>
   <h1>Earn Your <span>$5</span><br>Online — From Your Phone</h1>
   <p>Complete step-by-step tutorial. Proven methods used by thousands. No credit card required.</p>
   <div class="stats">
@@ -256,34 +264,59 @@ footer{text-align:center;padding:40px 20px;color:#94a3b8;font-size:.88em;border-
 </footer>
 
 <script>
-const parts = [
-  {id:1, title:"How to Create a Digital Wallet (FaucetPay)", desc:"Your first step — a free wallet in 5 minutes.", read:"3 min", ads:"Micro Wallet"},
-  {id:2, title:"Auto Faucet Claim Using Your Phone", desc:"Set up a faucet bot to earn satoshis every hour.", read:"5 min", ads:"Crypto Earn"},
-  {id:3, title:"Micro Tasks — Earn $0.5-1 Per Day", desc:"Complete small online tasks. No special skills needed.", read:"7 min", ads:"Task Hub"},
-  {id:4, title:"Airdrop Farming for Beginners", desc:"Find, register, and claim free airdrops before listing.", read:"10 min", ads:"Airdrop Alert"},
-  {id:5,title:"Tips to Cash Out Fast & Avoid Scams", desc:"What to do — and what NOT to do. Stay safe.", read:"4 min", ads:"Safe Earn"},
-  {id:6, title:"10x Your Income — Advanced Strategy", desc:"Scale from $5 to $50-100/month. Multi-account & automation.", read:"8 min", ads:"Scale Up"},
-];
+let currentLang = 'en';
 
-const list = document.getElementById('partList');
-parts.forEach(p => {
-  const card = document.createElement('div');
-  card.className = 'part-card';
-  card.onclick = () => window.location.href = 'parts/part'+p.id+'.html';
-  card.innerHTML = `
-    <div class="card-num">${p.id}</div>
-    <div class="card-body">
-      <h3>${p.title}</h3>
-      <div class="card-meta">
-        <span>⏱ ${p.read}</span>
-        <span>📢 ${p.ads}</span>
+const partsData = {
+  en: [
+    {id:1, title:"How to Create a Digital Wallet (FaucetPay)", desc:"Your first step — a free wallet in 5 minutes.", read:"3 min", ads:"Micro Wallet"},
+    {id:2, title:"Auto Faucet Claim Using Your Phone", desc:"Set up a faucet bot to earn satoshis every hour.", read:"5 min", ads:"Crypto Earn"},
+    {id:3, title:"Micro Tasks — Earn $0.5-1 Per Day", desc:"Complete small online tasks. No special skills needed.", read:"7 min", ads:"Task Hub"},
+    {id:4, title:"Airdrop Farming for Beginners", desc:"Find, register, and claim free airdrops before listing.", read:"10 min", ads:"Airdrop Alert"},
+    {id:5,title:"Tips to Cash Out Fast & Avoid Scams", desc:"What to do — and what NOT to do. Stay safe.", read:"4 min", ads:"Safe Earn"},
+    {id:6, title:"10x Your Income — Advanced Strategy", desc:"Scale from $5 to $50-100/month. Multi-account & automation.", read:"8 min", ads:"Scale Up"},
+  ],
+  id: [
+    {id:1, title:"Cara Bikin Dompet Digital (FaucetPay)", desc:"Langkah pertama — dompet gratis dalam 5 menit.", read:"3 mnt", ads:"Dompet"},
+    {id:2, title:"Auto Claim Faucet Pake HP", desc:"Setel bot faucet buat dapet satoshi tiap jam.", read:"5 mnt", ads:"Crypto"},
+    {id:3, title:"Micro Tasks — Dapet $0.5-1 Per Hari", desc:"Kerjakan tugas kecil online. Gak perlu skill khusus.", read:"7 mnt", ads:"Task"},
+    {id:4, title:"Airdrop Farming untuk Pemula", desc:"Cari, daftar, dan klaim airdrop gratis sebelum listing.", read:"10 mnt", ads:"Airdrop"},
+    {id:5,title:"Tips Cairkan Duit & Hindari Scam", desc:"Yang boleh & gak boleh dilakukan. Tetap aman.", read:"4 mnt", ads:"Aman"},
+    {id:6, title:"10x Lipat Penghasilan — Strategi Lanjutan", desc:"Skalakan dari $5 ke $50-100/bulan. Multi-akun & otomatisasi.", read:"8 mnt", ads:"Scale Up"},
+  ]
+};
+
+function renderParts(lang) {
+  const parts = partsData[lang];
+  const list = document.getElementById('partList');
+  list.innerHTML = '';
+  parts.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'part-card';
+    card.onclick = () => window.location.href = 'parts/part'+p.id+(lang==='en'?'-en':'')+'.html';
+    card.innerHTML = `
+      <div class="card-num">${p.id}</div>
+      <div class="card-body">
+        <h3>${p.title}</h3>
+        <div class="card-meta">
+          <span>⏱ ${p.read}</span>
+          <span>📢 ${p.ads}</span>
+        </div>
+        <div class="card-desc">${p.desc}</div>
       </div>
-      <div class="card-desc">${p.desc}</div>
-    </div>
-    <div class="card-arrow">→</div>
-  `;
-  list.appendChild(card);
-});
+      <div class="card-arrow">→</div>
+    `;
+    list.appendChild(card);
+  });
+  document.getElementById('langBadge').textContent = lang === 'en' ? '🌍 English' : '🌍 Indonesia';
+  currentLang = lang;
+}
+
+function toggleLang() {
+  const newLang = currentLang === 'en' ? 'id' : 'en';
+  renderParts(newLang);
+}
+
+renderParts('en');
 </script>
 
 <!-- LATEST BLOG POSTS -->
