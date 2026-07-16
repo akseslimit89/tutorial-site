@@ -29,7 +29,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .header{padding:10px 0;display:flex;justify-content:space-between;align-items:center}
 .header .score{font-size:24px;font-weight:800;background:rgba(255,255,255,0.1);padding:8px 20px;border-radius:20px;backdrop-filter:blur(10px)}
 .header .score span{color:#ffd700}
-.header .level{padding:8px 16px;background:rgba(255,255,255,0.1);border-radius:20px;font-size:14px}
+.header .level{padding:8px 16px;background:rgba(255,255,255,0.1);border-radius:20px;font-size:14px;cursor:pointer}
 
 .energy-wrap{margin:8px 0;text-align:left}
 .energy-label{display:flex;justify-content:space-between;font-size:12px;color:#aaa;margin-bottom:4px}
@@ -45,17 +45,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 @keyframes flyUp{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-100px) scale(1.5)}}
 
 .stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:16px 0}
-.stat-card{background:rgba(255,255,255,0.08);border-radius:12px;padding:10px;backdrop-filter:blur(10px);transition:all .3s}
+.stat-card{background:rgba(255,255,255,0.08);border-radius:12px;padding:10px;backdrop-filter:blur(10px);transition:all .3s;cursor:pointer}
 .stat-card .num{font-size:18px;font-weight:700;color:#ffd700}
 .stat-card .label{font-size:11px;color:#aaa;margin-top:2px}
 .stat-card.rush{background:rgba(255,107,107,0.25);box-shadow:0 0 20px rgba(255,107,107,0.3)}
+.stat-card.usd{background:rgba(16,185,129,0.2);box-shadow:0 0 15px rgba(16,185,129,0.2)}
 
 .boosts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
 .boost-btn{background:linear-gradient(135deg,#4a6cf7,#6c5ce7);border:none;color:#fff;padding:12px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;transition:transform 0.2s}
 .boost-btn:active{transform:scale(0.95)}
 .boost-btn:disabled{opacity:0.4}
 
-/* NEW: MULTI AD BUTTONS */
 .ad-btns{display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
 .ad-btn{width:100%;padding:12px 16px;border:none;border-radius:12px;font-size:13px;font-weight:700;color:#fff;cursor:pointer;transition:transform 0.2s;display:flex;align-items:center;justify-content:space-between}
 .ad-btn:active{transform:scale(0.97)}
@@ -77,16 +77,63 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .timer-overlay .info{font-size:16px;color:#ccc;margin-top:12px}
 .timer-overlay .bonus{font-size:14px;color:#ffd700;margin-top:6px;font-weight:600}
 
-.ad-banner{min-height:50px;margin:8px 0;border-radius:12px;overflow:hidden;background:rgba(255,255,255,0.03);font-size:12px;color:#555;display:flex;align-items:center;justify-content:center}
+.modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);z-index:200;justify-content:center;align-items:center;padding:20px}
+.modal-overlay.show{display:flex}
+.modal-card{background:linear-gradient(180deg,#1a1a4e,#0d0d2b);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:24px;max-width:380px;width:100%;max-height:80vh;overflow-y:auto}
+.modal-card h3{font-size:20px;font-weight:800;margin-bottom:16px;text-align:center}
+.modal-card .close{float:right;cursor:pointer;background:none;border:none;color:#aaa;font-size:24px}
+.modal-card p{font-size:13px;color:#ccc;margin-bottom:8px;line-height:1.5}
+.modal-card .rule-item{padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:13px;color:#ddd}
+.modal-card .rule-item .icon{font-size:16px;margin-right:6px}
+.modal-btn{width:100%;padding:14px;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;transition:transform 0.2s;margin-top:12px}
+.modal-btn:active{transform:scale(0.97)}
+.modal-btn-gold{background:linear-gradient(135deg,#ffd700,#ff8c00);color:#0d0d2b}
+.modal-btn-purple{background:linear-gradient(135deg,#a855f7,#7c3aed);color:#fff}
+.modal-btn-green{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff}
 
-.footer-links{display:flex;justify-content:center;gap:20px;padding:8px}
-.footer-links a{color:#aaa;text-decoration:none;font-size:12px}
+.profile-row{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding:12px;background:rgba(255,255,255,0.06);border-radius:14px;cursor:pointer}
+.profile-avatar{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#4a6cf7,#6c5ce7);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;color:#fff;overflow:hidden;border:2px solid #ffd700}
+.profile-avatar img{width:100%;height:100%;object-fit:cover}
+.profile-info{flex:1;text-align:left}
+.profile-info .name{font-size:15px;font-weight:700}
+.profile-info .sub{font-size:11px;color:#aaa;margin-top:2px}
+
+.tier-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+.tier-card{padding:10px;background:rgba(255,255,255,0.06);border-radius:10px;text-align:center;font-size:12px}
+.tier-card .tier-name{font-weight:700;font-size:14px}
+.tier-card .tier-rate{color:#ffd700;font-size:11px}
+.tier-card.locked{opacity:0.4}
+
+.footer-links{display:flex;justify-content:center;gap:20px;padding:8px;flex-wrap:wrap}
+.footer-links a{color:#aaa;text-decoration:none;font-size:12px;cursor:pointer}
+
+/* Convert modal */
+.convert-opt{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:12px 0}
+.convert-btn{padding:12px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);border-radius:10px;text-align:center;cursor:pointer;transition:all 0.2s}
+.convert-btn:active{transform:scale(0.95);background:rgba(255,215,0,0.15);border-color:#ffd700}
+.convert-btn .c-coins{font-size:14px;font-weight:700}
+.convert-btn .c-usd{font-size:11px;color:#22c55e}
+
+.redeem-input{width:100%;padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.08);color:#fff;font-size:14px;margin:8px 0;text-align:center}
+.redeem-input::placeholder{color:#666}
 </style>
 </head>
 <body>
 <div class="container">
+  <!-- Profile Row -->
+  <div class="profile-row" onclick="showProfile()">
+    <div class="profile-avatar" id="avatarEl">
+      <span id="avatarInit">🎯</span>
+    </div>
+    <div class="profile-info">
+      <div class="name" id="profileName">Player</div>
+      <div class="sub" id="profileSub">🌍 Indonesia · 💵 $0.00</div>
+    </div>
+    <div style="font-size:20px">›</div>
+  </div>
+
   <div class="header">
-    <div class="level">🪙 Lv.<span id="level">1</span></div>
+    <div class="level" onclick="showProfile()">🪙 Lv.<span id="level">1</span></div>
     <div class="score">💰 <span id="score">0</span></div>
   </div>
   
@@ -107,7 +154,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   <div class="stats">
     <div class="stat-card"><div class="num" id="stat-taps">0</div><div class="label">Total Taps</div></div>
     <div class="stat-card" id="stat-power-card"><div class="num" id="stat-power">1x</div><div class="label">Tap Power</div></div>
-    <div class="stat-card"><div class="num" id="stat-coins">0</div><div class="label">This Session</div></div>
+    <div class="stat-card usd" onclick="showConvert()"><div class="num" id="stat-usd">$0.00</div><div class="label">USD Balance 💵</div></div>
   </div>
   
   <div class="boosts">
@@ -115,7 +162,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
     <button class="boost-btn" id="boost-energy" onclick="buyBoost('energy')">🔋 Full Energy<div class="cost">🪙 50</div></button>
   </div>
 
-  <!-- 🎬 MULTI AD BUTTONS -->
   <div class="ad-btns" id="ad-btns">
     <button class="ad-btn ad-btn-primary" id="ad-boost-btn" onclick="watchAd('boost')">
       <span class="left">🎬 Watch Ad</span>
@@ -137,30 +183,131 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   
   <button class="claim-btn" onclick="claimCoins()">📤 Claim to Bot</button>
 
-  <div class="ad-banner" id="ad-container"><small style="color:#555">— Ad Space —</small></div>
-  
   <div class="footer-links">
-    <a href="https://venicelab.web.id">About</a>
-    <a href="#" onclick="showLeaderboard()">🏆 Top</a>
+    <a onclick="showProfile()">📸 Profile</a>
+    <a onclick="showConvert()">💵 Convert</a>
+    <a onclick="showLeaderboard()">🏆 Top</a>
+    <a onclick="showRules()">📋 Rules</a>
+    <a onclick="showSupport()">📞 Help</a>
   </div>
 </div>
 
 <div class="timer-overlay" id="timer">
   <div class="big" id="timer-num">10</div>
-  <div class="info" id="timer-info">📢 Loading ad... Reward incoming!</div>
+  <div class="info" id="timer-info">📢 Loading ad...</div>
   <div class="bonus" id="timer-bonus"></div>
 </div>
 
+<!-- MODAL: Profile -->
+<div class="modal-overlay" id="modal-profile">
+  <div class="modal-card">
+    <button class="close" onclick="closeModal('modal-profile')">✕</button>
+    <h3>📸 My Profile</h3>
+    <div style="text-align:center;margin:12px 0">
+      <div style="width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,#4a6cf7,#6c5ce7);display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto;border:3px solid #ffd700" id="modalAvatar">🎯</div>
+      <div style="font-size:16px;font-weight:700;margin-top:8px" id="modalName">Player</div>
+      <div style="font-size:12px;color:#aaa" id="modalCountry">🌍 Indonesia</div>
+    </div>
+    <div class="rule-item"><span class="icon">🆔</span> ID: <span id="modalUid">-</span></div>
+    <div class="rule-item"><span class="icon">🪙</span> Coins: <span id="modalCoins">0</span></div>
+    <div class="rule-item"><span class="icon">💵</span> USD: $<span id="modalUsd">0.00</span></div>
+    <div class="rule-item"><span class="icon">🏆</span> Rank: #<span id="modalRank">-</span> / <span id="modalTotal">-</span></div>
+    <div class="rule-item"><span class="icon">👥</span> Referrals: <span id="modalRefs">0</span></div>
+    <div class="rule-item"><span class="icon">👆</span> Taps: <span id="modalTaps">0</span></div>
+    <div class="rule-item"><span class="icon">⚡</span> Power: <span id="modalPower">1x</span></div>
+    <div style="display:flex;gap:8px;margin-top:14px">
+      <button class="modal-btn modal-btn-gold" style="flex:1" onclick="closeModal('modal-profile');showConvert()">💵 Convert</button>
+      <button class="modal-btn modal-btn-purple" style="flex:1" onclick="closeModal('modal-profile');showRedeem()">💸 Redeem</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Convert -->
+<div class="modal-overlay" id="modal-convert">
+  <div class="modal-card">
+    <button class="close" onclick="closeModal('modal-convert')">✕</button>
+    <h3>🔄 Convert to USD</h3>
+    <p style="text-align:center">Saldo: 🪙 <span id="convCoins">0</span> · 💵 $<span id="convUsd">0.00</span></p>
+    <div class="convert-opt" id="convOptions"></div>
+    <p style="font-size:11px;color:#666;text-align:center;margin-top:8px">Klik jumlah coins yang mau ditukar. Rate bisa berubah.</p>
+  </div>
+</div>
+
+<!-- MODAL: Redeem -->
+<div class="modal-overlay" id="modal-redeem">
+  <div class="modal-card">
+    <button class="close" onclick="closeModal('modal-redeem')">✕</button>
+    <h3>💸 Redeem USDT</h3>
+    <p style="text-align:center">💵 Balance: $<span id="redeemUsd">0.00</span></p>
+    <div class="tier-grid" id="tierList"></div>
+    <input class="redeem-input" id="redeemAddress" placeholder="Masukkan alamat USDT (TRC-20)" />
+    <button class="modal-btn modal-btn-green" onclick="doRedeem()">💸 Redeem Now</button>
+    <p style="font-size:11px;color:#666;text-align:center;margin-top:6px">⏱ Processing 24-48 jam · Pastikan address benar!</p>
+  </div>
+</div>
+
+<!-- MODAL: Rules -->
+<div class="modal-overlay" id="modal-rules">
+  <div class="modal-card">
+    <button class="close" onclick="closeModal('modal-rules')">✕</button>
+    <h3>📋 Rules & Policy</h3>
+    <div class="rule-item"><span class="icon">🚫</span> <b>Anti-Click / Anti-Bot</b><br><span style="font-size:12px;color:#888">Max 50 taps/30detik · 3 ad views/5menit · Auto-clicks detection · Suspended jika melanggar</span></div>
+    <div class="rule-item"><span class="icon">💸</span> <b>Redeem Policy</b><br><span style="font-size:12px;color:#888">Min $1.00 · TRC-20/BEP-20 · 24-48 jam · Fee per tier · Pastikan address benar</span></div>
+    <div class="rule-item"><span class="icon">🔒</span> <b>Account Security</b><br><span style="font-size:12px;color:#888">1 akun per Telegram · IP detected · VPN allowed · No multi-account from same IP</span></div>
+    <div class="rule-item"><span class="icon">📞</span> <b>Contact</b><br><span style="font-size:12px;color:#888">@VaniceLab_support · support@venicelab.web.id · 1x24 jam respon</span></div>
+  </div>
+</div>
+
+<!-- MODAL: Support -->
+<div class="modal-overlay" id="modal-support">
+  <div class="modal-card">
+    <button class="close" onclick="closeModal('modal-support')">✕</button>
+    <h3>📞 Support</h3>
+    <p>Punya masalah? Kami siap bantu!</p>
+    <div class="rule-item"><span class="icon">🐞</span> <b>Bug / Error</b><br>→ @VaniceLab_support</div>
+    <div class="rule-item"><span class="icon">💸</span> <b>Redeem Issue</b><br>→ support@venicelab.web.id (sertakan ID redeem)</div>
+    <div class="rule-item"><span class="icon">👤</span> <b>Account Issue</b><br>→ /support di bot @VaniceLab_bot</div>
+    <div class="rule-item"><span class="icon">⏱</span> Respon: 1x24 jam kerja</div>
+  </div>
+</div>
+
 <script>
+// ===== SOUNDS (base64) =====
+const SOUNDS = {
+  tap: new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA='),
+  bonus: new Audio('data:audio/wav;base64,UklGRnoAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAAoAHBhY2thZ2UgPSB7fTsgdmFyIHNvdW5kID0gbmV3IEF1ZGlvKCk7IHNvdW5kLnNyYyA9ICdkYXRhOmF1ZGlvL3dhdjtiYXNlNjQnOw=='),
+  redeem: new Audio('data:audio/wav;base64,UklGRnoAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAAoAHBhY2thZ2UgPSB7fTsgdmFyIHNvdW5kID0gbmV3IEF1ZGlvKCk7IHNvdW5kLnNyYyA9ICdkYXRhOmF1ZGlvL3dhdjtiYXNlNjQnOw=='),
+  error: new Audio('data:audio/wav;base64,UklGRnoAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAAoAHBhY2thZ2UgPSB7fTsgdmFyIHNvdW5kID0gbmV3IEF1ZGlvKCk7IHNvdW5kLnNyYyA9ICdkYXRhOmF1ZGlvL3dhdjtiYXNlNjQnOw=='),
+};
+function playSound(name) { try { SOUNDS[name]?.play().catch(()=>{}); } catch(e){} }
+
+// ===== TG WEBAPP =====
 let tg = window.Telegram?.WebApp;
 if(tg) { tg.expand(); tg.enableClosingConfirmation(); }
 
+// ===== CONVERT RATES =====
+const CONVERT_RATES = [
+  [1000, 0.10],
+  [5000, 0.50],
+  [10000, 1.00],
+  [50000, 5.00],
+  [100000, 10.00],
+];
+
+const REDEEM_TIERS = [
+  {name:"Starter", min:1.0, maxDay:5, fee:0, color:"🟢"},
+  {name:"Silver", min:5.0, maxDay:25, fee:2, color:"🔵"},
+  {name:"Gold", min:10.0, maxDay:100, fee:5, color:"🟡"},
+  {name:"Platinum", min:25.0, maxDay:999999, fee:10, color:"🟣"},
+];
+
+// ===== STATE =====
 let state = {
   coins:0, energy:1000, maxEnergy:1000, tapPower:1,
   totalTaps:0, sessionCoins:0, level:1, adWatchCount:0,
   rushMode:false, rushEnd:0,
-  dailyBonus:true,
-  multiplyReady:false,
+  dailyBonus:true, multiplyReady:false,
+  usdBalance:0, userRank:1, totalUsers:1, userRefs:0,
 };
 
 try {
@@ -168,8 +315,7 @@ try {
   if(s) Object.assign(state, s);
 } catch(e) {}
 
-
-// ⚡ RUSH MODE TIMER
+// ===== RUSH TIMER =====
 setInterval(() => {
   if(state.rushMode && Date.now() > state.rushEnd) {
     state.rushMode = false;
@@ -179,7 +325,7 @@ setInterval(() => {
   }
 }, 1000);
 
-// ⚡ ENERGY REFILL
+// ===== ENERGY REFILL =====
 setInterval(() => {
   if(state.energy < state.maxEnergy) {
     state.energy = Math.min(state.energy + 3, state.maxEnergy);
@@ -187,13 +333,15 @@ setInterval(() => {
   }
 }, 1000);
 
-// 👆 TAP
+// ===== TAP =====
 document.getElementById('coin').addEventListener('click', (e) => {
   if(state.energy < state.tapPower) return;
   state.energy = Math.max(0, state.energy - state.tapPower);
   state.coins += state.tapPower;
   state.totalTaps += 1;
   state.sessionCoins += state.tapPower;
+  
+  playSound('tap');
   
   let fly = document.createElement('div');
   fly.className = 'fly';
@@ -209,6 +357,7 @@ document.getElementById('coin').addEventListener('click', (e) => {
   let nl = Math.floor(state.totalTaps/500)+1;
   if(nl > state.level) {
     state.level = nl;
+    playSound('bonus');
     if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
   }
 });
@@ -219,16 +368,17 @@ function updateUI() {
   document.getElementById('energy-fill').style.width = `${(state.energy/state.maxEnergy)*100}%`;
   document.getElementById('stat-taps').textContent = state.totalTaps.toLocaleString();
   document.getElementById('stat-power').textContent = state.rushMode ? `3x ⚡` : `${state.tapPower}x`;
-  document.getElementById('stat-coins').textContent = state.sessionCoins;
+  document.getElementById('stat-coins') && (document.getElementById('stat-coins').textContent = state.sessionCoins);
   document.getElementById('level').textContent = state.level;
+  document.getElementById('stat-usd').textContent = `$${state.usdBalance.toFixed(2)}`;
   
   let dl = document.getElementById('daily-label');
   dl.textContent = state.dailyBonus ? '⭐ 2x Reward!' : '✅ Done today';
   document.getElementById('ad-daily-btn').disabled = !state.dailyBonus;
-  
-  let ml = document.getElementById('multiply-label');
-  ml.textContent = state.sessionCoins > 0 ? '2x your coins!' : 'Claim first!';
   document.getElementById('ad-multiply-btn').disabled = state.sessionCoins <= 0 || !state.multiplyReady;
+  
+  // Profile row
+  document.getElementById('profileSub').textContent = `${state.country || '🌍 Indonesia'} · 💵 $${state.usdBalance.toFixed(2)}`;
 }
 
 function saveState() { try { localStorage.setItem('venice_state', JSON.stringify(state)); } catch(e) {} }
@@ -238,16 +388,18 @@ function buyBoost(t) {
     let c = 100 * state.tapPower;
     if(state.coins < c) return;
     state.coins -= c; state.tapPower += 1;
+    playSound('bonus');
     if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
   } else if(t === 'energy') {
     if(state.coins < 50) return;
     state.coins -= 50; state.energy = state.maxEnergy;
+    playSound('tap');
     if(tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('heavy');
   }
   updateUI(); saveState();
 }
 
-// 🎬 OPEN AD LINK (fallback — kalo VaniceLab gagal)
+// ===== VANICELAB ADS =====
 function openAdLink() {
   let ads = [
     'https://6opo.com/wrr?z=11298121&p_rid=37314776-dc73-453f-9024-07d4f44dc157&rb=r5L-31vDSjUVWY-RQ41amCGRqOKu3nRa1nOWWZA_GZREap6a97W9kv6pMjqjYxN3mOjqMqxN-jbDcpY-ltNdeaDTvbCgJ0nJ1gQcVSh3zG2aa8wsWviwD8Z_1CoxCRmcDe7OcoYjUZUAYTg8aLIUq9odhrL6cC5agoTF8jjP0oPBnhiQwqCpDxbcinfsjGw92MONLGw4N0fvWn4Jvk4AYtlyqo6sbATqMM6DpdEKaicTZovud5igJ7X-W-3QA7wVBXO6Tqw_KzJ1gyi4_6D9ufqW6vpajLCZJutXpQUlh4ZEcxMa0Zr3TuMTJ2fMToF7hJuMVC3VK8kOXByTY0OlmOqkYCOqgjDK',
@@ -263,85 +415,59 @@ function openAdLink() {
   }, 200);
 }
 
-// 🎬 SHOW VANICELAB REWARDED AD
 function showVaniceAd(rewardCallback) {
   if(typeof show_11323629 === 'function') {
-    show_11323629()
-      .then(() => { rewardCallback(); })
-      .catch(e => {
-        // VaniceLab gagal — fallback ke openAdLink
-        openAdLink();
-        setTimeout(() => { rewardCallback(); }, 12000);
-      });
+    show_11323629().then(() => { rewardCallback(); }).catch(e => {
+      openAdLink(); setTimeout(() => { rewardCallback(); }, 12000);
+    });
   } else {
-    // SDK belum load — fallback
-    openAdLink();
-    setTimeout(() => { rewardCallback(); }, 12000);
+    openAdLink(); setTimeout(() => { rewardCallback(); }, 12000);
   }
 }
-
-// 🎬 SHOW VANICELAB REWARDED POPUP
 function showVanicePop(rewardCallback) {
   if(typeof show_11323629 === 'function') {
-    show_11323629('pop')
-      .then(() => { rewardCallback(); })
-      .catch(e => {
-        openAdLink();
-        setTimeout(() => { rewardCallback(); }, 15000);
-      });
+    show_11323629('pop').then(() => { rewardCallback(); }).catch(e => {
+      openAdLink(); setTimeout(() => { rewardCallback(); }, 15000);
+    });
   } else {
-    openAdLink();
-    setTimeout(() => { rewardCallback(); }, 15000);
+    openAdLink(); setTimeout(() => { rewardCallback(); }, 15000);
   }
 }
 
-// 🎬 WATCH AD (3 TYPES)
+// ===== WATCH AD =====
 function watchAd(type) {
   if(type === 'boost') {
     let btn = document.getElementById('ad-boost-btn');
-    if(btn.disabled) return;
-    btn.disabled = true;
-    
+    if(btn.disabled) return; btn.disabled = true;
     showTimer(12, '📢 Loading ad...', '', () => {
       showVaniceAd(() => {
         state.energy = Math.min(state.energy + 50, state.maxEnergy);
-        state.coins += 10;
-        state.sessionCoins += 10;
-        state.adWatchCount += 1;
+        state.coins += 10; state.sessionCoins += 10;
+        state.adWatchCount += 1; playSound('bonus');
         flyReward('🎬 +50⚡ +10🪙');
         setTimeout(() => { btn.disabled = false; }, 25000);
       });
     });
-    
   } else if(type === 'daily') {
     let btn = document.getElementById('ad-daily-btn');
-    if(!state.dailyBonus || btn.disabled) return;
-    btn.disabled = true;
-    
+    if(!state.dailyBonus || btn.disabled) return; btn.disabled = true;
     showTimer(15, '⭐ Daily Bonus!', 'Watch ad for DOUBLE reward!', () => {
       showVanicePop(() => {
-        let bonus = 100;
-        state.coins += bonus;
-        state.sessionCoins += bonus;
-        state.energy = state.maxEnergy;
-        state.dailyBonus = false;
-        state.adWatchCount += 1;
+        state.coins += 100; state.sessionCoins += 100;
+        state.energy = state.maxEnergy; state.dailyBonus = false;
+        state.adWatchCount += 1; playSound('bonus');
         flyReward('⭐ +100🪙 +Full Energy');
         if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
       });
     });
-    
   } else if(type === 'rush') {
     let btn = document.getElementById('ad-rush-btn');
-    if(state.rushMode || btn.disabled) return;
-    btn.disabled = true;
-    
+    if(state.rushMode || btn.disabled) return; btn.disabled = true;
     showTimer(10, '⚡ Rush Mode!', '3x tap power for 30 seconds!', () => {
       showVaniceAd(() => {
-        state.rushMode = true;
-        state.rushEnd = Date.now() + 30000;
+        state.rushMode = true; state.rushEnd = Date.now() + 30000;
         state.tapPower = Math.max(state.tapPower, 1) + 2;
-        state.adWatchCount += 1;
+        state.adWatchCount += 1; playSound('bonus');
         document.getElementById('stat-power-card').classList.add('rush');
         flyReward('⚡ 3x POWER 30s!');
         if(tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('heavy');
@@ -349,22 +475,17 @@ function watchAd(type) {
       });
     });
   }
-  
   updateUI(); saveState();
 }
 
-// 🔁 MULTIPLY CLAIM
 function multiplyClaim() {
   let btn = document.getElementById('ad-multiply-btn');
   if(state.sessionCoins <= 0 || !state.multiplyReady || btn.disabled) return;
   btn.disabled = true;
-  
   showTimer(12, '🔁 Multiply Claim!', `2x your ${state.sessionCoins} coins!`, () => {
     showVanicePop(() => {
-      state.coins += state.sessionCoins;
-      state.sessionCoins *= 2;
-      state.adWatchCount += 1;
-      state.multiplyReady = false;
+      state.coins += state.sessionCoins; state.sessionCoins *= 2;
+      state.adWatchCount += 1; state.multiplyReady = false; playSound('bonus');
       flyReward('🔁 2x MULTIPLIED!');
       if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
       setTimeout(() => { btn.disabled = false; }, 60000);
@@ -373,23 +494,19 @@ function multiplyClaim() {
   updateUI(); saveState();
 }
 
-// ⏱ TIMER HELPER
+// ===== TIMER =====
 function showTimer(seconds, info, bonus, callback) {
   let overlay = document.getElementById('timer');
   let numEl = document.getElementById('timer-num');
   let infoEl = document.getElementById('timer-info');
   let bonusEl = document.getElementById('timer-bonus');
-  
   infoEl.textContent = info;
   bonusEl.textContent = bonus || '';
   overlay.classList.add('show');
-  
   let count = seconds;
   numEl.textContent = count;
-  
   let timer = setInterval(() => {
-    count--;
-    numEl.textContent = count;
+    count--; numEl.textContent = count;
     if(count <= 0) {
       clearInterval(timer);
       overlay.classList.remove('show');
@@ -399,35 +516,140 @@ function showTimer(seconds, info, bonus, callback) {
   }, 1000);
 }
 
-// 🎉 FLY REWARD
 function flyReward(text) {
   let f = document.createElement('div');
-  f.className = 'fly';
-  f.textContent = text;
-  f.style.left = '25%';
-  f.style.top = '35%';
-  f.style.fontSize = '18px';
+  f.className = 'fly'; f.textContent = text;
+  f.style.left = '25%'; f.style.top = '35%'; f.style.fontSize = '18px';
   document.querySelector('.container').appendChild(f);
   setTimeout(()=>f.remove(), 1200);
 }
 
-// 📤 CLAIM → RESET MULTIPLY
+// ===== CLAIM =====
 function claimCoins() {
   if(state.sessionCoins <= 0) return;
   if(tg) {
-    tg.sendData(JSON.stringify({action:'claim', coins: state.sessionCoins}));
+    tg.sendData(JSON.stringify({
+      action:'claim', coins: state.sessionCoins,
+      taps: state.totalTaps, ads: state.adWatchCount
+    }));
+    // Update USD
+    let usdEarned = state.sessionCoins / 10000;
+    state.usdBalance = (state.usdBalance || 0) + usdEarned;
     state.multiplyReady = true;
     state.sessionCoins = 0;
+    playSound('redeem');
     updateUI(); saveState();
     if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
   }
 }
 
+// ===== PROFILE MODAL =====
+function showProfile() {
+  document.getElementById('modalName').textContent = tg?.initDataUnsafe?.user?.first_name || 'Player';
+  document.getElementById('modalUid').textContent = tg?.initDataUnsafe?.user?.id || '-';
+  document.getElementById('modalCoins').textContent = state.coins.toLocaleString();
+  document.getElementById('modalUsd').textContent = state.usdBalance.toFixed(2);
+  document.getElementById('modalRank').textContent = state.userRank;
+  document.getElementById('modalTotal').textContent = state.totalUsers;
+  document.getElementById('modalRefs').textContent = state.userRefs;
+  document.getElementById('modalTaps').textContent = state.totalTaps.toLocaleString();
+  document.getElementById('modalPower').textContent = `${state.tapPower}x`;
+  openModal('modal-profile');
+}
+
+// ===== CONVERT MODAL =====
+function showConvert() {
+  document.getElementById('convCoins').textContent = state.coins.toLocaleString();
+  document.getElementById('convUsd').textContent = state.usdBalance.toFixed(2);
+  
+  let html = '';
+  for(let [coins, usd] of CONVERT_RATES) {
+    let can = state.coins >= coins;
+    html += `<div class="convert-btn ${can?'':'locked'}" onclick="${can?`doConvert(${coins},${usd})`:''}">
+      <div class="c-coins">${coins.toLocaleString()} 🪙</div>
+      <div class="c-usd">→ $${usd.toFixed(2)}</div>
+    </div>`;
+  }
+  document.getElementById('convOptions').innerHTML = html;
+  openModal('modal-convert');
+}
+
+function doConvert(coins, usd) {
+  if(state.coins < coins) return;
+  state.coins -= coins;
+  state.usdBalance = (state.usdBalance || 0) + usd;
+  playSound('bonus');
+  flyReward(`💵 +$${usd.toFixed(2)} USD!`);
+  updateUI(); saveState();
+  closeModal('modal-convert');
+}
+
+// ===== REDEEM MODAL =====
+function showRedeem() {
+  document.getElementById('redeemUsd').textContent = state.usdBalance.toFixed(2);
+  let html = '';
+  for(let t of REDEEM_TIERS) {
+    let can = state.usdBalance >= t.min;
+    html += `<div class="tier-card ${can?'':'locked'}">
+      <div class="tier-name">${t.color} ${t.name}</div>
+      <div>Min $${t.min}</div>
+      <div class="tier-rate">Fee ${t.fee}%</div>
+      <div style="font-size:10px;color:#888">${can?'✅ Available':'🔒 Locked'}</div>
+    </div>`;
+  }
+  document.getElementById('tierList').innerHTML = html;
+  openModal('modal-redeem');
+}
+
+function doRedeem() {
+  if(state.usdBalance < 1.0) {
+    flyReward('❌ Min $1.00');
+    return;
+  }
+  let addr = document.getElementById('redeemAddress').value.trim();
+  if(addr.length < 20) {
+    flyReward('❌ Address invalid');
+    return;
+  }
+  
+  // Find tier
+  let tier = REDEEM_TIERS.filter(t => state.usdBalance >= t.min).pop();
+  let fee = state.usdBalance * (tier.fee / 100);
+  let net = state.usdBalance - fee;
+  
+  if(tg) {
+    tg.sendData(JSON.stringify({
+      action:'redeem',
+      usd: state.usdBalance,
+      address: addr,
+      tier: tier.name,
+      fee: fee,
+      net: net
+    }));
+  }
+  
+  state.usdBalance = 0;
+  document.getElementById('redeemAddress').value = '';
+  playSound('redeem');
+  flyReward(`💸 Redeem $${net.toFixed(2)} pending!`);
+  updateUI(); saveState();
+  closeModal('modal-redeem');
+}
+
+// ===== LEADERBOARD =====
 function showLeaderboard() {
   if(tg) tg.sendData(JSON.stringify({action:'get_leaderboard'}));
 }
 
-// ⏰ RESET DAILY BONUS (checks every minute)
+// ===== RULES & SUPPORT =====
+function showRules() { openModal('modal-rules'); }
+function showSupport() { openModal('modal-support'); }
+
+// ===== MODAL HELPERS =====
+function openModal(id) { document.getElementById(id).classList.add('show'); }
+function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+
+// ===== RESET DAILY =====
 setInterval(() => {
   let today = new Date().toDateString();
   let saved = localStorage.getItem('venice_daily');
@@ -438,7 +660,7 @@ setInterval(() => {
   }
 }, 60000);
 
-// CHECK BOOST DISABLE
+// ===== INIT =====
 setInterval(() => {
   let pc = 100 * state.tapPower;
   document.querySelector('#boost-power .cost').textContent = `🪙 ${pc}`;
@@ -446,23 +668,24 @@ setInterval(() => {
   document.getElementById('boost-energy').disabled = state.coins < 50 || state.energy >= state.maxEnergy;
 }, 500);
 
-// SET DAILY ON LOAD
 if(!localStorage.getItem('venice_daily')) {
   localStorage.setItem('venice_daily', new Date().toDateString());
 }
 
-// 🎬 VANICELAB IN-APP INTERSTITIAL (auto ads)
+// Set profile name
+let u = tg?.initDataUnsafe?.user;
+if(u) {
+  document.getElementById('profileName').textContent = u.first_name || 'Player';
+  document.getElementById('modalName').textContent = u.first_name || 'Player';
+  document.getElementById('modalUid').textContent = u.id || '-';
+}
+
+// In-App interstitial
 setTimeout(() => {
   if(typeof show_11323629 === 'function') {
     show_11323629({
       type: 'inApp',
-      inAppSettings: {
-        frequency: 2,
-        capping: 0.1,
-        interval: 30,
-        timeout: 5,
-        everyPage: false
-      }
+      inAppSettings: { frequency: 2, capping: 0.1, interval: 30, timeout: 5, everyPage: false }
     });
   }
 }, 3000);
