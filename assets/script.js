@@ -114,7 +114,7 @@ function toggleLang() {
     fetch(`https://visitor-badge.laobi.icu/badge?page_id=venicelab.web.id&_=${ts}`)
         .then(r => r.text())
         .then(svg => {
-            const match = svg.match(/<text[^>]*x="571[^"]*"[^>]*>([^<]+)<\/text>/);
+            const match = svg.match(/<text[^>]*x="64[01][^"]*"[^>]*>([0-9]+)<\/text>/);
             totalEl.textContent = match ? match[1] : '1K+';
         })
         .catch(() => { totalEl.textContent = '1K+'; });
@@ -123,7 +123,7 @@ function toggleLang() {
     fetch(`https://visitor-badge.laobi.icu/badge?page_id=venicelab.${today}&_=${ts}`)
         .then(r => r.text())
         .then(svg => {
-            const match = svg.match(/<text[^>]*x="571[^"]*"[^>]*>([^<]+)<\/text>/);
+            const match = svg.match(/<text[^>]*x="64[01][^"]*"[^>]*>([0-9]+)<\/text>/);
             if (liveEl) liveEl.textContent = match ? match[1] : '0';
         })
         .catch(() => { if (liveEl) liveEl.textContent = '0'; });
