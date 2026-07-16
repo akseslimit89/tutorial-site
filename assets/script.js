@@ -56,7 +56,7 @@ const partsData = {
     {id:6, title:"10x Your Income — Advanced Strategy", desc:"Scale from $5 to $50-100/month. Multi-account & automation.", read:"8 min", ads:"Scale Up"},
   ],
   id: [
-    {id:1, title:"Cara Bikin Dompet Digital (FaucetPay)", desc:"Langkah pertama — dompet gratis dalam 5 menit.", read:"3 mnt", ads:"Dompet"},
+    {id:1, title:"Cara Bikin Dompet Digital (FaucetPay)", desc:"Langkah pertama — dompet gratis dalam 5 menit.", read:"5 mnt", ads:"Dompet"},
     {id:2, title:"Auto Claim Faucet Pake HP", desc:"Setel bot faucet buat dapet satoshi tiap jam.", read:"5 mnt", ads:"Crypto"},
     {id:3, title:"Micro Tasks — Dapet $0.5-1 Per Hari", desc:"Kerjakan tugas kecil online. Gak perlu skill khusus.", read:"7 mnt", ads:"Task"},
     {id:4, title:"Airdrop Farming untuk Pemula", desc:"Cari, daftar, dan klaim airdrop gratis sebelum listing.", read:"10 mnt", ads:"Airdrop"},
@@ -100,35 +100,37 @@ function toggleLang() {
   renderParts(newLang);
 }
 
-// ── REAL VISITOR COUNTER ──
+// ── VISITOR COUNTER (img badge — works without CORS) ──
 (function() {
-    const totalEl = document.getElementById('totalCount');
-    const liveEl = document.getElementById('liveCount');
-    const countryEl = document.getElementById('countryCount');
-    if (!totalEl) return;
-    
+    const ts = Date.now();
     const today = new Date().toISOString().split('T')[0];
-    const ts = Date.now(); // anti-cache
-    
-    // 1️⃣ Total visitors — dari visitor badge
-    fetch(`https://visitor-badge.laobi.icu/badge?page_id=venicelab.web.id&_=${ts}`)
-        .then(r => r.text())
-        .then(svg => {
-            const match = svg.match(/<text[^>]*x="64[01][^"]*"[^>]*>([0-9]+)<\/text>/);
-            totalEl.textContent = match ? match[1] : '1K+';
-        })
-        .catch(() => { totalEl.textContent = '1K+'; });
-    
-    // 2️⃣ Today — badge harian (auto reset tiap hari)
-    fetch(`https://visitor-badge.laobi.icu/badge?page_id=venicelab.${today}&_=${ts}`)
-        .then(r => r.text())
-        .then(svg => {
-            const match = svg.match(/<text[^>]*x="64[01][^"]*"[^>]*>([0-9]+)<\/text>/);
-            if (liveEl) liveEl.textContent = match ? match[1] : '0';
-        })
-        .catch(() => { if (liveEl) liveEl.textContent = '0'; });
-    
-    // 3️⃣ Country — deteksi real dari IP
+
+    // Total badge — setiap page load = +1 count (via <img> tag)
+    const totalImg = document.getElementById('totalBadge');
+    if (totalImg) {
+        totalImg.src = `https://visitor-badge.laobi.icu/badge?page_id=venicelab.web.id&left_text=Visitors&right_color=2563eb&height=30&_=${ts}`;
+    }
+
+    // Total badge (lower section) — page_id sama, jadi total +2/page
+    const totalImg2 = document.getElementById('totalBadge2');
+    if (totalImg2) {
+        totalImg2.src = `https://visitor-badge.laobi.icu/badge?page_id=venicelab.web.id&left_text=Total&right_color=2563eb&height=26&_=${ts}`;
+    }
+
+    // Today badge — daily counter, auto-reset
+    const todayImg = document.getElementById('todayBadge');
+    if (todayImg) {
+        todayImg.src = `https://visitor-badge.laobi.icu/badge?page_id=venicelab.${today}&left_text=Today&right_color=22c55e&height=30&_=${ts}`;
+    }
+
+    // Today badge (lower section)
+    const todayImg2 = document.getElementById('todayBadge2');
+    if (todayImg2) {
+        todayImg2.src = `https://visitor-badge.laobi.icu/badge?page_id=venicelab.${today}&left_text=Today&right_color=22c55e&height=28&_=${ts}`;
+    }
+
+    // Country detection — ip-api.com HAS CORS support ✅
+    const countryEl = document.getElementById('countryCount');
     if (countryEl) {
         fetch('https://api.ipify.org?format=json')
             .then(r => r.json())
@@ -147,7 +149,6 @@ function toggleLang() {
             })
             .catch(() => { countryEl.textContent = '🌍 Indonesia'; });
     }
-    
 })();
 
 // ── INIT ──

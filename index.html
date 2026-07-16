@@ -94,12 +94,16 @@ document.documentElement.style.visibility='visible';
   <p class="subtitle">Complete step-by-step tutorial. Proven methods used by thousands worldwide. No credit card required. 100% free.</p>
   <div class="stats-row">
     <div class="stat-item">
-      <div class="stat-num"><span id="totalCount">0</span>+</div>
+      <div class="stat-num">
+        <img id="totalBadge" src="" alt="Total Visits" style="height:34px;display:block;margin:0 auto" />
+      </div>
       <div class="stat-label">Total Visits</div>
     </div>
     <div class="stat-item">
-      <div class="stat-num"><span id="liveCount">0</span></div>
-      <div class="stat-label">Today <span id="liveDot" style="color:#22c55e">●</span></div>
+      <div class="stat-num">
+        <img id="todayBadge" src="" alt="Today" style="height:34px;display:block;margin:0 auto" />
+      </div>
+      <div class="stat-label">Today <span style="color:#22c55e">●</span></div>
     </div>
     <div class="stat-item">
       <div class="stat-num"><span id="countryCount">0</span></div>
@@ -134,12 +138,16 @@ document.documentElement.style.visibility='visible';
     <h3>🌐 Global Visitor Statistics</h3>
     <div class="stats-grid">
       <div class="stat-box">
-        <div class="num">787+</div>
+        <div class="num">
+          <img id="totalBadge2" src="" alt="Total" style="height:30px;vertical-align:middle" />
+        </div>
         <div class="label">Total Visits</div>
       </div>
       <div class="stat-box">
-        <div class="num"><span id="liveCount2">0</span>+</div>
-        <div class="label">Live Visitors</div>
+        <div class="num">
+          <img id="todayBadge2" src="" alt="Today" style="height:30px;vertical-align:middle" />
+        </div>
+        <div class="label">Live Visitors Today</div>
       </div>
       <div class="stat-box">
         <div class="num">15</div>
@@ -253,13 +261,5 @@ document.documentElement.style.visibility='visible';
 
 <!-- SHARED SCRIPTS -->
 <script src="assets/script.js"></script>
-<script>
-// Override visitor count for the second display
-document.addEventListener('DOMContentLoaded', () => {
-  const lc2 = document.getElementById('liveCount2');
-  const lc1 = document.getElementById('liveCount');
-  if (lc2 && lc1) lc2.textContent = lc1.textContent;
-});
-</script>
 </body>
 </html>
