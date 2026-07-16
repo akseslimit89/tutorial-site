@@ -227,6 +227,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
       <div style="font-size:12px;color:#aaa" id="modalCountry">🌍 Indonesia</div>
     </div>
     <div class="rule-item"><span class="icon">🆔</span> ID: <span id="modalUid">-</span></div>
+    <div class="rule-item"><span class="icon">📤</span> Ref Link: <span style="font-size:11px;color:#ffd700;word-break:break-all" id="modalRefLink">-</span></div>
     <div class="rule-item"><span class="icon">🪙</span> Coins: <span id="modalCoins">0</span></div>
     <div class="rule-item"><span class="icon">💵</span> USD: $<span id="modalUsd">0.00</span></div>
     <div class="rule-item"><span class="icon">🏆</span> Rank: #<span id="modalRank">-</span> / <span id="modalTotal">-</span></div>
@@ -586,8 +587,11 @@ function claimCoins() {
 
 // ===== PROFILE MODAL =====
 function showProfile() {
-  document.getElementById('modalName').textContent = tg?.initDataUnsafe?.user?.first_name || 'Player';
-  document.getElementById('modalUid').textContent = tg?.initDataUnsafe?.user?.id || '-';
+  let u = tg?.initDataUnsafe?.user;
+  let uid = u?.id || '-';
+  document.getElementById('modalName').textContent = u?.first_name || 'Player';
+  document.getElementById('modalUid').textContent = uid;
+  document.getElementById('modalRefLink').textContent = `https://t.me/VaniceLab_bot?start=ref_${uid}`;
   document.getElementById('modalCoins').textContent = state.coins.toLocaleString();
   document.getElementById('modalUsd').textContent = state.usdBalance.toFixed(2);
   document.getElementById('modalRank').textContent = state.userRank;
@@ -713,12 +717,22 @@ if(!localStorage.getItem('venice_daily')) {
   localStorage.setItem('venice_daily', new Date().toDateString());
 }
 
-// Set profile name
+// Set profile name + foto
 let u = tg?.initDataUnsafe?.user;
 if(u) {
   document.getElementById('profileName').textContent = u.first_name || 'Player';
   document.getElementById('modalName').textContent = u.first_name || 'Player';
-  document.getElementById('modalUid').textContent = u.id || '-';
+  
+  // Ambil foto dari Telegram (kalo ada)
+  if(u.photo_url) {
+    document.getElementById('avatarEl').innerHTML = `<img src="${u.photo_url}" alt="avatar" />`;
+    document.getElementById('modalAvatar').innerHTML = `<img src="${u.photo_url}" alt="avatar" style="width:70px;height:70px;border-radius:50%;object-fit:cover" />`;
+  } else {
+    // Fallback: inisial
+    let init = (u.first_name?.charAt(0) || '🎯').toUpperCase();
+    document.getElementById('avatarEl').textContent = init;
+    document.getElementById('modalAvatar').textContent = init;
+  }
 }
 
 // In-App interstitial
