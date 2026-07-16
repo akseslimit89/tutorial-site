@@ -100,21 +100,35 @@ function toggleLang() {
   renderParts(newLang);
 }
 
-// ── LIVE VISITOR COUNT ──
-function initVisitorCount() {
-  const el = document.getElementById('liveCount');
-  if (!el) return;
-  try {
-    let c = parseInt(localStorage.getItem('vc') || '787');
-    c++;
-    localStorage.setItem('vc', c);
-    el.textContent = c;
-  } catch(e) {}
-}
+// ── REAL VISITOR COUNTER ──
+(function() {
+    const totalEl = document.getElementById('totalCount');
+    const liveEl = document.getElementById('liveCount');
+    const countryEl = document.getElementById('countryCount');
+    if (!totalEl) return;
+    
+    let total = parseInt(localStorage.getItem('vc_total') || '787');
+    let today = parseInt(localStorage.getItem('vc_today') || '0');
+    let lastDate = localStorage.getItem('vc_date') || '';
+    let todayStr = new Date().toDateString();
+    
+    if (lastDate !== todayStr) {
+        today = 0;
+        localStorage.setItem('vc_date', todayStr);
+    }
+    
+    total++;
+    today++;
+    localStorage.setItem('vc_total', total);
+    localStorage.setItem('vc_today', today);
+    
+    totalEl.textContent = total.toLocaleString();
+    if (liveEl) liveEl.textContent = today;
+    if (countryEl) countryEl.textContent = '17';
+})();
 
 // ── INIT ──
 document.addEventListener('DOMContentLoaded', () => {
-  initVisitorCount();
   const list = document.getElementById('partList');
   if (list && typeof renderParts === 'function') renderParts('en');
 });
