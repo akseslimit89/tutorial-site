@@ -47,9 +47,16 @@
 </script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 
-<!-- SHARED PREMIUM CSS -->
+<!-- PRECONNECT untuk gambar & ad -->
+<link rel="preconnect" href="https://picsum.photos">
+<link rel="preconnect" href="https://pl30369958.effectivecpmnetwork.com">
+
+<!-- PRELOAD critical assets -->
+<link rel="preload" href="assets/style.css" as="style">
 <link rel="stylesheet" href="assets/style.css">
 
 <style>
@@ -58,9 +65,19 @@
 .intro-section{text-align:center;padding:48px 0 24px}
 .intro-section h2{font-size:clamp(1.3em,2.5vw,1.8em);font-weight:700;margin-bottom:12px;color:#0f172a}
 .intro-section p{color:#64748b;max-width:620px;margin:0 auto 0;font-size:1em}
+/* Critical render fix: visible text immediately */
+h1, h2, p, .badge, .subtitle { font-family: system-ui, -apple-system, sans-serif; }
+.fonts-loaded h1, .fonts-loaded h2, .fonts-loaded p, .fonts-loaded .badge, .fonts-loaded .subtitle { font-family: 'Inter', system-ui, sans-serif; }
 </style>
+<script>
+// Detect font load, swap class
+if(document.fonts) document.fonts.ready.then(()=>document.documentElement.classList.add('fonts-loaded'));
+else setTimeout(()=>document.documentElement.classList.add('fonts-loaded'), 3000);
+// Show content immediately
+document.documentElement.style.visibility='visible';
+</script>
 </head>
-<body>
+<body style="visibility:visible">
 
 <header class="header-premium">
   <div class="badge" onclick="toggleLang()" id="langBadge" aria-label="Switch language">🌍 English</div>
