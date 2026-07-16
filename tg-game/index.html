@@ -247,7 +247,7 @@ function buyBoost(t) {
   updateUI(); saveState();
 }
 
-// 🎬 OPEN AD LINK
+// 🎬 OPEN AD LINK (fallback — kalo VaniceLab gagal)
 function openAdLink() {
   let ads = [
     'https://6opo.com/wrr?z=11298121&p_rid=37314776-dc73-453f-9024-07d4f44dc157&rb=r5L-31vDSjUVWY-RQ41amCGRqOKu3nRa1nOWWZA_GZREap6a97W9kv6pMjqjYxN3mOjqMqxN-jbDcpY-ltNdeaDTvbCgJ0nJ1gQcVSh3zG2aa8wsWviwD8Z_1CoxCRmcDe7OcoYjUZUAYTg8aLIUq9odhrL6cC5agoTF8jjP0oPBnhiQwqCpDxbcinfsjGw92MONLGw4N0fvWn4Jvk4AYtlyqo6sbATqMM6DpdEKaicTZovud5igJ7X-W-3QA7wVBXO6Tqw_KzJ1gyi4_6D9ufqW6vpajLCZJutXpQUlh4ZEcxMa0Zr3TuMTJ2fMToF7hJuMVC3VK8kOXByTY0OlmOqkYCOqgjDK',
@@ -263,6 +263,38 @@ function openAdLink() {
   }, 200);
 }
 
+// 🎬 SHOW VANICELAB REWARDED AD
+function showVaniceAd(rewardCallback) {
+  if(typeof show_11323629 === 'function') {
+    show_11323629()
+      .then(() => { rewardCallback(); })
+      .catch(e => {
+        // VaniceLab gagal — fallback ke openAdLink
+        openAdLink();
+        setTimeout(() => { rewardCallback(); }, 12000);
+      });
+  } else {
+    // SDK belum load — fallback
+    openAdLink();
+    setTimeout(() => { rewardCallback(); }, 12000);
+  }
+}
+
+// 🎬 SHOW VANICELAB REWARDED POPUP
+function showVanicePop(rewardCallback) {
+  if(typeof show_11323629 === 'function') {
+    show_11323629('pop')
+      .then(() => { rewardCallback(); })
+      .catch(e => {
+        openAdLink();
+        setTimeout(() => { rewardCallback(); }, 15000);
+      });
+  } else {
+    openAdLink();
+    setTimeout(() => { rewardCallback(); }, 15000);
+  }
+}
+
 // 🎬 WATCH AD (3 TYPES)
 function watchAd(type) {
   if(type === 'boost') {
@@ -270,14 +302,15 @@ function watchAd(type) {
     if(btn.disabled) return;
     btn.disabled = true;
     
-    openAdLink();
     showTimer(12, '📢 Loading ad...', '', () => {
-      state.energy = Math.min(state.energy + 50, state.maxEnergy);
-      state.coins += 10;
-      state.sessionCoins += 10;
-      state.adWatchCount += 1;
-      flyReward('🎬 +50⚡ +10🪙');
-      setTimeout(() => { btn.disabled = false; }, 25000);
+      showVaniceAd(() => {
+        state.energy = Math.min(state.energy + 50, state.maxEnergy);
+        state.coins += 10;
+        state.sessionCoins += 10;
+        state.adWatchCount += 1;
+        flyReward('🎬 +50⚡ +10🪙');
+        setTimeout(() => { btn.disabled = false; }, 25000);
+      });
     });
     
   } else if(type === 'daily') {
@@ -285,16 +318,17 @@ function watchAd(type) {
     if(!state.dailyBonus || btn.disabled) return;
     btn.disabled = true;
     
-    openAdLink();
     showTimer(15, '⭐ Daily Bonus!', 'Watch ad for DOUBLE reward!', () => {
-      let bonus = 100;
-      state.coins += bonus;
-      state.sessionCoins += bonus;
-      state.energy = state.maxEnergy;
-      state.dailyBonus = false;
-      state.adWatchCount += 1;
-      flyReward('⭐ +100🪙 +Full Energy');
-      if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+      showVanicePop(() => {
+        let bonus = 100;
+        state.coins += bonus;
+        state.sessionCoins += bonus;
+        state.energy = state.maxEnergy;
+        state.dailyBonus = false;
+        state.adWatchCount += 1;
+        flyReward('⭐ +100🪙 +Full Energy');
+        if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+      });
     });
     
   } else if(type === 'rush') {
@@ -302,16 +336,17 @@ function watchAd(type) {
     if(state.rushMode || btn.disabled) return;
     btn.disabled = true;
     
-    openAdLink();
     showTimer(10, '⚡ Rush Mode!', '3x tap power for 30 seconds!', () => {
-      state.rushMode = true;
-      state.rushEnd = Date.now() + 30000;
-      state.tapPower = Math.max(state.tapPower, 1) + 2;
-      state.adWatchCount += 1;
-      document.getElementById('stat-power-card').classList.add('rush');
-      flyReward('⚡ 3x POWER 30s!');
-      if(tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('heavy');
-      setTimeout(() => { btn.disabled = false; }, 45000);
+      showVaniceAd(() => {
+        state.rushMode = true;
+        state.rushEnd = Date.now() + 30000;
+        state.tapPower = Math.max(state.tapPower, 1) + 2;
+        state.adWatchCount += 1;
+        document.getElementById('stat-power-card').classList.add('rush');
+        flyReward('⚡ 3x POWER 30s!');
+        if(tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('heavy');
+        setTimeout(() => { btn.disabled = false; }, 45000);
+      });
     });
   }
   
@@ -324,15 +359,16 @@ function multiplyClaim() {
   if(state.sessionCoins <= 0 || !state.multiplyReady || btn.disabled) return;
   btn.disabled = true;
   
-  openAdLink();
   showTimer(12, '🔁 Multiply Claim!', `2x your ${state.sessionCoins} coins!`, () => {
-    state.coins += state.sessionCoins;
-    state.sessionCoins *= 2;
-    state.adWatchCount += 1;
-    state.multiplyReady = false;
-    flyReward('🔁 2x MULTIPLIED!');
-    if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
-    setTimeout(() => { btn.disabled = false; }, 60000);
+    showVanicePop(() => {
+      state.coins += state.sessionCoins;
+      state.sessionCoins *= 2;
+      state.adWatchCount += 1;
+      state.multiplyReady = false;
+      flyReward('🔁 2x MULTIPLIED!');
+      if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+      setTimeout(() => { btn.disabled = false; }, 60000);
+    });
   });
   updateUI(); saveState();
 }
@@ -414,6 +450,22 @@ setInterval(() => {
 if(!localStorage.getItem('venice_daily')) {
   localStorage.setItem('venice_daily', new Date().toDateString());
 }
+
+// 🎬 VANICELAB IN-APP INTERSTITIAL (auto ads)
+setTimeout(() => {
+  if(typeof show_11323629 === 'function') {
+    show_11323629({
+      type: 'inApp',
+      inAppSettings: {
+        frequency: 2,
+        capping: 0.1,
+        interval: 30,
+        timeout: 5,
+        everyPage: false
+      }
+    });
+  }
+}, 3000);
 
 updateUI();
 </script>
