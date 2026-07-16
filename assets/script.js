@@ -108,9 +108,10 @@ function toggleLang() {
     if (!totalEl) return;
     
     const today = new Date().toISOString().split('T')[0];
+    const ts = Date.now(); // anti-cache
     
     // 1️⃣ Total visitors — dari visitor badge
-    fetch('https://visitor-badge.laobi.icu/badge?page_id=venicelab.web.id')
+    fetch(`https://visitor-badge.laobi.icu/badge?page_id=venicelab.web.id&_=${ts}`)
         .then(r => r.text())
         .then(svg => {
             const match = svg.match(/<text[^>]*x="571[^"]*"[^>]*>([^<]+)<\/text>/);
@@ -119,7 +120,7 @@ function toggleLang() {
         .catch(() => { totalEl.textContent = '1K+'; });
     
     // 2️⃣ Today — badge harian (auto reset tiap hari)
-    fetch(`https://visitor-badge.laobi.icu/badge?page_id=venicelab.${today}`)
+    fetch(`https://visitor-badge.laobi.icu/badge?page_id=venicelab.${today}&_=${ts}`)
         .then(r => r.text())
         .then(svg => {
             const match = svg.match(/<text[^>]*x="571[^"]*"[^>]*>([^<]+)<\/text>/);
@@ -147,10 +148,6 @@ function toggleLang() {
             .catch(() => { countryEl.textContent = '🌍 Indonesia'; });
     }
     
-    // 4️⃣ Bonus: panggil badge dari script biar keitung semua traffic
-    // (script visit juga bakal increment badge ini)
-    fetch(`https://visitor-badge.laobi.icu/badge?page_id=venicelab.web.id`, {mode:'no-cors'});
-    fetch(`https://visitor-badge.laobi.icu/badge?page_id=venicelab.${today}`, {mode:'no-cors'});
 })();
 
 // ── INIT ──
