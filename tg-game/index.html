@@ -38,9 +38,24 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 
 .coin-area{flex:1;display:flex;align-items:center;justify-content:center;position:relative}
 .coin-wrap{position:relative;cursor:pointer}
-.coin{width:200px;height:200px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ffd700,#ff8c00,#b8860b);display:flex;align-items:center;justify-content:center;font-size:80px;box-shadow:0 0 80px rgba(255,215,0,0.3),inset 0 -10px 30px rgba(0,0,0,0.3);transition:transform 0.1s;border:4px solid #ffd700;overflow:hidden}
+.coin{width:200px;height:200px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ffd700,#ff8c00,#b8860b);display:flex;align-items:center;justify-content:center;font-size:80px;box-shadow:0 0 80px rgba(255,215,0,0.3),inset 0 -10px 30px rgba(0,0,0,0.3);transition:transform 0.1s;border:4px solid #ffd700;overflow:hidden;position:relative;z-index:2}
 .coin img{width:100%;height:100%;object-fit:cover;display:block}
 .coin:active{transform:scale(0.9)}
+
+/* TAP GLOW EFFECT */
+.tap-glow{position:absolute;top:50%;left:50%;width:220px;height:220px;margin:-110px 0 0 -110px;border-radius:50%;pointer-events:none;z-index:1;opacity:0;transition:none}
+.tap-glow.show{animation:tapPulse 0.4s ease-out forwards}
+@keyframes tapPulse{0%{opacity:0.8;transform:scale(0.8);box-shadow:0 0 60px 20px rgba(255,215,0,0.6),0 0 120px 40px rgba(255,200,0,0.3)}100%{opacity:0;transform:scale(1.3);box-shadow:0 0 100px 30px rgba(255,215,0,0),0 0 200px 60px rgba(255,200,0,0)}}
+
+/* RUSH MODE FIRE AURA */
+.rush-aura{position:absolute;top:50%;left:50%;width:260px;height:260px;margin:-130px 0 0 -130px;border-radius:50%;pointer-events:none;z-index:0;opacity:0;background:radial-gradient(circle,rgba(255,200,0,0.15) 0%,rgba(255,100,0,0.08) 40%,transparent 70%)}
+.rush-aura.active{opacity:1;animation:fireDance 0.8s ease-in-out infinite alternate}
+@keyframes fireDance{0%{transform:scale(0.95) rotate(-2deg);opacity:0.6}100%{transform:scale(1.05) rotate(2deg);opacity:1}}
+
+/* FIRE PARTICLE */
+.fire-particle{position:absolute;width:8px;height:12px;background:linear-gradient(to top,#ff4500,#ffd700);border-radius:50%;pointer-events:none;z-index:3;opacity:0}
+.fire-particle.show{animation:fireFly 0.6s ease-out forwards}
+@keyframes fireFly{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-40px) scale(0.3)}}
 
 .fly{position:absolute;font-weight:800;font-size:24px;color:#ffd700;pointer-events:none;animation:flyUp 0.8s ease-out forwards;z-index:10}
 @keyframes flyUp{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-100px) scale(1.5)}}
@@ -148,6 +163,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   
   <div class="coin-area">
     <div class="coin-wrap" id="coin-wrap">
+      <div class="rush-aura" id="rushAura"></div>
+      <div class="tap-glow" id="tapGlow"></div>
       <div class="coin" id="coin"><img src="coin.png" alt="🪙" /></div>
     </div>
   </div>
@@ -322,6 +339,7 @@ setInterval(() => {
     state.rushMode = false;
     state.tapPower = Math.max(1, state.tapPower - 2);
     document.getElementById('stat-power-card').classList.remove('rush');
+    document.getElementById('rushAura').classList.remove('active');
     updateUI(); saveState();
   }
 }, 1000);
@@ -343,6 +361,27 @@ document.getElementById('coin').addEventListener('click', (e) => {
   state.sessionCoins += state.tapPower;
   
   playSound('tap');
+  
+  // 👆 TAP GLOW EFFECT
+  let glow = document.getElementById('tapGlow');
+  glow.classList.remove('show');
+  void glow.offsetWidth; // reflow
+  glow.classList.add('show');
+  
+  // 🔥 FIRE PARTICLES saat rush mode
+  if(state.rushMode) {
+    for(let i=0; i<3; i++) {
+      let p = document.createElement('div');
+      p.className = 'fire-particle show';
+      p.style.left = (20 + Math.random() * 60)+'%';
+      p.style.bottom = '0px';
+      p.style.animationDelay = (Math.random()*0.3)+'s';
+      p.style.width = (5+Math.random()*8)+'px';
+      p.style.height = (8+Math.random()*12)+'px';
+      document.getElementById('coin-wrap').appendChild(p);
+      setTimeout(() => p.remove(), 800);
+    }
+  }
   
   let fly = document.createElement('div');
   fly.className = 'fly';
@@ -470,7 +509,8 @@ function watchAd(type) {
         state.tapPower = Math.max(state.tapPower, 1) + 2;
         state.adWatchCount += 1; playSound('bonus');
         document.getElementById('stat-power-card').classList.add('rush');
-        flyReward('⚡ 3x POWER 30s!');
+        document.getElementById('rushAura').classList.add('active');
+        flyReward('⚡ 3x POWER 30s! 🔥');
         if(tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('heavy');
         setTimeout(() => { btn.disabled = false; }, 45000);
       });
