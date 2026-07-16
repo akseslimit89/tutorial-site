@@ -101,30 +101,59 @@ function toggleLang() {
 }
 
 // ── REAL VISITOR COUNTER ──
-(function() {
+(async function() {
     const totalEl = document.getElementById('totalCount');
     const liveEl = document.getElementById('liveCount');
     const countryEl = document.getElementById('countryCount');
     if (!totalEl) return;
     
-    let total = parseInt(localStorage.getItem('vc_total') || '787');
+    // 1️⃣ Total visitors — dari visitor badge (real count)
+    try {
+        const resp = await fetch('https://visitor-badge.laobi.icu/badge?page_id=venicelab.web.id&format=json');
+        const data = await resp.json();
+        totalEl.textContent = data.value || '1K+';
+    } catch {
+        // Fallback ke localStorage
+        let t = parseInt(localStorage.getItem('vc_total') || '787');
+        t++;
+        localStorage.setItem('vc_total', t);
+        totalEl.textContent = t.toLocaleString();
+    }
+    
+    // 2️⃣ Today — pake localStorage (per browser)
     let today = parseInt(localStorage.getItem('vc_today') || '0');
     let lastDate = localStorage.getItem('vc_date') || '';
     let todayStr = new Date().toDateString();
-    
     if (lastDate !== todayStr) {
         today = 0;
         localStorage.setItem('vc_date', todayStr);
     }
-    
-    total++;
     today++;
-    localStorage.setItem('vc_total', total);
     localStorage.setItem('vc_today', today);
-    
-    totalEl.textContent = total.toLocaleString();
     if (liveEl) liveEl.textContent = today;
-    if (countryEl) countryEl.textContent = '17';
+    
+    // 3️⃣ Country — deteksi real dari IP
+    if (countryEl) {
+        try {
+            const ipResp = await fetch('https://api.ipify.org?format=json');
+            const ipData = await ipResp.json();
+            const geoResp = await fetch(`http://ip-api.com/json/${ipData.ip}?fields=status,country,countryCode`);
+            const geo = await geoResp.json();
+            if (geo.status === 'success') {
+                const flags = {
+                    'ID': '🇮🇩','US': '🇺🇸','GB': '🇬🇧','DE': '🇩🇪','FR': '🇫🇷',
+                    'NL': '🇳🇱','SG': '🇸🇬','JP': '🇯🇵','KR': '🇰🇷','CN': '🇨🇳',
+                    'RU': '🇷🇺','IN': '🇮🇳','MY': '🇲🇾','VN': '🇻🇳','TH': '🇹🇭',
+                    'CA': '🇨🇦','AU': '🇦🇺','BR': '🇧🇷','MX': '🇲🇽','IT': '🇮🇹',
+                    'ES': '🇪🇸','SA': '🇸🇦','AE': '🇦🇪','ZA': '🇿🇦','NG': '🇳🇬'
+                };
+                const flag = flags[geo.countryCode] || '🌍';
+                countryEl.textContent = `${flag} ${geo.country}`;
+            }
+        } catch {
+            countryEl.textContent = '🌍 Indonesia';
+        }
+    }
 })();
 
 // ── INIT ──
