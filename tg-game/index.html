@@ -38,7 +38,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 
 .coin-area{flex:1;display:flex;align-items:center;justify-content:center;position:relative}
 .coin-wrap{position:relative;cursor:pointer}
-.coin{width:200px;height:200px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ffd700,#ff8c00,#b8860b);display:flex;align-items:center;justify-content:center;font-size:80px;box-shadow:0 0 80px rgba(255,215,0,0.3),inset 0 -10px 30px rgba(0,0,0,0.3);transition:transform 0.1s;border:4px solid #ffd700}
+.coin{width:200px;height:200px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ffd700,#ff8c00,#b8860b);display:flex;align-items:center;justify-content:center;font-size:80px;box-shadow:0 0 80px rgba(255,215,0,0.3),inset 0 -10px 30px rgba(0,0,0,0.3);transition:transform 0.1s;border:4px solid #ffd700;overflow:hidden}
+.coin img{width:100%;height:100%;object-fit:cover;display:block}
 .coin:active{transform:scale(0.9)}
 
 .fly{position:absolute;font-weight:800;font-size:24px;color:#ffd700;pointer-events:none;animation:flyUp 0.8s ease-out forwards;z-index:10}
@@ -147,7 +148,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   
   <div class="coin-area">
     <div class="coin-wrap" id="coin-wrap">
-      <div class="coin" id="coin">🪙</div>
+      <div class="coin" id="coin"><img src="coin.png" alt="🪙" /></div>
     </div>
   </div>
   
