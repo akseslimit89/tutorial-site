@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-85JWDM4J1B"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0770R5SEN7"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-gtag('config', 'G-85JWDM4J1B');
+gtag('config', 'G-0770R5SEN7');
 </script>
 
 <!-- VaniceLab SDK -->
@@ -274,6 +274,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
     <div class="rule-item"><span class="icon">💸</span> <b>Redeem Policy</b><br><span style="font-size:12px;color:#888">Min $1.00 · TRC-20/BEP-20 · 24-48 jam · Fee per tier · Pastikan address benar</span></div>
     <div class="rule-item"><span class="icon">🔒</span> <b>Account Security</b><br><span style="font-size:12px;color:#888">1 akun per Telegram · IP detected · VPN allowed · No multi-account from same IP</span></div>
     <div class="rule-item"><span class="icon">📞</span> <b>Contact</b><br><span style="font-size:12px;color:#888">@VaniceLab_support · support@venicelab.web.id · 1x24 jam respon</span></div>
+  </div>
+</div>
+
+<!-- MODAL: Leaderboard -->
+<div class="modal-overlay" id="modal-leaderboard">
+  <div class="modal-card">
+    <button class="close" onclick="closeModal('modal-leaderboard')">✕</button>
+    <h3>🏆 Leaderboard</h3>
+    <div class="lb-body" style="min-height:100px">⏳</div>
   </div>
 </div>
 
@@ -683,7 +692,29 @@ function doRedeem() {
 
 // ===== LEADERBOARD =====
 function showLeaderboard() {
-  if(tg) tg.sendData(JSON.stringify({action:'get_leaderboard'}));
+  var lb = document.getElementById('modal-leaderboard');
+  if(!lb) return;
+  lb.classList.add('show');
+  var body = lb.querySelector('.lb-body');
+  if(!body) return;
+  body.innerHTML = '<div style="text-align:center;padding:20px;color:#888">⏳ Loading...</div>';
+  fetch('tg-game/leaderboard.json?_='+Date.now())
+    .then(r=>r.json())
+    .then(d=>{
+      var h = '';
+      if(d.total_users) h += '<div style="text-align:center;margin-bottom:12px;font-size:13px;color:#888">👥 '+d.total_users+' user</div>';
+      d.leaderboard.forEach(function(u){
+        h += '<div class="rule-item">' +
+          '<span style="font-weight:700;margin-right:6px">'+u.medal+'</span>' +
+          '<b>'+(u.username?'@'+u.username:u.name)+'</b>' +
+          '<span style="float:right">🪙 '+u.coins.toLocaleString()+'</span></div>';
+      });
+      if(!d.leaderboard.length) h = '<div style="text-align:center;padding:20px;color:#888">Belum ada data</div>';
+      body.innerHTML = h;
+    })
+    .catch(function(){
+      body.innerHTML = '<div style="text-align:center;padding:20px;color:#f44">❌ Gagal load</div>';
+    });
 }
 
 // ===== RULES & SUPPORT =====

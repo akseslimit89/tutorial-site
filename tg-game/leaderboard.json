@@ -1,0 +1,96 @@
+{
+  "leaderboard": [
+    {
+      "rank": 1,
+      "medal": "\ud83e\udd47",
+      "user_id": 2052061635,
+      "name": "Player_635",
+      "username": "WolfgangChesnutt",
+      "coins": 2076,
+      "usd": 0.2
+    },
+    {
+      "rank": 2,
+      "medal": "\ud83e\udd48",
+      "user_id": 966786502,
+      "name": "Coba",
+      "username": "Cobatobat89",
+      "coins": 1400,
+      "usd": 0
+    },
+    {
+      "rank": 3,
+      "medal": "\ud83e\udd49",
+      "user_id": 2075023303,
+      "name": "P3303",
+      "username": "BakerTeresa4",
+      "coins": 1047,
+      "usd": 0.1
+    },
+    {
+      "rank": 4,
+      "medal": "4.",
+      "user_id": 1412312696,
+      "name": "P2696",
+      "username": "GarzaEllison",
+      "coins": 1010,
+      "usd": 0
+    },
+    {
+      "rank": 5,
+      "medal": "5.",
+      "user_id": 2053555371,
+      "name": "Player_371",
+      "username": "AngelouJonathan",
+      "coins": 887,
+      "usd": 0.06
+    },
+    {
+      "rank": 6,
+      "medal": "6.",
+      "user_id": 2024068998,
+      "name": "Player_998",
+      "username": "VistaMatthew6",
+      "coins": 830,
+      "usd": 0.08
+    },
+    {
+      "rank": 7,
+      "medal": "7.",
+      "user_id": 1541500268,
+      "name": "Player_268",
+      "username": "NapoleonGalileo",
+      "coins": 825,
+      "usd": 0.06
+    },
+    {
+      "rank": 8,
+      "medal": "8.",
+      "user_id": 1563439456,
+      "name": "P9456",
+      "username": "HoodTagore",
+      "coins": 760,
+      "usd": 0
+    },
+    {
+      "rank": 9,
+      "medal": "9.",
+      "user_id": 2040808702,
+      "name": "P8702",
+      "username": "PierceJulie",
+      "coins": 740,
+      "usd": 0.05
+    },
+    {
+      "rank": 10,
+      "medal": "10.",
+      "user_id": 2061147460,
+      "name": "P7460",
+      "username": "NicholsonRachel",
+      "coins": 710,
+      "usd": 0
+    }
+  ],
+  "total_users": 194,
+  "updated": "2026-07-18 01:54:41"
+}
