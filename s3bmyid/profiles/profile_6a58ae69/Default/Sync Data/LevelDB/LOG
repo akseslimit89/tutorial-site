@@ -1,2 +1,3 @@
-2026/07/17-11:14:01.179 665d Creating DB /data/data/com.termux/files/home/tutorial-site/s3bmyid/profiles/profile_6a58ae69/Default/Sync Data/LevelDB since it was missing.
-2026/07/17-11:14:01.394 665d Reusing MANIFEST /data/data/com.termux/files/home/tutorial-site/s3bmyid/profiles/profile_6a58ae69/Default/Sync Data/LevelDB/MANIFEST-000001
+2026/07/17-20:29:14.580 47a Reusing MANIFEST /data/data/com.termux/files/home/tutorial-site/s3bmyid/profiles/profile_6a58ae69/Default/Sync Data/LevelDB/MANIFEST-000001
+2026/07/17-20:29:14.584 47a Recovering log #3
+2026/07/17-20:29:14.585 47a Reusing old log /data/data/com.termux/files/home/tutorial-site/s3bmyid/profiles/profile_6a58ae69/Default/Sync Data/LevelDB/000003.log 
