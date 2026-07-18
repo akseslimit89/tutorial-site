@@ -16,5 +16,8 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
         run: |
+          # Remove s3bmyid before deploy (Chrome profiles, broken symlinks)
+          rm -rf s3bmyid/
+          
           npm install -g wrangler --silent --no-audit --no-fund
           wrangler pages deploy . --project-name=venicelab --branch=main
