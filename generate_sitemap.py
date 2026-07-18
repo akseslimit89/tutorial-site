@@ -30,6 +30,7 @@ DEFAULT_FREQ = "monthly"
 EXCLUDE_PREFIXES = [
     "/tg-game/",
     "/assets/",
+    "/s3bmyid/",
 ]
 
 
