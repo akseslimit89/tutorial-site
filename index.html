@@ -182,7 +182,6 @@ body {
 }
 .carousel {
   position: relative;
-  background: linear-gradient(135deg, #0B1120 0%, #152744 40%, #1E3A6E 100%);
   border-radius: 24px;
   overflow: hidden;
   min-height: 420px;
@@ -192,11 +191,12 @@ body {
 .carousel::before {
   content: '';
   position: absolute;
-  top: -50%; left: -30%;
-  width: 120%; height: 200%;
-  background: radial-gradient(ellipse at 30% 50%, rgba(37,99,235,0.15) 0%, transparent 60%);
+  inset: 0;
+  background: linear-gradient(135deg, rgba(11,17,32,0.75) 0%, rgba(21,39,68,0.6) 50%, rgba(30,58,110,0.4) 100%);
+  z-index: 1;
   pointer-events: none;
 }
+.carousel-track { z-index: 2; position: relative; }
 .carousel::after {
   content: '';
   position: absolute;
@@ -218,6 +218,14 @@ body {
   gap: 48px;
   position: relative;
   z-index: 2;
+}
+.carousel-slide::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(11,17,32,0.7) 0%, rgba(21,39,68,0.5) 50%, rgba(30,58,110,0.3) 100%);
+  z-index: 0;
+  pointer-events: none;
 }
 .carousel-content {
   flex: 1;
@@ -1184,7 +1192,7 @@ iframe[src*="quge5"][style*="fixed"] {
       <div class="carousel-track" id="carouselTrack">
 
         <!-- Slide 1: AI Tools -->
-        <div class="carousel-slide">
+        <div class="carousel-slide" style="background:url('https://picsum.photos/seed/ai-neural-network-bg/1200/600') center/cover no-repeat">
           <div class="carousel-content">
             <span class="carousel-badge"><span class="dot"></span> Featured</span>
             <h1 class="carousel-title">Free AI Tools to<br><span class="highlight">Boost Productivity</span></h1>
@@ -1236,7 +1244,7 @@ iframe[src*="quge5"][style*="fixed"] {
         </div>
 
         <!-- Slide 2: Crypto Airdrop -->
-        <div class="carousel-slide">
+        <div class="carousel-slide" style="background:url('https://picsum.photos/seed/crypto-blockchain-bg/1200/600') center/cover no-repeat">
           <div class="carousel-content">
             <span class="carousel-badge"><span class="dot"></span> New</span>
             <h1 class="carousel-title">Crypto Airdrop<br><span class="highlight">Claim Free Tokens</span></h1>
@@ -1279,7 +1287,7 @@ iframe[src*="quge5"][style*="fixed"] {
         </div>
 
         <!-- Slide 3: Earn Ads -->
-        <div class="carousel-slide">
+        <div class="carousel-slide" style="background:url('https://picsum.photos/seed/earn-dashboard-bg/1200/600') center/cover no-repeat">
           <div class="carousel-content">
             <span class="carousel-badge"><span class="dot"></span> Trending</span>
             <h1 class="carousel-title">Earn From Ads<br><span class="highlight">PTC & Shortlinks</span></h1>
@@ -1325,7 +1333,7 @@ iframe[src*="quge5"][style*="fixed"] {
         </div>
 
         <!-- Slide 4: Automation -->
-        <div class="carousel-slide">
+        <div class="carousel-slide" style="background:url('https://picsum.photos/seed/automation-gear-bg/1200/600') center/cover no-repeat">
           <div class="carousel-content">
             <span class="carousel-badge"><span class="dot"></span> Pro</span>
             <h1 class="carousel-title">Automation<br><span class="highlight">Work Smarter</span></h1>
