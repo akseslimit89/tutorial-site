@@ -634,6 +634,55 @@ body {
 .tuto-bar-fill.automation { width: 58%; background: linear-gradient(90deg, #EC4899, #F472B6); }
 .tuto-bar-fill.trading { width: 45%; background: linear-gradient(90deg, #EF4444, #F87171); }
 
+/* ── STATS BAR ── */
+.stats-bar {
+  background: linear-gradient(135deg, #0B1120 0%, #152744 50%, #1E3A6E 100%);
+  padding: 40px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.stats-bar::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -30%;
+  width: 120%; height: 200%;
+  background: radial-gradient(ellipse at 30% 50%, rgba(37,99,235,0.12) 0%, transparent 60%);
+}
+.stats-bar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  position: relative;
+  z-index: 2;
+}
+.stat-item {
+  text-align: center;
+  padding: 20px;
+}
+.stat-item .stat-icon { font-size: 1.5em; margin-bottom: 8px; }
+.stat-item .stat-num {
+  font-size: clamp(1.6em, 2.5vw, 2.2em);
+  font-weight: 800;
+  background: linear-gradient(135deg, #60A5FA, #93C5FD);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2;
+}
+.stat-item .stat-label {
+  font-size: 0.82em;
+  color: rgba(255,255,255,0.5);
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+@media (max-width: 768px) {
+  .stats-bar-inner { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .stat-item { padding: 16px 8px; }
+}
+
 /* ── FOOTER ── */
 .footer {
   background: #0B1120;
@@ -1088,6 +1137,32 @@ body {
   </div>
 </section>
 
+<!-- ═══════════ LIVE STATS ═══════════ -->
+<section class="stats-bar">
+  <div class="stats-bar-inner">
+    <div class="stat-item">
+      <div class="stat-icon">👁️</div>
+      <div class="stat-num" id="totalVisits">—</div>
+      <div class="stat-label">Total Visits</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon">📄</div>
+      <div class="stat-num">19</div>
+      <div class="stat-label">Articles</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon">👤</div>
+      <div class="stat-num">787+</div>
+      <div class="stat-label">Community</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon">🌍</div>
+      <div class="stat-num" id="todayVisits">—</div>
+      <div class="stat-label">Today</div>
+    </div>
+  </div>
+</section>
+
 <!-- ═══════════ FOOTER ═══════════ -->
 <footer class="footer">
   <div class="footer-inner">
@@ -1217,16 +1292,33 @@ document.getElementById('mobileToggle').addEventListener('click', () => {
   links.style.boxShadow = '0 10px 30px rgba(0,0,0,0.08)';
 });
 
-// ── Visitor Badge ──
-const badge = document.getElementById('totalBadge');
-if (badge) {
-  badge.src = 'https://visitor-badge.laobi.icu/badge?page_id=venicelab.web.id&format=json';
-  fetch('https://visitor-badge.laobi.icu/badge?page_id=venicelab.web.id')
-    .then(r => r.text()).then(html => {
-      const match = html.match(/([0-9,]+)/);
-      // ignore, just tracking
-    }).catch(() => {});
+// ── Live Visitor Stats ──
+async function loadStats() {
+  try {
+    // Fetch total visits from visitor badge
+    const resp = await fetch('https://visitor-badge.laobi.icu/badge?page_id=venicelab.web.id');
+    const html = await resp.text();
+    const match = html.match(/([0-9,]+)/);
+    if (match) {
+      document.getElementById('totalVisits').textContent = match[1];
+    }
+    // Today's count (daily badge)
+    const today = new Date().toISOString().split('T')[0];
+    const resp2 = await fetch(`https://visitor-badge.laobi.icu/badge?page_id=venicelab.${today}`);
+    const html2 = await resp2.text();
+    const match2 = html2.match(/([0-9,]+)/);
+    if (match2) {
+      document.getElementById('todayVisits').textContent = match2[1];
+    }
+  } catch(e) {
+    // Fallback: show GA4 ping
+    document.getElementById('totalVisits').textContent = '—';
+    document.getElementById('todayVisits').textContent = '—';
+  }
+  // GA4 ping for tracking
+  fetch('https://www.google-analytics.com/g/collect?v=2&tid=G-0770R5SEN7&cid=stats-' + Date.now() + '&en=page_view&dl=https://venicelab.web.id&dt=VeniceLab');
 }
+loadStats();
 </script>
 </body>
 </html>
