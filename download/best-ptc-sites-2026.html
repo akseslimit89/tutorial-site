@@ -49,7 +49,7 @@ h1{font-size:1.4em;color:#fff;margin-bottom:6px}
     <div class="status-text" id="clickHint" style="display:none;color:#f0ad4e">👆 Click anywhere to unlock!</div>
   </div>
 
-  <a class="download-btn" id="downloadBtn">⬇️ Download Now — Free</a>
+  <a class="download-btn" id="downloadBtn" data-dl="Best-PTC-Sites-2026-Guide.txt" data-dl-name="Best-PTC-Sites-2026-Guide.pdf">⬇️ Download Now — Free</a>
 
   <div class="ad-note">
     💡 Download is free! A quick ad view helps us keep providing premium content.<br>
@@ -61,11 +61,14 @@ h1{font-size:1.4em;color:#fff;margin-bottom:6px}
 </div>
 </div>
 
-<!-- Monetag -->
+<!-- Monetag Popunder (CPM tinggi) -->
 <script async src="https://quge5.com/88/tag.min.js" data-zone="259806" data-cfasync="false"></script>
 <script async src="https://pl30369956.effectivecpmnetwork.com/59a4ff2cea3b42dd5ac3409a603daee8/invoke.js"></script>
-<!-- Adstera -->
+<!-- Adstera Premium (CPM tertinggi) -->
 <script src="https://acscdn.com/script.js" async></script>
+<script src="https://acscdn.com/pop.js" async></script>
+<!-- Monetag Onclick Popunder (premium) -->
+<script async src="https://quge5.com/88/onclick.min.js" data-zone="259806" data-cfasync="false"></script>
 
 <script>
 (function(){
@@ -100,59 +103,75 @@ h1{font-size:1.4em;color:#fff;margin-bottom:6px}
     unlockBox.classList.add('unlocked');
     downloadBtn.style.display = 'block';
     clickHint.style.display = 'none';
+    // Trigger Monetag popunder premium pas unlock
+    if (!adClicked) {
+      document.body.click();
+      adClicked = true;
+    }
   }
 
-  // Trigger Monetag popunder klik
+  // Trigger Monetag popunder premium — klik sekali
   function triggerAd() {
     if (adClicked) return;
     adClicked = true;
-    // Klik body trigger Monetag popunder
-    document.body.click();
-    // Countdown mulai
+    document.body.click(); // Trigger Monetag popunder
+    // Klik body 3x biar pasti ke-trigger
+    for(let i=0;i<3;i++){
+      document.body.click();
+    }
     if (!unlocked) {
-      statusText.textContent = '⏳ Viewing ad... (2s)';
+      statusText.textContent = '⏳ Viewing premium ad...';
       setTimeout(() => {
-        statusText.textContent = '✅ Ad viewed! Unlocking...';
-        unlockContent();
+        if (!unlocked) {
+          statusText.textContent = '✅ Premium ad viewed!';
+          unlockContent();
+        }
       }, 2000);
     }
   }
 
-  // Download click handler
   downloadBtn.addEventListener('click', function(e) {
     if (!unlocked) {
       e.preventDefault();
       triggerAd();
       return;
     }
-    // Simulate download
+    // Download real file
     this.textContent = '⬇️ Downloading...';
     setTimeout(() => {
       this.textContent = '✅ Download Complete!';
       this.style.background = '#218838';
-    }, 2000);
+      // Trigger actual download after delay
+      var link = document.createElement('a');
+      link.href = this.getAttribute('data-dl');
+      link.download = this.getAttribute('data-dl-name');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }, 1500);
   });
 
-  // Click anywhere trigger ads
+  // Click body auto-trigger ads premium
   document.addEventListener('click', function() {
     if (!adClicked) {
       triggerAd();
     }
+    // Klik accelerate timer
     if (!unlocked && countdown > 0) {
-      // Accelerate countdown on click
       countdown = Math.max(0, countdown - 2);
       timerEl.textContent = countdown;
       progressBar.style.width = ((5 - countdown) / 5 * 100) + '%';
     }
   });
 
-  // Start
   startCountdown();
 
-  // Auto trigger popunder on page load
+  // Auto trigger premium popunder on load
   setTimeout(() => {
     document.body.click();
-  }, 1000);
+    document.body.click();
+    document.body.click();
+  }, 500);
 })();
 </script>
 </body>
