@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Download — AI Tools for Passive Income 2026 | VeniceLab</title>
-<meta name="description" content="Download AI Tools for Passive Income 2026 bundle. Watch a quick ad to unlock — free and instant.">
+<meta name="description" content="Download AI Tools for Passive Income 2026. Watch 2 quick ads to unlock.">
 <link rel="canonical" href="https://venicelab.web.id/download/ai-tools-passive-income.html">
 <style>*{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f0f1a;color:#e0e0e0;display:flex;justify-content:center;align-items:center;min-height:100vh}
@@ -14,8 +14,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 h1{font-size:1.4em;color:#fff;margin-bottom:6px}
 .file-meta{color:#666;font-size:0.88em;margin-bottom:20px;display:flex;justify-content:center;gap:15px}
 .desc{color:#999;font-size:0.9em;margin-bottom:25px;line-height:1.5}
-.ad-gate{border:2px dashed #2a2a4a;border-radius:12px;padding:20px;margin-bottom:20px;transition:all .5s}
+.ad-gate{border:2px dashed #2a2a4a;border-radius:12px;padding:20px;margin-bottom:20px}
 .ad-gate.done{border-color:#28a745;background:rgba(40,167,69,.08)}
+.step-label{font-size:0.85em;color:#8ab4f8;margin-bottom:4px}
 #timer{font-size:2.2em;font-weight:700;color:#8ab4f8;display:block;margin:8px 0}
 #timer.done{color:#28a745}
 .status-text{color:#888;font-size:0.9em;margin-bottom:5px}
@@ -32,13 +33,14 @@ h1{font-size:1.4em;color:#fff;margin-bottom:6px}
   <div class="desc">10 proven AI tools that generate passive income with zero experience. Complete setup guides and earnings proof included.</div>
 
   <div class="ad-gate" id="adGate">
+    <div class="step-label" id="stepLabel">Langkah 0/2</div>
     <div class="status-text" id="statusText">🔒 Klik download untuk mulai</div>
     <span id="timer">—</span>
   </div>
 
   <button class="dl-btn" id="dlBtn">⬇️ Download Now — Free</button>
 
-  <div class="ad-note">💡 Klik download → tonton iklan 5dtk → file siap</div>
+  <div class="ad-note">💡 Klik → tonton 2 iklan (5dtk) → file siap</div>
   <a href="index.html" class="back-link">← Back to Downloads</a>
 </div></div>
 
@@ -50,64 +52,37 @@ h1{font-size:1.4em;color:#fff;margin-bottom:6px}
 
 <script>
 (function(){
-  const btn = document.getElementById('dlBtn');
-  const timer = document.getElementById('timer');
-  const status = document.getElementById('statusText');
-  const gate = document.getElementById('adGate');
-  let step = 'idle';
-
-  btn.addEventListener('click', function() {
-    if (step === 'downloading') return;
-
-    if (step === 'idle') {
-      step = 'ad_waiting';
-      btn.disabled = true;
-      btn.textContent = '⏳ Membuka iklan...';
-      status.textContent = '🔓 Klik untuk buka iklan...';
-      timer.textContent = '▶';
-      
-      document.body.click(); document.body.click(); document.body.click();
-      setTimeout(() => { document.body.click(); document.body.click(); }, 500);
-
-      setTimeout(() => {
-        step = 'ad_viewing';
-        status.textContent = '⏳ Menonton iklan... (5dtk)';
-        timer.textContent = '5';
-        btn.textContent = '⏳ Menonton iklan 5dtk...';
-        
-        let c = 5;
-        const iv = setInterval(() => {
-          c--; timer.textContent = c;
-          if (c <= 0) {
-            clearInterval(iv);
-            step = 'unlocked';
-            status.textContent = '✅ Selesai! Download siap';
-            timer.textContent = '✅'; timer.className = 'done';
-            gate.classList.add('done');
-            btn.disabled = false;
-            btn.textContent = '⬇️ Download Now';
-          }
-        }, 1000);
-      }, 2000);
+  const btn=document.getElementById('dlBtn'),tm=document.getElementById('timer'),
+        st=document.getElementById('statusText'),sl=document.getElementById('stepLabel'),
+        gt=document.getElementById('adGate');
+  let p=0;
+  btn.onclick=function(){
+    if(p===4)return;
+    if(p===0){
+      p=1;btn.disabled=1;btn.textContent='⏳ Ad #1...';st.textContent='🔓 Iklan #1...';sl.textContent='Langkah 1/2 — Iklan #1';tm.textContent='▶';
+      for(let i=0;i<5;i++)document.body.click();
+      setTimeout(()=>{for(let i=0;i<5;i++)document.body.click()},300);
+      st.textContent='⏳ Iklan #1 — view 5dtk...';tm.textContent='5';
+      let c=5;const iv=setInterval(()=>{c--;tm.textContent=c;if(c<=0){clearInterval(iv);p=2;st.textContent='✅ Iklan #1! Klik lagi untuk #2';btn.disabled=0;btn.textContent='🔄 Klik untuk iklan #2';sl.textContent='Langkah 1/2 ✅'}},1000);
       return;
     }
-
-    if (step === 'unlocked') {
-      step = 'downloading';
-      btn.textContent = '⬇️ Mendownload...';
-      status.textContent = '📥 Mengunduh file...';
-      
-      setTimeout(() => {
-        var a = document.createElement('a');
-        a.href = 'AI-Tools-Passive-Income-Bundle.txt';
-        a.download = 'AI-Tools-Passive-Income-Bundle.zip';
-        document.body.appendChild(a); a.click(); document.body.removeChild(a);
-        btn.textContent = '✅ Download Selesai!';
-        status.textContent = '✅ File terunduh!';
-        btn.style.background = '#218838';
-      }, 1000);
+    if(p===2){
+      p=3;btn.disabled=1;btn.textContent='⏳ Ad #2...';st.textContent='🔓 Iklan #2...';sl.textContent='Langkah 2/2 — Iklan #2';tm.textContent='▶';
+      for(let i=0;i<5;i++)document.body.click();
+      setTimeout(()=>{for(let i=0;i<5;i++)document.body.click()},300);
+      st.textContent='⏳ Iklan #2 — view 5dtk...';tm.textContent='5';
+      let c2=5;const iv2=setInterval(()=>{c2--;tm.textContent=c2;if(c2<=0){clearInterval(iv2);p=10;st.textContent='✅ Selesai! Download siap';tm.textContent='✅';tm.className='done';gt.classList.add('done');btn.disabled=0;btn.textContent='⬇️ Download Now';sl.textContent='✅ Unlocked!'}},1000);
+      return;
     }
-  });
+    if(p>=10){
+      p=4;btn.textContent='⬇️ Mendownload...';st.textContent='📥 Mengunduh...';
+      setTimeout(()=>{
+        var a=document.createElement('a');a.href='AI-Tools-Passive-Income-Bundle.txt';a.download='AI-Tools-Passive-Income-Bundle.zip';
+        document.body.appendChild(a);a.click();document.body.removeChild(a);
+        btn.textContent='✅ Download Selesai!';st.textContent='✅ File terunduh!';btn.style.background='#218838';
+      },1000);
+    }
+  };
 })();
 </script>
 </body></html>
