@@ -921,13 +921,14 @@ body {
   .tutorial-grid { grid-template-columns: repeat(2, 1fr); }
   .posts-layout { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
-  .carousel-slide { padding: 40px 32px; flex-direction: column; text-align: center; }
-  .carousel-content { max-width: 100%; }
-  .carousel-illustration { display: flex; justify-content: center; margin-top: 16px; }
-  .carousel-illustration svg { width: 200px; height: 200px; }
+  .carousel-slide { padding: 32px 28px; gap: 24px; }
+  .carousel-content { max-width: 60%; }
+  .carousel-title { font-size: 1.5em; }
+  .carousel-desc { font-size: 0.9em; }
+  .carousel-illustration { display: flex; justify-content: center; flex-shrink: 0; }
+  .carousel-illustration svg { width: 180px; height: 180px; }
   .carousel-illustration .glow-ring { display: none; }
-}
-@media (max-width: 768px) {
+}@media (max-width: 768px) {
   .nav-links { display: none; }
   .nav-mobile-btn { display: flex; }
   .hero { padding: 80px 16px 40px; }
@@ -935,9 +936,11 @@ body {
   .feature-grid { grid-template-columns: 1fr; }
   .tutorial-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
-  .carousel-slide { padding: 32px 20px; min-height: 340px; }
-  .carousel-title { font-size: 1.5em; }
-  .carousel-illustration svg { width: 150px; height: 150px; }
+  .carousel-slide { padding: 24px 16px; min-height: 260px; gap: 14px; }
+  .carousel-title { font-size: 1.15em; }
+  .carousel-desc { font-size: 0.8em; line-height: 1.5; }
+  .carousel-content { max-width: 58%; }
+  .carousel-illustration svg { width: 110px; height: 110px; }
   .carousel-arrow { display: none; }
   .newsletter-form { flex-direction: column; }
   .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
