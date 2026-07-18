@@ -98,7 +98,7 @@ body {
 /* ── NAVIGATION ── */
 .nav {
   position: fixed; top: 0; left: 0; right: 0;
-  z-index: 1000;
+  z-index: 10000;
   padding: 0 24px;
   backdrop-filter: blur(20px) saturate(1.4);
   -webkit-backdrop-filter: blur(20px) saturate(1.4);
@@ -752,6 +752,31 @@ body {
 }
 @keyframes flag-pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
+/* ── AD PLACEMENTS ── */
+.ad-modern {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50px;
+  max-height: 280px;
+  overflow: hidden;
+  margin: 8px auto;
+  position: relative;
+  z-index: 10;
+}
+.ad-modern iframe,
+.ad-modern ins,
+.ad-modern div[id^="div-gpt"] {
+  max-width: 100% !important;
+  max-height: 250px !important;
+  overflow: hidden !important;
+}
+/* Compact variant for in-content ads */
+.ad-compact {
+  max-height: 120px;
+  overflow: hidden;
+}
+
 /* ── FOOTER ── */
 .footer {
   background: #0B1120;
@@ -1111,6 +1136,16 @@ body {
   .modal-footer-text { color: #94a3b8; }
 }
 
+/* ── Ad Safety: prevent injected ads from covering nav ── */
+.nav, .nav * { z-index: 10000 !important; }
+body > iframe[style*="position: fixed"],
+body > iframe[style*="position:fixed"],
+iframe[src*="effectivecpm"][style*="fixed"],
+iframe[src*="quge5"][style*="fixed"] {
+  z-index: 9999 !important;
+  pointer-events: auto !important;
+}
+
 </style>
 </head>
 <body>
@@ -1283,15 +1318,6 @@ body {
   </div>
 </section>
 
-<!-- AD PLACEMENT -->
-<div class="section" style="padding:0 24px">
-  <div class="section-inner" style="max-width:1200px;margin:0 auto">
-    <div class="ad-modern">
-      🎯 <a href="https://venicelab.web.id/parts/part1.html" target="_blank" rel="noopener">Create a Free FaucetPay Wallet & Get $0.10 Bonus</a> — Start earning today!
-    </div>
-  </div>
-</div>
-
 <!-- ═══════════ LATEST POSTS ═══════════ -->
 <section class="section" style="padding-top:0">
   <div class="section-inner">
@@ -1358,17 +1384,8 @@ body {
 </section>
 
 <!-- AD PLACEMENT -->
-<div class="section" style="padding:0 24px">
-  <div class="section-inner" style="max-width:1200px;margin:0 auto">
-    <div class="ad-modern">
-      📺 <a href="https://venicelab.web.id/parts/part1.html" target="_blank" rel="noopener">Watch the Full Video Tutorial on YouTube</a> — Step-by-step earning guide
-    </div>
-  </div>
-</div>
-
-<!-- AD PLACEMENT -->
-<div class="section" style="padding:0 24px">
-  <div class="section-inner" style="max-width:1200px;margin:0 auto">
+<div style="padding:4px 24px">
+  <div style="max-width:1200px;margin:0 auto">
     <div class="ad-modern">
       <script async="async" data-cfasync="false" src="https://pl30369956.effectivecpmnetwork.com/59a4ff2cea3b42dd5ac3409a603daee8/invoke.js"></script>
     </div>
@@ -1432,8 +1449,8 @@ body {
 </section>
 
 <!-- AD PLACEMENT -->
-<div class="section" style="padding:0 24px">
-  <div class="section-inner" style="max-width:1200px;margin:0 auto">
+<div style="padding:4px 24px">
+  <div style="max-width:1200px;margin:0 auto">
     <div class="ad-modern">
       <script src="https://pl30369958.effectivecpmnetwork.com/01/1f/62/011f62616bd79203ac3a539277dfff65.js"></script>
     </div>
