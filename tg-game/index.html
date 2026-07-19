@@ -165,7 +165,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
     <div class="coin-wrap" id="coin-wrap">
       <div class="rush-aura" id="rushAura"></div>
       <div class="tap-glow" id="tapGlow"></div>
-      <div class="coin" id="coin"><img src="coin.png" alt="🪙" /></div>
+      <div class="coin" id="coin"><img src="coin.png" alt="🪙" width="800" height="450"/></div>
     </div>
   </div>
   
@@ -756,8 +756,8 @@ if(u) {
   
   // Ambil foto dari Telegram (kalo ada)
   if(u.photo_url) {
-    document.getElementById('avatarEl').innerHTML = `<img src="${u.photo_url}" alt="avatar" />`;
-    document.getElementById('modalAvatar').innerHTML = `<img src="${u.photo_url}" alt="avatar" style="width:70px;height:70px;border-radius:50%;object-fit:cover" />`;
+    document.getElementById('avatarEl').innerHTML = `<img src="${u.photo_url}" alt="avatar" width="800" height="450"/>`;
+    document.getElementById('modalAvatar').innerHTML = `<img src="${u.photo_url}" alt="avatar" style="width:70px;height:70px;border-radius:50%;object-fit:cover" width="800" height="450"/>`;
   } else {
     // Fallback: inisial
     let init = (u.first_name?.charAt(0) || '🎯').toUpperCase();
