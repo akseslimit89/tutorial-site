@@ -1160,6 +1160,35 @@ iframe[src*="quge5"][style*="fixed"] {
   pointer-events: auto !important;
 }
 
+
+/* ── RECENT POSTS ── */
+.recent-posts { background: #fff; }
+.recent-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 32px;
+}
+.recent-card {
+  display: block;
+  background: #f8fafc;
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: transform .2s, box-shadow .2s;
+}
+.recent-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.1); }
+.recent-thumb { width: 100%; height: 140px; background-size: cover !important; }
+.recent-info { padding: 14px 16px; }
+.recent-info h3 { font-size: .95em; line-height: 1.4; margin-bottom: 6px; }
+.recent-cat { font-size: .75em; color: #2563eb; font-weight: 600; }
+.recent-more { text-align: center; margin-top: 32px; }
+
+@media (max-width: 768px) {
+  .recent-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
 </style>
 </head>
 <body>
@@ -1716,6 +1745,50 @@ iframe[src*="quge5"][style*="fixed"] {
     </p>
   </div>
 </div>
+
+
+<!-- ═══════════ RECENT POSTS ═══════════ -->
+<section class="section recent-posts">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <div class="section-label">✦ Latest</div>
+      <h2 class="section-title">Recent Posts</h2>
+    </div>
+    <div class="recent-grid">
+      <a href="/blog/trend-piala-dunia-2026-0720.html" class="recent-card">
+        <div class="recent-thumb" style="background:url('https://picsum.photos/seed/trend-piala-dunia-2026-0720/800/400') center/cover"></div>
+        <div class="recent-info">
+          <h3>Piala Dunia 2026: Trending & Viral 2026 — Why Everyone's Talking</h3>
+          <span class="recent-cat">Artikel</span>
+        </div>
+      </a>
+      <a href="/blog/trend-ai-agent-0720.html" class="recent-card">
+        <div class="recent-thumb" style="background:url('https://picsum.photos/seed/trend-ai-agent-0720/800/400') center/cover"></div>
+        <div class="recent-info">
+          <h3>AI Agent: Trending & Viral 2026 — Why Everyone's Talking</h3>
+          <span class="recent-cat">Artikel</span>
+        </div>
+      </a>
+      <a href="/blog/trend-bitcoin-etf-0720.html" class="recent-card">
+        <div class="recent-thumb" style="background:url('https://picsum.photos/seed/trend-bitcoin-etf-0720/800/400') center/cover"></div>
+        <div class="recent-info">
+          <h3>Bitcoin ETF: Trending & Viral 2026 — Why Everyone's Talking</h3>
+          <span class="recent-cat">Artikel</span>
+        </div>
+      </a>
+      <a href="/blog/trading-bot-ai-risk.html" class="recent-card">
+        <div class="recent-thumb" style="background:url('https://picsum.photos/seed/trading-bot-ai-risk/800/400') center/cover"></div>
+        <div class="recent-info">
+          <h3>Risk Management Trading Bot AI: Cegah Liquidasi</h3>
+          <span class="recent-cat">Artikel</span>
+        </div>
+      </a>
+    </div>
+    <div class="recent-more">
+      <a href="/blog/" class="carousel-cta">Next → Lihat Semua Artikel</a>
+    </div>
+  </div>
+</section>
 
 <!-- ═══════════ FOOTER ═══════════ -->
 <footer class="footer">
