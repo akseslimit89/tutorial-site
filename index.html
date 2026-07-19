@@ -287,7 +287,34 @@ body {
   transform: translateY(-2px);
   box-shadow: 0 8px 30px rgba(37,99,235,0.35);
 }
-50%{transform:scale(1.1);opacity:0.8}
+.carousel-illustration {
+  flex: 1;
+  max-width: 440px;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.carousel-illustration .glow-ring {
+  position: absolute;
+  width: 320px; height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(37,99,235,0.15) 0%, transparent 70%);
+  animation: ring-pulse 4s ease-in-out infinite;
+}
+@keyframes ring-pulse {
+  0%,100%{transform:scale(1);opacity:0.5}
+  50%{transform:scale(1.1);opacity:0.8}
+}
+.carousel-illustration .glow-ring:nth-child(2) {
+  width: 240px; height: 240px;
+  animation-delay: -1.5s;
+}
+.carousel-illustration svg {
+  position: relative;
+  z-index: 2;
+  width: 80%; height: 80%;
 }
 /* Carousel controls */
 .carousel-controls {
@@ -898,7 +925,10 @@ body {
   .carousel-content { max-width: 60%; }
   .carousel-title { font-size: 1.5em; }
   .carousel-desc { font-size: 0.9em; }
-  }@media (max-width: 768px) {
+  .carousel-illustration { display: flex; justify-content: center; flex-shrink: 0; }
+  .carousel-illustration svg { width: 180px; height: 180px; }
+  .carousel-illustration .glow-ring { display: none; }
+}@media (max-width: 768px) {
   .nav-links { display: none; }
   .nav-mobile-btn { display: flex; }
   .hero { padding: 80px 16px 40px; }
@@ -910,6 +940,7 @@ body {
   .carousel-title { font-size: 1.15em; }
   .carousel-desc { font-size: 0.8em; line-height: 1.5; }
   .carousel-content { max-width: 58%; }
+  .carousel-illustration svg { width: 110px; height: 110px; }
   .carousel-arrow { display: none; }
   .newsletter-form { flex-direction: column; }
   .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
@@ -1164,47 +1195,198 @@ iframe[src*="quge5"][style*="fixed"] {
       <div class="carousel-track" id="carouselTrack">
 
         <!-- Slide 1: AI Tools -->
-        <div class="carousel-slide" style="min-height:550px;background:url('https://picsum.photos/seed/ai-neural-network-bg/1200/600') center/cover no-repeat">
+        <div class="carousel-slide" style="min-height:600px;background:url('https://picsum.photos/seed/ai-neural-network-bg/1200/600') center/cover no-repeat">
           <div class="carousel-content">
             <span class="carousel-badge"><span class="dot"></span> Featured</span>
             <h1 class="carousel-title">Free AI Tools to<br><span class="highlight">Boost Productivity</span></h1>
             <p class="carousel-desc">Discover powerful AI tools that automate your workflow, generate content, and help you earn smarter — all completely free.</p>
             <a href="/blog/ai-install-passive.html" class="carousel-cta">Explore AI Tools →</a>
           </div>
+          <div class="carousel-illustration">
+            <div class="glow-ring"></div>
+            <div class="glow-ring"></div>
+            <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#60A5FA"/><stop offset="100%" stop-color="#2563EB"/></linearGradient>
+                <linearGradient id="g1a" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#93C5FD"/><stop offset="100%" stop-color="#3B82F6"/></linearGradient>
+              </defs>
+              <!-- Neural network nodes -->
+              <circle cx="150" cy="150" r="28" fill="url(#g1)" opacity="0.15"/>
+              <circle cx="150" cy="150" r="22" fill="url(#g1)" opacity="0.25"/>
+              <circle cx="150" cy="150" r="14" fill="url(#g1)" opacity="0.9"/>
+              <!-- Brain lines -->
+              <path d="M150 136c-8-6-18-10-28-10-14 0-26 8-32 20" stroke="#60A5FA" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+              <path d="M150 136c8-6 18-10 28-10 14 0 26 8 32 20" stroke="#60A5FA" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+              <path d="M150 164c-8 6-18 10-28 10-14 0-26-8-32-20" stroke="#60A5FA" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+              <path d="M150 164c8 6 18 10 28 10 14 0 26-8 32-20" stroke="#60A5FA" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+              <!-- AI chip details -->
+              <rect x="138" y="138" width="24" height="24" rx="4" fill="#1E40AF" opacity="0.4"/>
+              <rect x="143" y="143" width="14" height="14" rx="3" fill="#DBEAFE" opacity="0.9"/>
+              <circle cx="150" cy="150" r="3" fill="#2563EB"/>
+              <!-- Connection dots -->
+              <circle cx="100" cy="120" r="4" fill="#93C5FD" opacity="0.8"/>
+              <circle cx="200" cy="120" r="4" fill="#93C5FD" opacity="0.8"/>
+              <circle cx="85" cy="160" r="3" fill="#BFDBFE" opacity="0.6"/>
+              <circle cx="215" cy="160" r="3" fill="#BFDBFE" opacity="0.6"/>
+              <circle cx="100" cy="190" r="4" fill="#93C5FD" opacity="0.7"/>
+              <circle cx="200" cy="190" r="4" fill="#93C5FD" opacity="0.7"/>
+              <!-- Connecting lines -->
+              <line x1="104" y1="120" x2="136" y2="144" stroke="#93C5FD" stroke-width="1" opacity="0.4"/>
+              <line x1="196" y1="120" x2="164" y2="144" stroke="#93C5FD" stroke-width="1" opacity="0.4"/>
+              <line x1="104" y1="190" x2="136" y2="158" stroke="#93C5FD" stroke-width="1" opacity="0.4"/>
+              <line x1="196" y1="190" x2="164" y2="158" stroke="#93C5FD" stroke-width="1" opacity="0.4"/>
+              <line x1="88" y1="160" x2="136" y2="152" stroke="#BFDBFE" stroke-width="1" opacity="0.3"/>
+              <line x1="212" y1="160" x2="164" y2="152" stroke="#BFDBFE" stroke-width="1" opacity="0.3"/>
+              <!-- Sparkle dots -->
+              <circle cx="120" cy="80" r="2" fill="#60A5FA" opacity="0.6"/>
+              <circle cx="180" cy="75" r="2.5" fill="#93C5FD" opacity="0.5"/>
+              <circle cx="220" cy="100" r="2" fill="#60A5FA" opacity="0.4"/>
+              <circle cx="80" cy="100" r="2" fill="#93C5FD" opacity="0.4"/>
+            </svg>
+          </div>
         </div>
 
         <!-- Slide 2: Crypto Airdrop -->
-        <div class="carousel-slide" style="min-height:550px;background:url('https://picsum.photos/seed/crypto-blockchain-bg/1200/600') center/cover no-repeat">
+        <div class="carousel-slide" style="min-height:600px;background:url('https://picsum.photos/seed/crypto-blockchain-bg/1200/600') center/cover no-repeat">
           <div class="carousel-content">
             <span class="carousel-badge"><span class="dot"></span> New</span>
             <h1 class="carousel-title">Crypto Airdrop<br><span class="highlight">Claim Free Tokens</span></h1>
             <p class="carousel-desc">Stay ahead with the latest crypto airdrop opportunities. Step-by-step guides to claim free tokens from top blockchain projects.</p>
             <a href="/blog/airdrop-july-2026.html" class="carousel-cta">View Airdrops →</a>
           </div>
+          <div class="carousel-illustration">
+            <div class="glow-ring"></div>
+            <div class="glow-ring"></div>
+            <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FBBF24"/><stop offset="100%" stop-color="#D97706"/></linearGradient>
+                <linearGradient id="g2a" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FDE68A"/><stop offset="100%" stop-color="#F59E0B"/></linearGradient>
+              </defs>
+              <!-- Parachute dome -->
+              <path d="M90 140c0-40 27-72 60-72s60 32 60 72" stroke="url(#g2)" stroke-width="2.5" fill="none" opacity="0.6"/>
+              <path d="M90 140c0-40 27-72 60-72s60 32 60 72" fill="url(#g2)" opacity="0.12"/>
+              <!-- Parachute strings -->
+              <line x1="105" y1="140" x2="140" y2="190" stroke="#FCD34D" stroke-width="1.2" opacity="0.5"/>
+              <line x1="120" y1="138" x2="145" y2="190" stroke="#FCD34D" stroke-width="1.2" opacity="0.5"/>
+              <line x1="180" y1="138" x2="155" y2="190" stroke="#FCD34D" stroke-width="1.2" opacity="0.5"/>
+              <line x1="195" y1="140" x2="160" y2="190" stroke="#FCD34D" stroke-width="1.2" opacity="0.5"/>
+              <!-- Person hanging -->
+              <circle cx="150" cy="198" r="6" fill="url(#g2)" opacity="0.7"/>
+              <line x1="150" y1="204" x2="150" y2="218" stroke="#FBBF24" stroke-width="2" opacity="0.6"/>
+              <line x1="142" y1="210" x2="158" y2="210" stroke="#FBBF24" stroke-width="2" opacity="0.6"/>
+              <!-- Falling coins -->
+              <circle cx="100" cy="220" r="8" stroke="url(#g2)" stroke-width="2" fill="url(#g2a)" opacity="0.7"/>
+              <text x="96" y="224" font-size="9" fill="#92400E" font-weight="700">$</text>
+              <circle cx="200" cy="230" r="7" stroke="url(#g2)" stroke-width="1.5" fill="url(#g2a)" opacity="0.6"/>
+              <text x="197" y="234" font-size="8" fill="#92400E" font-weight="700">$</text>
+              <circle cx="80" cy="250" r="6" stroke="url(#g2)" stroke-width="1.5" fill="url(#g2a)" opacity="0.5"/>
+              <text x="77" y="253" font-size="7" fill="#92400E" font-weight="700">$</text>
+              <circle cx="220" cy="255" r="6" stroke="url(#g2)" stroke-width="1.5" fill="url(#g2a)" opacity="0.5"/>
+              <text x="217" y="259" font-size="7" fill="#92400E" font-weight="700">$</text>
+              <circle cx="130" cy="245" r="5" stroke="url(#g2)" stroke-width="1" fill="url(#g2a)" opacity="0.4"/>
+              <circle cx="170" cy="250" r="5" stroke="url(#g2)" stroke-width="1" fill="url(#g2a)" opacity="0.4"/>
+            </svg>
+          </div>
         </div>
 
         <!-- Slide 3: Earn Ads -->
-        <div class="carousel-slide" style="min-height:550px;background:url('https://picsum.photos/seed/earn-dashboard-bg/1200/600') center/cover no-repeat">
+        <div class="carousel-slide" style="min-height:600px;background:url('https://picsum.photos/seed/earn-dashboard-bg/1200/600') center/cover no-repeat">
           <div class="carousel-content">
             <span class="carousel-badge"><span class="dot"></span> Trending</span>
             <h1 class="carousel-title">Earn From Ads<br><span class="highlight">PTC & Shortlinks</span></h1>
             <p class="carousel-desc">Maximize your earnings with proven ad-based methods. PTC sites, shortlinks, and offer walls — all in one place.</p>
             <a href="/parts/part1.html" class="carousel-cta">Start Earning →</a>
           </div>
+          <div class="carousel-illustration">
+            <div class="glow-ring"></div>
+            <div class="glow-ring"></div>
+            <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#34D399"/><stop offset="100%" stop-color="#059669"/></linearGradient>
+                <linearGradient id="g3a" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6EE7B7"/><stop offset="100%" stop-color="#10B981"/></linearGradient>
+              </defs>
+              <!-- Bar chart -->
+              <rect x="75" y="160" width="24" height="80" rx="4" fill="url(#g3)" opacity="0.4"/>
+              <rect x="75" y="160" width="24" height="60" rx="4" fill="url(#g3)" opacity="0.7"/>
+              <rect x="110" y="130" width="24" height="110" rx="4" fill="url(#g3)" opacity="0.4"/>
+              <rect x="110" y="130" width="24" height="85" rx="4" fill="url(#g3)" opacity="0.7"/>
+              <rect x="145" y="100" width="24" height="140" rx="4" fill="url(#g3)" opacity="0.4"/>
+              <rect x="145" y="100" width="24" height="120" rx="4" fill="url(#g3)" opacity="0.8"/>
+              <rect x="180" y="120" width="24" height="120" rx="4" fill="url(#g3)" opacity="0.4"/>
+              <rect x="180" y="120" width="24" height="95" rx="4" fill="url(#g3)" opacity="0.7"/>
+              <rect x="215" y="140" width="24" height="100" rx="4" fill="url(#g3)" opacity="0.4"/>
+              <rect x="215" y="140" width="24" height="70" rx="4" fill="url(#g3)" opacity="0.6"/>
+              <!-- Trendline -->
+              <path d="M87 170L122 155L157 110L192 125L227 145" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+              <circle cx="87" cy="170" r="4" fill="#fff" opacity="0.9"/>
+              <circle cx="122" cy="155" r="4" fill="#fff" opacity="0.9"/>
+              <circle cx="157" cy="110" r="5" fill="#fff" opacity="0.9"/>
+              <circle cx="192" cy="125" r="4" fill="#fff" opacity="0.9"/>
+              <circle cx="227" cy="145" r="4" fill="#fff" opacity="0.9"/>
+              <!-- Dollar sign on top -->
+              <text x="152" y="88" font-size="18" fill="#fff" font-weight="700" text-anchor="middle" opacity="0.9">$</text>
+              <!-- Base line -->
+              <line x1="60" y1="240" x2="250" y2="240" stroke="#34D399" stroke-width="1.5" opacity="0.3"/>
+              <!-- Grid lines -->
+              <line x1="60" y1="195" x2="250" y2="195" stroke="#34D399" stroke-width="0.5" opacity="0.15"/>
+              <line x1="60" y1="150" x2="250" y2="150" stroke="#34D399" stroke-width="0.5" opacity="0.15"/>
+              <line x1="60" y1="105" x2="250" y2="105" stroke="#34D399" stroke-width="0.5" opacity="0.15"/>
+            </svg>
+          </div>
         </div>
 
         <!-- Slide 4: Automation -->
-        <div class="carousel-slide" style="min-height:550px;background:url('https://picsum.photos/seed/automation-gear-bg/1200/600') center/cover no-repeat">
+        <div class="carousel-slide" style="min-height:600px;background:url('https://picsum.photos/seed/automation-gear-bg/1200/600') center/cover no-repeat">
           <div class="carousel-content">
             <span class="carousel-badge"><span class="dot"></span> Pro</span>
             <h1 class="carousel-title">Automation<br><span class="highlight">Work Smarter</span></h1>
             <p class="carousel-desc">Automate repetitive tasks, build bots, and create passive income streams with our comprehensive automation tutorials.</p>
             <a href="/parts/part4.html" class="carousel-cta">Learn Automation →</a>
           </div>
+          <div class="carousel-illustration">
+            <div class="glow-ring"></div>
+            <div class="glow-ring"></div>
+            <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="g4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#A78BFA"/><stop offset="100%" stop-color="#7C3AED"/></linearGradient>
+                <linearGradient id="g4a" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#C4B5FD"/><stop offset="100%" stop-color="#8B5CF6"/></linearGradient>
+              </defs>
+              <!-- Large gear -->
+              <circle cx="150" cy="150" r="45" stroke="url(#g4)" stroke-width="2.5" fill="url(#g4)" opacity="0.1"/>
+              <circle cx="150" cy="150" r="32" stroke="url(#g4)" stroke-width="2" fill="none" opacity="0.6"/>
+              <circle cx="150" cy="150" r="8" fill="url(#g4)" opacity="0.8"/>
+              <!-- Gear teeth -->
+              <rect x="146" y="95" width="8" height="20" rx="2" fill="url(#g4)" opacity="0.7"/>
+              <rect x="146" y="185" width="8" height="20" rx="2" fill="url(#g4)" opacity="0.7"/>
+              <rect x="95" y="146" width="20" height="8" rx="2" fill="url(#g4)" opacity="0.7"/>
+              <rect x="185" y="146" width="20" height="8" rx="2" fill="url(#g4)" opacity="0.7"/>
+              <rect x="108" y="106" width="8" height="20" rx="2" fill="url(#g4)" opacity="0.7" transform="rotate(45 112 116)"/>
+              <rect x="185" y="172" width="8" height="20" rx="2" fill="url(#g4)" opacity="0.7" transform="rotate(45 189 182)"/>
+              <rect x="108" y="172" width="8" height="20" rx="2" fill="url(#g4)" opacity="0.7" transform="rotate(-45 112 182)"/>
+              <rect x="185" y="106" width="8" height="20" rx="2" fill="url(#g4)" opacity="0.7" transform="rotate(-45 189 116)"/>
+              <!-- Small gear -->
+              <circle cx="210" cy="200" r="22" stroke="url(#g4a)" stroke-width="2" fill="url(#g4a)" opacity="0.1"/>
+              <circle cx="210" cy="200" r="15" stroke="url(#g4a)" stroke-width="1.5" fill="none" opacity="0.5"/>
+              <circle cx="210" cy="200" r="5" fill="url(#g4a)" opacity="0.7"/>
+              <rect x="207" y="172" width="6" height="12" rx="1.5" fill="url(#g4a)" opacity="0.6"/>
+              <rect x="207" y="216" width="6" height="12" rx="1.5" fill="url(#g4a)" opacity="0.6"/>
+              <rect x="182" y="197" width="12" height="6" rx="1.5" fill="url(#g4a)" opacity="0.6"/>
+              <rect x="226" y="197" width="12" height="6" rx="1.5" fill="url(#g4a)" opacity="0.6"/>
+              <!-- Workflow arrows -->
+              <path d="M85 110l12-12 12 12" stroke="#A78BFA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+              <line x1="97" y1="98" x2="97" y2="135" stroke="#A78BFA" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+              <circle cx="97" cy="140" r="4" stroke="#A78BFA" stroke-width="1.5" fill="none" opacity="0.5"/>
+              <!-- Dots flow -->
+              <circle cx="70" cy="80" r="3" fill="#A78BFA" opacity="0.5"/>
+              <circle cx="85" cy="75" r="2" fill="#C4B5FD" opacity="0.4"/>
+              <circle cx="55" cy="95" r="2" fill="#C4B5FD" opacity="0.3"/>
+            </svg>
+          </div>
         </div>
 
       </div>
-<!-- Arrows -->
+
+      <!-- Arrows -->
       <button class="carousel-arrow prev" onclick="moveCarousel(-1)">‹</button>
       <button class="carousel-arrow next" onclick="moveCarousel(1)">›</button>
 
@@ -1753,61 +1935,9 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeLogin();
 });
 
-// ── Carousel ──
-let currentSlide = 0;
-const totalSlides = 4;
-
-function goToSlide(idx) {
-  currentSlide = idx;
-  const track = document.getElementById('carouselTrack');
-  const dots = document.querySelectorAll('.carousel-dot');
-  if (!track) return;
-  track.style.transform = `translateX(-${idx * 100}%)`;
-  dots.forEach((d, i) => d.classList.toggle('active', i === idx));
-}
-
-function moveCarousel(dir) {
-  const next = (currentSlide + dir + totalSlides) % totalSlides;
-  goToSlide(next);
-}
-
-// Auto play
-let carouselInterval = setInterval(() => moveCarousel(1), 5000);
-const carousel = document.getElementById('carousel');
-if (carousel) {
-  carousel.addEventListener('mouseenter', () => clearInterval(carouselInterval));
-  carousel.addEventListener('mouseleave', () => {
-    carouselInterval = setInterval(() => moveCarousel(1), 5000);
-  });
-}
-
-// Keyboard nav
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'ArrowLeft') moveCarousel(-1);
-  if (e.key === 'ArrowRight') moveCarousel(1);
-});
-
-// Dots click
-document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
-  dot.addEventListener('click', () => {
-    goToSlide(i);
-    clearInterval(carouselInterval);
-    carouselInterval = setInterval(() => moveCarousel(1), 5000);
-  });
-});
-
-// ── Login Modal (placeholder) ──
-function openLogin() {
-  const modal = document.getElementById('loginModal');
-  if (modal) modal.style.display = 'flex';
-}
-function closeLogin() {
-  const modal = document.getElementById('loginModal');
-  if (modal) modal.style.display = 'none';
-}
-
 // ── Article Image Utility ──
 // Panggil: articleImage('AI Tools') → https://picsum.photos/seed/ai-tools/800/400
+// Gampang dipake pas nambah artikel baru — tinggal tulis keyword topiknya
 const TOPIC_IMAGES = {
   'ai':       { seed:'ai-neural-network',    emoji:'🤖' },
   'airdrop':  { seed:'crypto-airdrops',      emoji:'🪂' },
@@ -1827,7 +1957,6 @@ function articleImage(topic, size='800/400') {
   const info = TOPIC_IMAGES[key];
   return `https://picsum.photos/seed/${info.seed}/${size}`;
 }
-
 // Contoh: Kalau nambah artikel tinggal copy-paste:
 // <img src="${articleImage('Crypto Airdrop July')}" alt="Crypto Airdrop" loading="lazy" width="800" height="450">
 </script>
