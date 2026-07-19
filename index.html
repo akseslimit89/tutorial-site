@@ -1571,23 +1571,23 @@ iframe[src*="quge5"][style*="fixed"] {
   <div class="stats-bar-inner">
     <div class="stat-item">
       <div class="stat-icon">👁️</div>
-      <div class="stat-num" id="totalVisits"><img src="https://visitor-badge.laobi.icu/badge?page_id=venicelab.web.id" alt="visitors" style="height:40px;display:inline-block;filter:brightness(0) invert(1) hue-rotate(200deg) saturate(3)" onerror="this.parentElement.textContent='—'" width="800" height="450"></div>
-      <div class="stat-label">Total Visits</div>
+      <div class="stat-num" id="statToday">—</div>
+      <div class="stat-label">Visits Today</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon">📊</div>
+      <div class="stat-num" id="statTotal">—</div>
+      <div class="stat-label">Total Views (30d)</div>
     </div>
     <div class="stat-item">
       <div class="stat-icon">📄</div>
-      <div class="stat-num">19</div>
+      <div class="stat-num" id="statArticles">58</div>
       <div class="stat-label">Articles & Guides</div>
     </div>
     <div class="stat-item">
       <div class="stat-icon">👤</div>
-      <div class="stat-num">787+</div>
+      <div class="stat-num" id="statCommunity">787+</div>
       <div class="stat-label">Community</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-icon">🌍</div>
-      <div class="stat-num" id="todayVisits"><img src="https://visitor-badge.laobi.icu/badge?page_id=venicelab.20260718" alt="today" style="height:40px;display:inline-block;filter:brightness(0) invert(1) hue-rotate(200deg) saturate(3)" onerror="this.parentElement.textContent='—'" width="800" height="450"></div>
-      <div class="stat-label">Today</div>
     </div>
   </div>
 </section>
@@ -1760,6 +1760,25 @@ iframe[src*="quge5"][style*="fixed"] {
       <p>${f.desc}</p>
       <a href="${f.link}" class="feature-link">${f.cta}</a>
     </div>`).join('');
+})();
+
+// ── Live Stats from Cloudflare Analytics ──
+(async function() {
+  try {
+    const res = await fetch('/stats');
+    const data = await res.json();
+    const fmt = n => n >= 1000 ? (n/1000).toFixed(1) + 'K' : n;
+    const today = document.getElementById('statToday');
+    const total = document.getElementById('statTotal');
+    const articles = document.getElementById('statArticles');
+    const community = document.getElementById('statCommunity');
+    if (today) today.textContent = fmt(data.today_views || 0);
+    if (total) total.textContent = fmt(data.total_views || 0);
+    if (articles) articles.textContent = data.articles || 58;
+    if (community) community.textContent = (data.community || 787) + '+';
+  } catch (e) {
+    console.warn('Stats fetch failed:', e);
+  }
 })();
 
 // ── Carousel ──
