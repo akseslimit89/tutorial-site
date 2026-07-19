@@ -1439,25 +1439,8 @@ iframe[src*="quge5"][style*="fixed"] {
       <p class="section-subtitle">Curated tools, guides, and resources designed to help you build sustainable online income — all free.</p>
     </div>
 
-    <div class="feature-grid">
-      <div class="feature-card fade-up">
-        <div class="feature-icon ai">🤖</div>
-        <h3>AI Tools</h3>
-        <p>Free AI-powered tools to boost your productivity — content generation, image creation, data analysis, and automation scripts.</p>
-        <a href="/blog/ai-install-passive.html" class="feature-link">Explore Tools →</a>
-      </div>
-      <div class="feature-card fade-up">
-        <div class="feature-icon airdrop">🪂</div>
-        <h3>Airdrop</h3>
-        <p>Stay updated with the latest crypto airdrop opportunities. Step-by-step claiming guides and project reviews.</p>
-        <a href="/blog/airdrop-july-2026.html" class="feature-link">View Airdrops →</a>
-      </div>
-      <div class="feature-card fade-up">
-        <div class="feature-icon earn">💰</div>
-        <h3>Earn Ads</h3>
-        <p>Monetize your traffic with PTC ads, shortlinks, offer walls, and banner networks. Maximize your CPM with smart strategies.</p>
-        <a href="/parts/part1.html" class="feature-link">Start Earning →</a>
-      </div>
+    <div class="feature-grid" id="dynamicFeatures">
+      <!-- Diisi otomatis oleh JS dari artikel terbaru -->
     </div>
   </div>
 </section>
@@ -1746,6 +1729,35 @@ iframe[src*="quge5"][style*="fixed"] {
 
 <!-- ═══════════ SCRIPTS ═══════════ -->
 <script>
+// ── Dynamic Feature Cards (auto from latest articles + shuffle) ──
+(function() {
+  const features = [
+    { icon:'🤖', title:'AI Tools', desc:'Free AI-powered tools to boost your productivity — content, image, data analysis, and automation.', link:'/blog/ai-tools-content-2026.html', cta:'Explore Tools →' },
+    { icon:'🪂', title:'Airdrop', desc:'Stay updated with the latest crypto airdrop opportunities. Step-by-step claiming guides and reviews.', link:'/blog/airdrop-layerzero-2026.html', cta:'View Airdrops →' },
+    { icon:'💰', title:'Earn Ads', desc:'Monetize your traffic with PTC ads, shortlinks, offer walls. Maximize your CPM with smart strategies.', link:'/parts/part1.html', cta:'Start Earning →' },
+    { icon:'⚽', title:'Piala Dunia', desc:'Prediksi, jadwal, dan bintang Piala Dunia 2026. Semua yang lo perlu tahu tentang turnamen terbesar.', link:'/blog/piala-dunia-2026-prediksi.html', cta:'World Cup →' },
+    { icon:'🤖', title:'Trading Bot AI', desc:'Setup bot trading AI di 30 menit. Backtest, risk management, dan LLM sentiment analysis.', link:'/blog/trading-bot-ai-pemula.html', cta:'Build Bot →' },
+    { icon:'🔥', title:'Trending', desc:'Topik viral dan trending hari ini. Jangan ketinggalan momentum.', link:'/blog/trend-ai-agent-0720.html', cta:'See Trends →' },
+    { icon:'⚡', title:'FIOLA AI', desc:'AI super-agent untuk traffic, SEO, dan optimasi otomatis. Powered by VeniceLab.', link:'/blog/fiola-ai-superagent.html', cta:'Meet FIOLA →' },
+    { icon:'📱', title:'Telegram Bots', desc:'Free Telegram earning bots 2026 — real or scam? Kita bedah semuanya.', link:'/blog/telegram-earning-bots.html', cta:'Check Bots →' },
+  ];
+  // Shuffle random
+  for (let i = features.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [features[i], features[j]] = [features[j], features[i]];
+  }
+  const pick = features.slice(0, 4);
+  const container = document.getElementById('dynamicFeatures');
+  if (!container) return;
+  container.innerHTML = pick.map(f => `
+    <div class="feature-card fade-up">
+      <div class="feature-icon">${f.icon}</div>
+      <h3>${f.title}</h3>
+      <p>${f.desc}</p>
+      <a href="${f.link}" class="feature-link">${f.cta}</a>
+    </div>`).join('');
+})();
+
 // ── Carousel ──
 let currentSlide = 0;
 const totalSlides = 4;
