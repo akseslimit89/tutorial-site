@@ -1758,9 +1758,61 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeLogin();
 });
 
+// ── Carousel ──
+let currentSlide = 0;
+const totalSlides = 4;
+
+function goToSlide(idx) {
+  currentSlide = idx;
+  const track = document.getElementById('carouselTrack');
+  const dots = document.querySelectorAll('.carousel-dot');
+  if (!track) return;
+  track.style.transform = `translateX(-${idx * 100}%)`;
+  dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+}
+
+function moveCarousel(dir) {
+  const next = (currentSlide + dir + totalSlides) % totalSlides;
+  goToSlide(next);
+}
+
+// Auto play
+let carouselInterval = setInterval(() => moveCarousel(1), 5000);
+const carousel = document.getElementById('carousel');
+if (carousel) {
+  carousel.addEventListener('mouseenter', () => clearInterval(carouselInterval));
+  carousel.addEventListener('mouseleave', () => {
+    carouselInterval = setInterval(() => moveCarousel(1), 5000);
+  });
+}
+
+// Keyboard nav
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowLeft') moveCarousel(-1);
+  if (e.key === 'ArrowRight') moveCarousel(1);
+});
+
+// Dots click
+document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+  dot.addEventListener('click', () => {
+    goToSlide(i);
+    clearInterval(carouselInterval);
+    carouselInterval = setInterval(() => moveCarousel(1), 5000);
+  });
+});
+
+// ── Login Modal (placeholder) ──
+function openLogin() {
+  const modal = document.getElementById('loginModal');
+  if (modal) modal.style.display = 'flex';
+}
+function closeLogin() {
+  const modal = document.getElementById('loginModal');
+  if (modal) modal.style.display = 'none';
+}
+
 // ── Article Image Utility ──
 // Panggil: articleImage('AI Tools') → https://picsum.photos/seed/ai-tools/800/400
-// Gampang dipake pas nambah artikel baru — tinggal tulis keyword topiknya
 const TOPIC_IMAGES = {
   'ai':       { seed:'ai-neural-network',    emoji:'🤖' },
   'airdrop':  { seed:'crypto-airdrops',      emoji:'🪂' },
@@ -1780,6 +1832,7 @@ function articleImage(topic, size='800/400') {
   const info = TOPIC_IMAGES[key];
   return `https://picsum.photos/seed/${info.seed}/${size}`;
 }
+
 // Contoh: Kalau nambah artikel tinggal copy-paste:
 // <img src="${articleImage('Crypto Airdrop July')}" alt="Crypto Airdrop" loading="lazy" width="800" height="450">
 </script>
