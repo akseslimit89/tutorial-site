@@ -287,34 +287,7 @@ body {
   transform: translateY(-2px);
   box-shadow: 0 8px 30px rgba(37,99,235,0.35);
 }
-.carousel-illustration {
-  flex: 1;
-  max-width: 440px;
-  aspect-ratio: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-.carousel-illustration .glow-ring {
-  position: absolute;
-  width: 320px; height: 320px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(37,99,235,0.15) 0%, transparent 70%);
-  animation: ring-pulse 4s ease-in-out infinite;
-}
-@keyframes ring-pulse {
-  0%,100%{transform:scale(1);opacity:0.5}
-  50%{transform:scale(1.1);opacity:0.8}
-}
-.carousel-illustration .glow-ring:nth-child(2) {
-  width: 240px; height: 240px;
-  animation-delay: -1.5s;
-}
-.carousel-illustration svg {
-  position: relative;
-  z-index: 2;
-  width: 80%; height: 80%;
+50%{transform:scale(1.1);opacity:0.8}
 }
 /* Carousel controls */
 .carousel-controls {
@@ -925,10 +898,7 @@ body {
   .carousel-content { max-width: 60%; }
   .carousel-title { font-size: 1.5em; }
   .carousel-desc { font-size: 0.9em; }
-  .carousel-illustration { display: flex; justify-content: center; flex-shrink: 0; }
-  .carousel-illustration svg { width: 180px; height: 180px; }
-  .carousel-illustration .glow-ring { display: none; }
-}@media (max-width: 768px) {
+  }@media (max-width: 768px) {
   .nav-links { display: none; }
   .nav-mobile-btn { display: flex; }
   .hero { padding: 80px 16px 40px; }
@@ -940,7 +910,6 @@ body {
   .carousel-title { font-size: 1.15em; }
   .carousel-desc { font-size: 0.8em; line-height: 1.5; }
   .carousel-content { max-width: 58%; }
-  .carousel-illustration svg { width: 110px; height: 110px; }
   .carousel-arrow { display: none; }
   .newsletter-form { flex-direction: column; }
   .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
@@ -1195,16 +1164,14 @@ iframe[src*="quge5"][style*="fixed"] {
       <div class="carousel-track" id="carouselTrack">
 
         <!-- Slide 1: AI Tools -->
-        <div class="carousel-slide" style="min-height:600px;background:url('https://picsum.photos/seed/ai-neural-network-bg/1200/600') center/cover no-repeat">
+        <div class="carousel-slide" style="min-height:550px;background:url('https://picsum.photos/seed/ai-neural-network-bg/1200/600') center/cover no-repeat">
           <div class="carousel-content">
             <span class="carousel-badge"><span class="dot"></span> Featured</span>
             <h1 class="carousel-title">Free AI Tools to<br><span class="highlight">Boost Productivity</span></h1>
             <p class="carousel-desc">Discover powerful AI tools that automate your workflow, generate content, and help you earn smarter — all completely free.</p>
             <a href="/blog/ai-install-passive.html" class="carousel-cta">Explore AI Tools →</a>
           </div>
-          <div class="carousel-illustration">
-            <div class="glow-ring"></div>
-            <div class="glow-ring"></div>
+<div class="glow-ring"></div>
             <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#60A5FA"/><stop offset="100%" stop-color="#2563EB"/></linearGradient>
@@ -1247,16 +1214,14 @@ iframe[src*="quge5"][style*="fixed"] {
         </div>
 
         <!-- Slide 2: Crypto Airdrop -->
-        <div class="carousel-slide" style="min-height:600px;background:url('https://picsum.photos/seed/crypto-blockchain-bg/1200/600') center/cover no-repeat">
+        <div class="carousel-slide" style="min-height:550px;background:url('https://picsum.photos/seed/crypto-blockchain-bg/1200/600') center/cover no-repeat">
           <div class="carousel-content">
             <span class="carousel-badge"><span class="dot"></span> New</span>
             <h1 class="carousel-title">Crypto Airdrop<br><span class="highlight">Claim Free Tokens</span></h1>
             <p class="carousel-desc">Stay ahead with the latest crypto airdrop opportunities. Step-by-step guides to claim free tokens from top blockchain projects.</p>
             <a href="/blog/airdrop-july-2026.html" class="carousel-cta">View Airdrops →</a>
           </div>
-          <div class="carousel-illustration">
-            <div class="glow-ring"></div>
-            <div class="glow-ring"></div>
+<div class="glow-ring"></div>
             <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FBBF24"/><stop offset="100%" stop-color="#D97706"/></linearGradient>
@@ -1290,16 +1255,14 @@ iframe[src*="quge5"][style*="fixed"] {
         </div>
 
         <!-- Slide 3: Earn Ads -->
-        <div class="carousel-slide" style="min-height:600px;background:url('https://picsum.photos/seed/earn-dashboard-bg/1200/600') center/cover no-repeat">
+        <div class="carousel-slide" style="min-height:550px;background:url('https://picsum.photos/seed/earn-dashboard-bg/1200/600') center/cover no-repeat">
           <div class="carousel-content">
             <span class="carousel-badge"><span class="dot"></span> Trending</span>
             <h1 class="carousel-title">Earn From Ads<br><span class="highlight">PTC & Shortlinks</span></h1>
             <p class="carousel-desc">Maximize your earnings with proven ad-based methods. PTC sites, shortlinks, and offer walls — all in one place.</p>
             <a href="/parts/part1.html" class="carousel-cta">Start Earning →</a>
           </div>
-          <div class="carousel-illustration">
-            <div class="glow-ring"></div>
-            <div class="glow-ring"></div>
+<div class="glow-ring"></div>
             <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#34D399"/><stop offset="100%" stop-color="#059669"/></linearGradient>
@@ -1336,16 +1299,14 @@ iframe[src*="quge5"][style*="fixed"] {
         </div>
 
         <!-- Slide 4: Automation -->
-        <div class="carousel-slide" style="min-height:600px;background:url('https://picsum.photos/seed/automation-gear-bg/1200/600') center/cover no-repeat">
+        <div class="carousel-slide" style="min-height:550px;background:url('https://picsum.photos/seed/automation-gear-bg/1200/600') center/cover no-repeat">
           <div class="carousel-content">
             <span class="carousel-badge"><span class="dot"></span> Pro</span>
             <h1 class="carousel-title">Automation<br><span class="highlight">Work Smarter</span></h1>
             <p class="carousel-desc">Automate repetitive tasks, build bots, and create passive income streams with our comprehensive automation tutorials.</p>
             <a href="/parts/part4.html" class="carousel-cta">Learn Automation →</a>
           </div>
-          <div class="carousel-illustration">
-            <div class="glow-ring"></div>
-            <div class="glow-ring"></div>
+<div class="glow-ring"></div>
             <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <linearGradient id="g4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#A78BFA"/><stop offset="100%" stop-color="#7C3AED"/></linearGradient>
