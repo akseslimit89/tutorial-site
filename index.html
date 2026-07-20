@@ -1875,8 +1875,61 @@ document.getElementById('mobileToggle').addEventListener('click', () => {
   }
 })();
 
-// ── GA4 Beacon ──
-fetch('https://www.google-analytics.com/g/collect?v=2&tid=G-0770R5SEN7&cid=hp-' + Date.now() + '&en=page_view&dl=https://venicelab.web.id&dt=VeniceLab');
+// ── GA4 Event Tracking ──
+(function() {
+  // Enhanced page_view
+  gtag('event', 'page_view', {
+    page_title: document.title,
+    page_location: window.location.href
+  });
+
+  // ── Scroll Depth ──
+  let scrollTracked = {25:0,50:0,75:0,100:0};
+  window.addEventListener('scroll', function() {
+    const p = Math.round(window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100);
+    if (p >= 25 && !scrollTracked[25]) { scrollTracked[25]=1; gtag('event','scroll_25'); }
+    if (p >= 50 && !scrollTracked[50]) { scrollTracked[50]=1; gtag('event','scroll_50'); }
+    if (p >= 75 && !scrollTracked[75]) { scrollTracked[75]=1; gtag('event','scroll_75'); }
+    if (p >= 100 && !scrollTracked[100]) { scrollTracked[100]=1; gtag('event','scroll_100'); }
+  }, {passive:true});
+
+  // ── Click tracking ──
+  document.addEventListener('click', function(e) {
+    const el = e.target.closest('a,button,.feature-card,.stat-item,.card');
+    if (!el) return;
+
+    // Download button
+    if (el.id === 'dlBtn') {
+      gtag('event', 'click_download', {page: window.location.pathname});
+      return;
+    }
+
+    // Link
+    if (el.tagName === 'A') {
+      const href = el.getAttribute('href') || '';
+      const label = el.textContent.trim().slice(0, 50);
+
+      if (href.includes('quge5') || href.includes('effectivecpm') || href.includes('monetag')) {
+        gtag('event', 'click_ad', {label: label});
+      } else if (href.includes('http') && !href.includes(window.location.host)) {
+        gtag('event', 'click_outbound', {url: href, label: label});
+      } else if (href.startsWith('/')) {
+        gtag('event', 'click_internal', {url: href, label: label});
+      }
+    }
+
+    // Navigation buttons
+    if (el.closest('.feature-card')) {
+      gtag('event', 'click_feature', {label: el.textContent.trim().slice(0,30)});
+    }
+    if (el.closest('.stat-item')) {
+      gtag('event', 'click_stat', {label: el.textContent.trim().slice(0,30)});
+    }
+  }, {passive:true});
+
+  // ── Beacon fallback ──
+  fetch('https://www.google-analytics.com/g/collect?v=2&tid=G-0770R5SEN7&cid=hp-' + Date.now() + '&en=page_view&dl=' + encodeURIComponent(window.location.href) + '&dt=' + encodeURIComponent(document.title));
+})();
 
 // ── Login Modal ──
 function openLogin() {
