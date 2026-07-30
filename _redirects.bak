@@ -1,0 +1,9 @@
+# Buat Cloudflare Pages serve robots.txt kita dengan bener
+https://venicelab.web.id/robots.txt  /robots.txt  301
+
+# Fix /index.html 404 — redirect ke root
+/index.html  /  301
+
+# Fix /landing/ 404 — serve directory listing
+/landing  /landing/index.html  200
+/landing/  /landing/index.html  200
